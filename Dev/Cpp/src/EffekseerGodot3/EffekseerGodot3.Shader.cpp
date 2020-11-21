@@ -1,0 +1,185 @@
+﻿
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+#include <VisualServer.hpp>
+#include "EffekseerGodot3.Shader.h"
+#include "EffekseerGodot3.Utils.h"
+
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+namespace EffekseerGodot3
+{
+
+static const char* ShaderType = 
+	"shader_type spatial;\n";
+
+static const char* BlendMode[] = {
+	"",
+	"render_mode blend_mix;\n",
+	"render_mode blend_add;\n",
+	"render_mode blend_sub;\n",
+	"render_mode blend_mul;\n",
+};
+static const char* CullMode[] = {
+	"render_mode cull_back;\n",
+	"render_mode cull_front;\n",
+	"render_mode cull_disabled;\n",
+};
+static const char* DepthTestMode[] = {
+	"render_mode depth_test_disable;\n",
+	"",
+};
+static const char* DepthWriteMode[] = {
+	"render_mode depth_draw_never;\n",
+	"render_mode depth_draw_always;\n",
+};
+
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+std::unique_ptr<Shader> Shader::Create(const char* name, const char* code, 
+	EffekseerRenderer::RendererShaderType shaderType,
+	const ParamDecl* paramDecls, uint32_t paramCount)
+{
+	return std::unique_ptr<Shader>(new Shader(name, code, shaderType, paramDecls, paramCount));
+}
+
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+Shader::Shader(const char* name, const char* code, 
+	EffekseerRenderer::RendererShaderType shaderType,
+	const ParamDecl* paramDecls, uint32_t paramCount)
+{
+	m_name = name;
+	m_paramDecls = paramDecls;
+	m_paramCount = paramCount;
+	m_shaderType = shaderType;
+
+	auto vs = godot::VisualServer::get_singleton();
+
+	godot::String baseCode = code;
+
+#define COUNT_OF(list) (sizeof(list) / sizeof(list[0]))
+	for (size_t dwm = 0; dwm < COUNT_OF(DepthWriteMode); dwm++)
+	{
+		for (size_t dtm = 0; dtm < COUNT_OF(DepthTestMode); dtm++)
+		{
+			for (size_t cm = 0; cm < COUNT_OF(CullMode); cm++)
+			{
+				for (size_t bm = 0; bm < COUNT_OF(BlendMode); bm++)
+				{
+					godot::String fullCode = ShaderType;
+					fullCode += DepthWriteMode[dwm];
+					fullCode += DepthTestMode[dtm];
+					fullCode += CullMode[cm];
+					fullCode += BlendMode[bm];
+					fullCode += baseCode;
+
+					m_rid[dwm][dtm][cm][bm] = vs->shader_create();
+					vs->shader_set_code(m_rid[dwm][dtm][cm][bm], fullCode);
+				}
+			}
+		}
+	}
+#undef COUNT_OF
+
+	//printf("%s\n", name);
+	//auto list = vs->shader_get_param_list(m_rid[0][0][0][0]);
+	//for (int i = 0; i < list.size(); i++)
+	//{
+	//	printf("%s\n", ((godot::String)list[i]).utf8().get_data());
+	//}
+}
+
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+Shader::~Shader()
+{
+	auto vs = godot::VisualServer::get_singleton();
+
+#define COUNT_OF(list) (sizeof(list) / sizeof(list[0]))
+	for (size_t dwm = 0; dwm < COUNT_OF(DepthWriteMode); dwm++)
+	{
+		for (size_t dtm = 0; dtm < COUNT_OF(DepthTestMode); dtm++)
+		{
+			for (size_t cm = 0; cm < COUNT_OF(CullMode); cm++)
+			{
+				for (size_t bm = 0; bm < COUNT_OF(BlendMode); bm++)
+				{
+					vs->free_rid(m_rid[dwm][dtm][cm][bm]);
+				}
+			}
+		}
+	}
+#undef COUNT_OF
+}
+
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+void Shader::ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderStateBase::State& state)
+{
+	auto vs = godot::VisualServer::get_singleton();
+
+	const size_t bm = (size_t)state.AlphaBlend;
+	const size_t cm = (size_t)state.CullingType;
+	const size_t dtm = (size_t)state.DepthTest;
+	const size_t dwm = (size_t)state.DepthWrite;
+
+	vs->material_set_shader(material, m_rid[dwm][dtm][cm][bm]);
+
+	for (uint32_t i = 0; i < m_paramCount; i++)
+	{
+		auto& decl = m_paramDecls[i];
+
+		if (decl.type == ParamType::Int)
+		{
+			auto value = *(const int32_t*)&m_constantBuffers[decl.slot][decl.offset];
+			vs->material_set_param(material, decl.name, value);
+		}
+		else if (decl.type == ParamType::Float)
+		{
+			auto value = *(const float*)&m_constantBuffers[decl.slot][decl.offset];
+			vs->material_set_param(material, decl.name, value);
+		}
+		else if (decl.type == ParamType::Vector2)
+		{
+			auto& vector = *(const godot::Vector2*)&m_constantBuffers[decl.slot][decl.offset];
+			vs->material_set_param(material, decl.name, vector);
+		}
+		else if (decl.type == ParamType::Vector3)
+		{
+			auto& vector = *(const godot::Vector3*)&m_constantBuffers[decl.slot][decl.offset];
+			vs->material_set_param(material, decl.name, vector);
+		}
+		else if (decl.type == ParamType::Vector4)
+		{
+			auto& vector = *(const godot::Quat*)&m_constantBuffers[decl.slot][decl.offset];
+			vs->material_set_param(material, decl.name, vector);
+		}
+		else if (decl.type == ParamType::Matrix44)
+		{
+			auto& matrix = *(const Effekseer::Matrix44*)&m_constantBuffers[decl.slot][decl.offset];
+			vs->material_set_param(material, decl.name, Convert::Matrix44(matrix));
+		}
+	}
+
+	const char* names[] = {
+		"Texture0", "Texture1", "Texture2", "Texture3",
+		"Texture4", "Texture5", "Texture6", "Texture7",
+	};
+	for (size_t i = 0; i < state.TextureIDs.size(); i++)
+	{
+		vs->material_set_param(material, names[i], 
+			Convert::Int64ToRID((int64_t)state.TextureIDs[i]));
+	}
+}
+
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+} // namespace EffekseerGodot3
