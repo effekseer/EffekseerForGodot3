@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EffekseerGodot", "EffekseerGodot.vcxproj", "{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effekseer", "..\..\..\Effekseer\build\Dev\Cpp\Effekseer\Effekseer.vcxproj", "{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}"
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "Godot_v3.2.3-stable_win64", "..\Godot_v3.2.3-stable_win64.exe", "{7DFEF70D-6D06-4738-A8D9-79822C780E86}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\home\work\Effekseer\EffekseerForGodot3\Dev\Godot_v3.2.3-stable_win64.exe
+		RemoteMachine = DESKTOP-R8V8HRU
+		StartingDirectory = C:\home\work\Effekseer\EffekseerForGodot3\Dev
+		Arguments = --path .\Godot
+		Environment = 既定
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		MinSizeRel|x64 = MinSizeRel|x64
+		MinSizeRel|x86 = MinSizeRel|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+		RelWithDebInfo|x64 = RelWithDebInfo|x64
+		RelWithDebInfo|x86 = RelWithDebInfo|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.Debug|x64.ActiveCfg = Debug|x64
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.Debug|x64.Build.0 = Debug|x64
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.Debug|x86.ActiveCfg = Debug|Win32
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.Debug|x86.Build.0 = Debug|Win32
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.MinSizeRel|x64.ActiveCfg = Release|x64
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.MinSizeRel|x64.Build.0 = Release|x64
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.MinSizeRel|x86.ActiveCfg = Release|Win32
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.MinSizeRel|x86.Build.0 = Release|Win32
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.Release|x64.ActiveCfg = Release|x64
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.Release|x64.Build.0 = Release|x64
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.Release|x86.ActiveCfg = Release|Win32
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.Release|x86.Build.0 = Release|Win32
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x64.ActiveCfg = Release|x64
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x64.Build.0 = Release|x64
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
+		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x86.Build.0 = Release|Win32
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.Debug|x64.ActiveCfg = Debug|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.Debug|x64.Build.0 = Debug|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.Debug|x86.ActiveCfg = Debug|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.MinSizeRel|x86.ActiveCfg = MinSizeRel|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.Release|x64.ActiveCfg = Release|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.Release|x64.Build.0 = Release|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.Release|x86.ActiveCfg = Release|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{FFFB6EF1-DA0D-3D76-811A-A631DD27A1C3}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
+		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.Debug|x64.ActiveCfg = Release|x64
+		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.Debug|x86.ActiveCfg = Release|x64
+		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.MinSizeRel|x64.ActiveCfg = Release|x64
+		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.MinSizeRel|x86.ActiveCfg = Release|x64
+		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.Release|x64.ActiveCfg = Release|x64
+		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.Release|x86.ActiveCfg = Release|x64
+		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.RelWithDebInfo|x64.ActiveCfg = Release|x64
+		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.RelWithDebInfo|x86.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E19B9F1C-E634-4F6D-AC8F-2E4F61DF97F1}
+	EndGlobalSection
+EndGlobal

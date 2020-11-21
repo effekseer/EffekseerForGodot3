@@ -1,0 +1,5 @@
+[gd_resource type="GDNativeLibrary" format=2]
+
+[resource]
+entry/Windows.64 = "res://addons/effekseer/bin/win64/libeffekseer.win64.dll"
+entry/Windows.32 = "res://addons/effekseer/bin/win32/libeffekseer.win32.dll"

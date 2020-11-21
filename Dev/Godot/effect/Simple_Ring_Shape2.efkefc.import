@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_Ring_Shape2.efkefc-da466494a59af2439f3d92d38f0828e9.tres"
+
+[deps]
+
+source_file="res://effect/Simple_Ring_Shape2.efkefc"
+dest_files=[ "res://.import/Simple_Ring_Shape2.efkefc-da466494a59af2439f3d92d38f0828e9.tres" ]
+
+[params]
+

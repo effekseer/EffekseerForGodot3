@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_GeneratingPosition1.efkefc-42a656ff89b09b06c3ea66200164f8ff.tres"
+
+[deps]
+
+source_file="res://effect/Simple_GeneratingPosition1.efkefc"
+dest_files=[ "res://.import/Simple_GeneratingPosition1.efkefc-42a656ff89b09b06c3ea66200164f8ff.tres" ]
+
+[params]
+

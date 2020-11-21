@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_Sprite_Fixed.efkefc-a03098a4973c46553fe605395f3a8ff3.tres"
+
+[deps]
+
+source_file="res://effect/Simple_Sprite_Fixed.efkefc"
+dest_files=[ "res://.import/Simple_Sprite_Fixed.efkefc-a03098a4973c46553fe605395f3a8ff3.tres" ]
+
+[params]
+

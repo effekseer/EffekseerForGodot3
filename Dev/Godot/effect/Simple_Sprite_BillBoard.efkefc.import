@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_Sprite_BillBoard.efkefc-05d243d6d24e69428e3a0ed347a88e99.tres"
+
+[deps]
+
+source_file="res://effect/Simple_Sprite_BillBoard.efkefc"
+dest_files=[ "res://.import/Simple_Sprite_BillBoard.efkefc-05d243d6d24e69428e3a0ed347a88e99.tres" ]
+
+[params]
+

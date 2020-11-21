@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_Turbulence_Fireworks.efkefc-15a443317c20d960e7d2d4c29f1f3056.tres"
+
+[deps]
+
+source_file="res://effect/Simple_Turbulence_Fireworks.efkefc"
+dest_files=[ "res://.import/Simple_Turbulence_Fireworks.efkefc-15a443317c20d960e7d2d4c29f1f3056.tres" ]
+
+[params]
+

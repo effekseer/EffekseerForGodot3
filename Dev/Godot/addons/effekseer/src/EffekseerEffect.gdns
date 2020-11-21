@@ -1,0 +1,10 @@
+[gd_resource type="NativeScript" load_steps=2 format=2]
+
+[ext_resource path="res://addons/effekseer/effekseer.tres" type="GDNativeLibrary" id=1]
+
+[resource]
+resource_name = "EffekseerEffect"
+class_name = "EffekseerEffect"
+library = ExtResource( 1 )
+script_class_name = "EffekseerEffect"
+script_class_icon_path = "res://addons/effekseer/icon16.png"
