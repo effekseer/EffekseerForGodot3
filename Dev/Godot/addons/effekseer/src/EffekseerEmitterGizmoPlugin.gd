@@ -1,19 +1,19 @@
 extends EditorSpatialGizmoPlugin
 
 
-var EffekseerEmitter = preload("EffekseerEmitter.gdns")
-
-
-func _init():
-	create_material("lines", Color(0.60, 0.93, 0.95), false, false, true);
-	create_icon_material("icon", preload("../icon64.png"));
+var is_first_draw = true
 
 
 func has_gizmo(spatial):
-	return spatial.get_script() == EffekseerEmitter
+	return spatial.get_script() == preload("res://addons/effekseer/src/EffekseerEmitter.gdns")
 
 
 func redraw(gizmo: EditorSpatialGizmo):
+	if is_first_draw:
+		create_material("lines", Color(0.60, 0.93, 0.95), false, false, true);
+		create_icon_material("icon", load("res://addons/effekseer/icon64.png"));
+		is_first_draw = false
+	
 	var emitter = gizmo.get_spatial_node()
 	gizmo.clear()
 
