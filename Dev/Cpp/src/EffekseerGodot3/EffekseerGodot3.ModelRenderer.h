@@ -16,7 +16,10 @@ namespace EffekseerGodot3
 //----------------------------------------------------------------------------------
 typedef ::Effekseer::ModelRenderer::NodeParameter efkModelNodeParam;
 typedef ::Effekseer::ModelRenderer::InstanceParameter efkModelInstanceParam;
-typedef ::Effekseer::Vec3f efkVector3D;
+typedef ::Effekseer::SIMD::Vec3f efkVector3D;
+
+class ModelRenderer;
+using ModelRendererRef = Effekseer::RefPtr<ModelRenderer>;
 
 class ModelRenderer : public ::EffekseerRenderer::ModelRendererBase
 {
@@ -34,7 +37,7 @@ private:
 public:
 	virtual ~ModelRenderer();
 
-	static ModelRenderer* Create(RendererImplemented* renderer);
+	static ModelRendererRef Create(RendererImplemented* renderer);
 
 public:
 	void BeginRendering(const efkModelNodeParam& parameter, int32_t count, void* userData);

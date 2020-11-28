@@ -43,10 +43,15 @@ private:
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
+class RendererImplemented;
+using RendererImplementedRef = Effekseer::RefPtr<RendererImplemented>;
+
 /**
 	@brief	描画クラス
 */
-class RendererImplemented : public Renderer
+class RendererImplemented
+	: public Renderer
+	, public Effekseer::ReferenceObject
 {
 	using StandardRenderer = EffekseerRenderer::StandardRenderer<RendererImplemented, Shader>;
 
@@ -140,33 +145,33 @@ public:
 	/**
 		@brief	スプライトレンダラーを生成する。
 	*/
-	::Effekseer::SpriteRenderer* CreateSpriteRenderer();
+	::Effekseer::SpriteRendererRef CreateSpriteRenderer();
 
 	/**
 		@brief	リボンレンダラーを生成する。
 	*/
-	::Effekseer::RibbonRenderer* CreateRibbonRenderer();
+	::Effekseer::RibbonRendererRef CreateRibbonRenderer();
 
 	/**
 		@brief	リングレンダラーを生成する。
 	*/
-	::Effekseer::RingRenderer* CreateRingRenderer();
+	::Effekseer::RingRendererRef CreateRingRenderer();
 
 	/**
 		@brief	モデルレンダラーを生成する。
 	*/
-	::Effekseer::ModelRenderer* CreateModelRenderer();
+	::Effekseer::ModelRendererRef CreateModelRenderer();
 
 	/**
 		@brief	軌跡レンダラーを生成する。
 	*/
-	::Effekseer::TrackRenderer* CreateTrackRenderer();
+	::Effekseer::TrackRendererRef CreateTrackRenderer();
 
-	::Effekseer::TextureLoader* CreateTextureLoader(::Effekseer::FileInterface* fileInterface = NULL) override { return nullptr; }
+	::Effekseer::TextureLoaderRef CreateTextureLoader(::Effekseer::FileInterface* fileInterface = NULL) override { return nullptr; }
 
-	::Effekseer::ModelLoader* CreateModelLoader(::Effekseer::FileInterface* fileInterface = NULL) override { return nullptr; }
+	::Effekseer::ModelLoaderRef CreateModelLoader(::Effekseer::FileInterface* fileInterface = NULL) override { return nullptr; }
 
-	::Effekseer::MaterialLoader* CreateMaterialLoader(::Effekseer::FileInterface* fileInterface = nullptr) override  { return nullptr; }
+	::Effekseer::MaterialLoaderRef CreateMaterialLoader(::Effekseer::FileInterface* fileInterface = nullptr) override  { return nullptr; }
 
 	/**
 		@brief	背景を取得する。
@@ -204,9 +209,9 @@ public:
 
 	void DeleteProxyTexture(Effekseer::TextureData* data) override;
 
-	virtual int GetRef() { return 0; }
-	virtual int AddRef() { return 0; }
-	virtual int Release() { return 0; }
+	virtual int GetRef() { return Effekseer::ReferenceObject::GetRef(); }
+	virtual int AddRef() { return Effekseer::ReferenceObject::AddRef(); }
+	virtual int Release() { return Effekseer::ReferenceObject::Release();; }
 };
 
 //----------------------------------------------------------------------------------

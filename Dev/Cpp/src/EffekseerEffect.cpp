@@ -31,10 +31,10 @@ void EffekseerEffect::load(String path)
 	m_load_path = path;
 	
 	auto system = EffekseerSystem::get_instance();
-	if (!system) return;
+	if (system == nullptr) return;
 
 	auto manager = EffekseerSystem::get_instance()->get_manager();
-	if (!manager) return;
+	if (manager == nullptr) return;
 
 	godot::Ref<godot::File> file = godot::File::_new();
 

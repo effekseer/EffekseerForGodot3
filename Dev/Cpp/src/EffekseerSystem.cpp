@@ -47,8 +47,8 @@ EffekseerSystem::EffekseerSystem()
 
 	m_manager = Effekseer::Manager::Create(instanceMaxCount);
 	m_manager->LaunchWorkerThreads(2);
-	m_manager->SetTextureLoader(new EffekseerGodot3::TextureLoader());
-	m_manager->SetModelLoader(new EffekseerGodot3::ModelLoader());
+	m_manager->SetTextureLoader(Effekseer::TextureLoaderRef(new EffekseerGodot3::TextureLoader()));
+	m_manager->SetModelLoader(Effekseer::ModelLoaderRef(new EffekseerGodot3::ModelLoader()));
 
 	m_renderer = EffekseerGodot3::Renderer::Create(squareMaxCount, drawMaxCount);
 	m_renderer->SetProjectionMatrix(Effekseer::Matrix44().Indentity());
@@ -62,12 +62,6 @@ EffekseerSystem::EffekseerSystem()
 
 EffekseerSystem::~EffekseerSystem()
 {
-	if (m_manager) {
-		m_manager->Destroy();
-	}
-	if (m_renderer) {
-		m_renderer->Destroy();
-	}
 	s_instance = nullptr;
 }
 

@@ -16,6 +16,9 @@ namespace EffekseerGodot3
 //
 //----------------------------------------------------------------------------------
 
+class Renderer;
+using RendererRef = Effekseer::RefPtr<Renderer>;
+
 /**
 	@brief	描画クラス
 */
@@ -35,7 +38,7 @@ public:
 		@param	squareMaxCount	最大描画スプライト数
 		@return	インスタンス
 	*/
-	static Renderer* Create(int32_t squareMaxCount, int32_t drawMaxCount);
+	static RendererRef Create(int32_t squareMaxCount, int32_t drawMaxCount);
 
 	/**
 		@brief	\~English	Set Godot World instance

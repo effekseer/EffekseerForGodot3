@@ -5,6 +5,7 @@
 #include <Camera.hpp>
 #include <Node.hpp>
 #include <Effekseer.h>
+#include "EffekseerGodot3/EffekseerGodot3.Renderer.h"
 
 namespace EffekseerGodot3
 {
@@ -46,13 +47,13 @@ public:
 
 	int get_total_instance_count() const;
 
-	Effekseer::Manager* get_manager() const { return m_manager; }
+	const Effekseer::ManagerRef& get_manager() { return m_manager; }
 
 private:
 	static EffekseerSystem* s_instance;
 
-	Effekseer::Manager* m_manager = nullptr;
-	EffekseerGodot3::Renderer* m_renderer = nullptr;
+	Effekseer::ManagerRef m_manager;
+	EffekseerGodot3::RendererRef m_renderer;
 	bool m_shouldResetState = true;
 };
 

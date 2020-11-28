@@ -161,11 +161,11 @@ ModelRenderer::~ModelRenderer()
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-ModelRenderer* ModelRenderer::Create(RendererImplemented* renderer)
+ModelRendererRef ModelRenderer::Create(RendererImplemented* renderer)
 {
 	assert(renderer != NULL);
 
-	return new ModelRenderer(renderer);
+	return ModelRendererRef(new ModelRenderer(renderer));
 }
 
 void ModelRenderer::BeginRendering(const efkModelNodeParam& parameter, int32_t count, void* userData)

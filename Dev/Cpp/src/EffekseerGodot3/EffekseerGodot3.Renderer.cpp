@@ -265,9 +265,9 @@ void RenderCommand::DrawModel(godot::World* world, godot::RID mesh, int32_t prio
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-Renderer* Renderer::Create(int32_t squareMaxCount, int32_t drawMaxCount)
+RendererRef Renderer::Create(int32_t squareMaxCount, int32_t drawMaxCount)
 {
-	RendererImplemented* renderer = new RendererImplemented(squareMaxCount);
+	auto renderer = Effekseer::MakeRefPtr<RendererImplemented>(squareMaxCount);
 	if (renderer->Initialize(drawMaxCount))
 	{
 		return renderer;
@@ -446,31 +446,31 @@ IndexBuffer* RendererImplemented::GetIndexBuffer()
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-::Effekseer::SpriteRenderer* RendererImplemented::CreateSpriteRenderer()
+::Effekseer::SpriteRendererRef RendererImplemented::CreateSpriteRenderer()
 {
-	return new ::EffekseerRenderer::SpriteRendererBase<RendererImplemented, false>(this);
+	return ::Effekseer::SpriteRendererRef(new ::EffekseerRenderer::SpriteRendererBase<RendererImplemented, false>(this));
 }
 
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-::Effekseer::RibbonRenderer* RendererImplemented::CreateRibbonRenderer()
+::Effekseer::RibbonRendererRef RendererImplemented::CreateRibbonRenderer()
 {
-	return new ::EffekseerRenderer::RibbonRendererBase<RendererImplemented, false>(this);
+	return ::Effekseer::RibbonRendererRef(new ::EffekseerRenderer::RibbonRendererBase<RendererImplemented, false>(this));
 }
 
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-::Effekseer::RingRenderer* RendererImplemented::CreateRingRenderer()
+::Effekseer::RingRendererRef RendererImplemented::CreateRingRenderer()
 {
-	return new ::EffekseerRenderer::RingRendererBase<RendererImplemented, false>(this);
+	return ::Effekseer::RingRendererRef(new ::EffekseerRenderer::RingRendererBase<RendererImplemented, false>(this));
 }
 
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-::Effekseer::ModelRenderer* RendererImplemented::CreateModelRenderer()
+::Effekseer::ModelRendererRef RendererImplemented::CreateModelRenderer()
 {
 	return ModelRenderer::Create(this);
 }
@@ -478,9 +478,9 @@ IndexBuffer* RendererImplemented::GetIndexBuffer()
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-::Effekseer::TrackRenderer* RendererImplemented::CreateTrackRenderer()
+::Effekseer::TrackRendererRef RendererImplemented::CreateTrackRenderer()
 {
-	return new ::EffekseerRenderer::TrackRendererBase<RendererImplemented, false>(this);
+	return ::Effekseer::TrackRendererRef(new ::EffekseerRenderer::TrackRendererBase<RendererImplemented, false>(this));
 }
 
 //----------------------------------------------------------------------------------
