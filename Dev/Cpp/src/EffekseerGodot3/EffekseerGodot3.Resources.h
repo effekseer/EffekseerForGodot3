@@ -7,24 +7,29 @@
 namespace EffekseerGodot3
 {
 	
-struct TextureResource : public Effekseer::TextureData
-{
-	int ReferenceCount = 1;
-	std::u16string Name;
-	godot::Ref<godot::Resource> GodotTexture;
-};
-
-class ModelResource : public Effekseer::Model
+class Texture : public Effekseer::Backend::Texture
 {
 public:
-	ModelResource(const void* data, int32_t size);
-	~ModelResource();
-	godot::RID GetRID() const { return GodotMesh; }
+	godot::RID GetRID() const { return textureRid_; }
 
 private:
-	int ReferenceCount = 1;
-	std::u16string Name;
-	godot::RID GodotMesh;
+	friend class TextureLoader;
+
+	godot::Ref<godot::Resource> godotTexture_;
+	godot::RID textureRid_;
+};
+
+class Model : public Effekseer::Model
+{
+public:
+	Model(const void* data, int32_t size);
+	~Model();
+	godot::RID GetRID() const { return meshRid_; }
+
+private:
+	friend class ModelLoader;
+
+	godot::RID meshRid_;
 };
 
 }

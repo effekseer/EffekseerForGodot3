@@ -3,7 +3,8 @@
 //----------------------------------------------------------------------------------
 // Include
 //----------------------------------------------------------------------------------
-#include "EffekseerGodot3.RendererImplemented.h"
+#include <Effekseer.h>
+#include "EffekseerGodot3.Resources.h"
 
 //-----------------------------------------------------------------------------------
 //
@@ -20,11 +21,11 @@ public:
 	virtual ~ModelLoader();
 
 public:
-	Effekseer::Model* Load(const char16_t* path) override;
+	Effekseer::ModelRef Load(const char16_t* path) override;
 
-	Effekseer::Model* Load(const void* data, int32_t size) override;
+	Effekseer::ModelRef Load(const void* data, int32_t size) override;
 
-	void Unload(Effekseer::Model* data) override;
+	void Unload(Effekseer::ModelRef data) override;
 };
 //----------------------------------------------------------------------------------
 //

@@ -10,14 +10,11 @@ namespace EffekseerGodot3
 
 class TextureLoader : public Effekseer::TextureLoader
 {
-protected:
-	std::unordered_map<std::u16string, std::unique_ptr<TextureResource>> resources;
-
 public:
 	TextureLoader() {}
 	virtual ~TextureLoader() {}
-	Effekseer::TextureData* Load(const char16_t* path, Effekseer::TextureType textureType) override;
-	void Unload(Effekseer::TextureData* texture) override;
+	Effekseer::TextureRef Load(const char16_t* path, Effekseer::TextureType textureType) override;
+	void Unload(Effekseer::TextureRef texture) override;
 };
 
 } // namespace EffekseerGodot3

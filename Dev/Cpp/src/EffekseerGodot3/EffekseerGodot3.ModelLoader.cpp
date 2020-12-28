@@ -24,7 +24,7 @@ ModelLoader::~ModelLoader()
 {
 }
 
-Effekseer::Model* ModelLoader::Load(const char16_t* path)
+Effekseer::ModelRef ModelLoader::Load(const char16_t* path)
 {
 	char path8[1024];
 	Effekseer::ConvertUtf16ToUtf8((int8_t*)path8, sizeof(path8), (const int16_t*)path);
@@ -44,21 +44,16 @@ Effekseer::Model* ModelLoader::Load(const char16_t* path)
 	return Load(bufferReader.ptr(), buffer.size());
 }
 
-Effekseer::Model* ModelLoader::Load(const void* data, int32_t size)
+Effekseer::ModelRef ModelLoader::Load(const void* data, int32_t size)
 {
-	return new ModelResource(data, size);
+	return Effekseer::MakeRefPtr<Model>(data, size);
 }
 
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-void ModelLoader::Unload(Effekseer::Model* data)
+void ModelLoader::Unload(Effekseer::ModelRef data)
 {
-	if (data != NULL)
-	{
-		auto model = (Effekseer::Model*)data;
-		delete model;
-	}
 }
 
 //----------------------------------------------------------------------------------

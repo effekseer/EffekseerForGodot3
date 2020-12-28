@@ -123,17 +123,17 @@ ModelRenderer::ModelRenderer(RendererImplemented* renderer)
 	m_shader_unlit = Shader::Create("ModelUnlit", Unlit::code, 
 		RendererShaderType::Unlit, Unlit::decl, COUNT_OF(Unlit::decl));
 	m_shader_unlit->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_shader_unlit->SetPixelConstantBufferSize(sizeof(ModelRendererPixelConstantBuffer));
+	m_shader_unlit->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
 	m_shader_distortion = Shader::Create("ModelDistortion", Distortion::code, 
 		RendererShaderType::BackDistortion, Distortion::decl, COUNT_OF(Distortion::decl));
 	m_shader_distortion->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_shader_distortion->SetPixelConstantBufferSize(sizeof(ModelRendererDistortionPixelConstantBuffer));
+	m_shader_distortion->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
 
 	m_shader_lit = Shader::Create("ModelLighting", Lighting::code, 
 		RendererShaderType::Lit, Lighting::decl, COUNT_OF(Lighting::decl));
 	m_shader_lit->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_shader_lit->SetPixelConstantBufferSize(sizeof(ModelRendererPixelConstantBuffer));
+	m_shader_lit->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
 	//m_shader_advanced_lit = Shader::Create("ModelAdvancedLighting", Unlit::code, 
 	//	RendererShaderType::AdvancedLit, Unlit::decl, COUNT_OF(Unlit::decl));
@@ -185,7 +185,7 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 		return;
 	}
 
-	Effekseer::Model* model = nullptr;
+	Effekseer::ModelRef model;
 
 	if (parameter.IsProcedualMode)
 	{

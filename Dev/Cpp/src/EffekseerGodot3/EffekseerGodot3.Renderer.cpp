@@ -212,7 +212,7 @@ void RenderCommand::DrawSprites(godot::World* world,
 	}
 	else if (shaderType == RendererShaderType::BackDistortion)
 	{
-		const VertexDistortion* vertices = (const VertexDistortion*)vertexData;
+		const DynamicVertex* vertices = (const DynamicVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
 			for (int32_t j = 0; j < 6; j++)
@@ -221,9 +221,8 @@ void RenderCommand::DrawSprites(godot::World* world,
 				vs->immediate_color(m_immediate, ConvertColor(v.Col));
 				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
 
-				VertexFloat3 tangent = Normalize(v.Tangent);
-				VertexFloat3 binormal = Normalize(v.Binormal);
-				VertexFloat3 normal = Normalize(Cross(tangent, binormal));
+				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
+				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
 				vs->immediate_normal(m_immediate, ConvertVector3(normal));
 				vs->immediate_tangent(m_immediate, ConvertTangent(normal, tangent));
 				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
@@ -240,9 +239,9 @@ void RenderCommand::DrawSprites(godot::World* world,
 				auto& v = vertices[indeces[i * 6 + j]];
 				vs->immediate_color(m_immediate, ConvertColor(v.Col));
 				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
-
-				VertexFloat3 normal = ConvertPackedVector3(v.Normal);
-				VertexFloat3 tangent = ConvertPackedVector3(v.Tangent);
+				
+				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
+				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
 				vs->immediate_normal(m_immediate, ConvertVector3(normal));
 				vs->immediate_tangent(m_immediate, ConvertTangent(normal, tangent));
 				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
@@ -281,6 +280,8 @@ RendererRef Renderer::Create(int32_t squareMaxCount, int32_t drawMaxCount)
 RendererImplemented::RendererImplemented(int32_t squareMaxCount)
 	: m_squareMaxCount(squareMaxCount)
 {
+	// dummy
+	m_background = Effekseer::MakeRefPtr<Texture>();
 }
 
 //----------------------------------------------------------------------------------
@@ -338,17 +339,17 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 		m_shader_unlit = Shader::Create("Unlit", Unlit::code, 
 			RendererShaderType::Unlit, Unlit::decl, COUNT_OF(Unlit::decl));
 		m_shader_unlit->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_shader_unlit->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererPixelBuffer));
+		m_shader_unlit->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
 
 		m_shader_distortion = Shader::Create("Distortion", Distortion::code, 
 			RendererShaderType::BackDistortion, Distortion::decl, COUNT_OF(Distortion::decl));
 		m_shader_distortion->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_shader_distortion->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererDistortionPixelBuffer));
+		m_shader_distortion->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBufferDistortion));
 
 		m_shader_lighting = Shader::Create("Lighting", Lighting::code, 
 			RendererShaderType::Lit, Lighting::decl, COUNT_OF(Lighting::decl));
 		m_shader_lighting->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_shader_lighting->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererLitPixelBuffer));
+		m_shader_lighting->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
 
 		//m_shader_advanced_unlit = Shader::Create("Advanced Unlit", Unlit::code, 
 		//	RendererShaderType::AdvancedUnlit, Unlit::decl, COUNT_OF(Unlit::decl));
@@ -486,9 +487,9 @@ IndexBuffer* RendererImplemented::GetIndexBuffer()
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-Effekseer::TextureData* RendererImplemented::GetBackground()
+const Effekseer::Backend::TextureRef& RendererImplemented::GetBackground()
 {
-	return &m_background;
+	return m_background;
 }
 
 //----------------------------------------------------------------------------------
@@ -543,7 +544,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-void RendererImplemented::SetModel(Effekseer::Model* model)
+void RendererImplemented::SetModel(Effekseer::ModelRef model)
 {
 	m_currentModel = model;
 }
@@ -565,7 +566,8 @@ void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
 		m_renderCommands[m_renderCount].GetMaterial(), 
 		m_renderState->GetActiveState());
 
-	auto mesh = ((const ModelResource*)m_currentModel)->GetRID();
+	
+	auto mesh = m_currentModel.DownCast<Model>()->GetRID();
 	m_renderCommands[m_renderCount].DrawModel(m_world, mesh, (int32_t)m_renderCount);
 	m_renderCount++;
 
@@ -645,14 +647,15 @@ void RendererImplemented::SetPixelBufferToShader(const void* data, int32_t size,
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-void RendererImplemented::SetTextures(Shader* shader, Effekseer::TextureData** textures, int32_t count)
+void RendererImplemented::SetTextures(Shader* shader, Effekseer::Backend::TextureRef* textures, int32_t count)
 {
 	auto& state = m_renderState->GetActiveState();
 	
 	state.TextureIDs.fill(0);
 	for (int32_t i = 0; i < count; i++)
 	{
-		state.TextureIDs[i] = (textures[i]) ? (uint64_t)textures[i]->UserID : 0;
+		state.TextureIDs[i] = (textures[i] != nullptr) ? 
+			Convert::RIDToInt64(textures[i].DownCast<Texture>()->GetRID()) : 0;
 	}
 }
 
@@ -662,13 +665,14 @@ void RendererImplemented::ResetRenderState()
 	m_renderState->Update(true);
 }
 
-Effekseer::TextureData* RendererImplemented::CreateProxyTexture(EffekseerRenderer::ProxyTextureType type)
+Effekseer::Backend::TextureRef RendererImplemented::CreateProxyTexture(EffekseerRenderer::ProxyTextureType type)
 {
 	return nullptr;
 }
 
-void RendererImplemented::DeleteProxyTexture(Effekseer::TextureData* data)
+void RendererImplemented::DeleteProxyTexture(Effekseer::Backend::TextureRef& texture)
 {
+	texture = nullptr;
 }
 
 } // namespace EffekseerGodot3

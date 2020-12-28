@@ -21,17 +21,17 @@ private:
 	::Effekseer::FileInterface* fileInterface_ = nullptr;
 	::Effekseer::DefaultFileInterface defaultFileInterface_;
 
-	::Effekseer::MaterialData* LoadAcutually(::Effekseer::Material& material, ::Effekseer::CompiledMaterialBinary* binary);
+	::Effekseer::MaterialRef LoadAcutually(::Effekseer::Material& material, ::Effekseer::CompiledMaterialBinary* binary);
 
 public:
 	MaterialLoader(Renderer* renderer, ::Effekseer::FileInterface* fileInterface);
 	virtual ~MaterialLoader();
 
-	::Effekseer::MaterialData* Load(const EFK_CHAR* path) override;
+	::Effekseer::MaterialRef Load(const EFK_CHAR* path) override;
 
-	::Effekseer::MaterialData* Load(const void* data, int32_t size, Effekseer::MaterialFileType fileType) override;
+	::Effekseer::MaterialRef Load(const void* data, int32_t size, Effekseer::MaterialFileType fileType) override;
 
-	void Unload(::Effekseer::MaterialData* data) override;
+	void Unload(::Effekseer::MaterialRef data) override;
 };
 
 } // namespace EffekseerGodot3

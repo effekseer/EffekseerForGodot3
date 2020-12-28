@@ -74,12 +74,12 @@ private:
 	std::vector<RenderCommand> m_renderCommands;
 	size_t m_renderCount = 0;
 
-	Effekseer::Model* m_currentModel = nullptr;
+	Effekseer::ModelRef m_currentModel = nullptr;
 	
 	std::unique_ptr<StandardRenderer> m_standardRenderer;
 	std::unique_ptr<RenderState> m_renderState;
 
-	Effekseer::TextureData m_background = {};
+	Effekseer::Backend::TextureRef m_background;
 
 public:
 	/**
@@ -176,7 +176,7 @@ public:
 	/**
 		@brief	背景を取得する。
 	*/
-	Effekseer::TextureData* GetBackground() override;
+	const Effekseer::Backend::TextureRef& GetBackground() override;
 
 	EffekseerRenderer::DistortingCallback* GetDistortingCallback() override;
 
@@ -192,7 +192,7 @@ public:
 
 	void SetLayout(Shader* shader);
 	void DrawSprites(int32_t spriteCount, int32_t vertexOffset);
-	void SetModel(Effekseer::Model* model);
+	void SetModel(Effekseer::ModelRef model);
 	void DrawPolygon(int32_t vertexCount, int32_t indexCount);
 	void DrawPolygonInstanced(int32_t vertexCount, int32_t indexCount, int32_t instanceCount);
 
@@ -202,12 +202,12 @@ public:
 
 	void SetVertexBufferToShader(const void* data, int32_t size, int32_t dstOffset);
 	void SetPixelBufferToShader(const void* data, int32_t size, int32_t dstOffset);
-	void SetTextures(Shader* shader, Effekseer::TextureData** textures, int32_t count);
+	void SetTextures(Shader* shader, Effekseer::Backend::TextureRef* textures, int32_t count);
 	void ResetRenderState();
 
-	Effekseer::TextureData* CreateProxyTexture(EffekseerRenderer::ProxyTextureType type) override;
+	Effekseer::Backend::TextureRef CreateProxyTexture(EffekseerRenderer::ProxyTextureType type) override;
 
-	void DeleteProxyTexture(Effekseer::TextureData* data) override;
+	void DeleteProxyTexture(Effekseer::Backend::TextureRef& texture) override;
 
 	virtual int GetRef() { return Effekseer::ReferenceObject::GetRef(); }
 	virtual int AddRef() { return Effekseer::ReferenceObject::AddRef(); }

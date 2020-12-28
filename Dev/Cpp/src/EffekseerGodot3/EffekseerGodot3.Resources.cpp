@@ -12,8 +12,8 @@
 namespace EffekseerGodot3
 {
 
-ModelResource::ModelResource(const void* data, int32_t size)
-	: Model((void*)data, size)
+Model::Model(const void* data, int32_t size)
+	: Effekseer::Model(data, size)
 {
 	int32_t vertexCount = GetVertexCount();
 	const Vertex* vertexData = GetVertexes();
@@ -52,16 +52,16 @@ ModelResource::ModelResource(const void* data, int32_t size)
 	arrays[godot::VisualServer::ARRAY_INDEX] = indeces;
 
 	auto vs = godot::VisualServer::get_singleton();
-	GodotMesh = vs->mesh_create();
-	vs->mesh_add_surface_from_arrays(GodotMesh, godot::VisualServer::PRIMITIVE_TRIANGLES, arrays);
+	meshRid_ = vs->mesh_create();
+	vs->mesh_add_surface_from_arrays(meshRid_, godot::VisualServer::PRIMITIVE_TRIANGLES, arrays);
 }
 
-ModelResource::~ModelResource()
+Model::~Model()
 {
-	if (GodotMesh.is_valid())
+	if (meshRid_.is_valid())
 	{
 		auto vs = godot::VisualServer::get_singleton();
-		vs->free_rid(GodotMesh);
+		vs->free_rid(meshRid_);
 	}
 }
 
