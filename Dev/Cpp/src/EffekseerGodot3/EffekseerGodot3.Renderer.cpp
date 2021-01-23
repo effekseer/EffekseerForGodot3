@@ -36,69 +36,62 @@ namespace StandardShaders
 
 namespace Unlit
 {
-const char code[] = R"(
-render_mode unshaded;
-uniform mat4 ModelViewMatrix;
-uniform sampler2D Texture0 : hint_albedo;
-void vertex() {
-	MODELVIEW_MATRIX = ModelViewMatrix;
-}
-void fragment() {
-	vec4 texel = texture(Texture0, UV);
-	ALBEDO = texel.rgb * COLOR.rgb;
-	ALPHA = texel.a * COLOR.a;
-}
-)";
-const Shader::ParamDecl decl[] = {
-	{ "ModelViewMatrix", Shader::ParamType::Matrix44, 0, 0 },
-};
-}
-
-namespace Distortion
+#define DISTORTION 0
+#define LIGHTING 0
+namespace Lightweight
 {
-const char code[] = R"(
-render_mode unshaded;
-uniform mat4 ModelViewMatrix;
-uniform float DistortionIntensity;
-uniform sampler2D Texture0 : hint_normal;
-uniform sampler2D Texture1 : hint_albedo;
-void vertex() {
-	MODELVIEW_MATRIX = ModelViewMatrix;
+#define SOFT_PARTICLE 0
+#include "Shaders/Particle.inl"
+#undef SOFT_PARTICLE
 }
-void fragment() {
-	vec4 texel = texture(Texture0, UV);
-    vec2 posU = BINORMAL.xy;
-    vec2 posR = TANGENT.xy;
-    float xscale = (((texel.x * 2.0) - 1.0) * COLOR.x) * DistortionIntensity * 4.0;
-    float yscale = (((texel.y * 2.0) - 1.0) * COLOR.y) * DistortionIntensity * 4.0;
-    vec2 uv = posR * xscale + posU * yscale;
-    ALBEDO = texture(SCREEN_TEXTURE, SCREEN_UV + uv).xyz;
-	ALPHA = COLOR.a * texel.a;
+namespace SoftParticle
+{
+#define SOFT_PARTICLE 1
+#include "Shaders/Particle.inl"
+#undef SOFT_PARTICLE
 }
-)";
-const Shader::ParamDecl decl[] = {
-	{ "ModelViewMatrix",     Shader::ParamType::Matrix44, 0,  0 },
-	{ "DistortionIntensity", Shader::ParamType::Float,    1, 48 },
-};
+#undef LIGHTING
+#undef DISTORTION
 }
 
 namespace Lighting
 {
-const char code[] = R"(
-uniform mat4 ModelViewMatrix;
-uniform sampler2D Texture0 : hint_albedo;
-void vertex() {
-	MODELVIEW_MATRIX = ModelViewMatrix;
+#define DISTORTION 0
+#define LIGHTING 1
+	namespace Lightweight
+	{
+#define SOFT_PARTICLE 0
+#include "Shaders/Particle.inl"
+#undef SOFT_PARTICLE
+	}
+	namespace SoftParticle
+	{
+#define SOFT_PARTICLE 1
+#include "Shaders/Particle.inl"
+#undef SOFT_PARTICLE
+	}
+#undef LIGHTING
+#undef DISTORTION
 }
-void fragment() {
-	vec4 texel = texture(Texture0, UV);
-	ALBEDO = texel.rgb * COLOR.rgb;
-	ALPHA = texel.a * COLOR.a;
+
+namespace Distortion
+{
+#define DISTORTION 1
+#define LIGHTING 0
+namespace Lightweight
+{
+#define SOFT_PARTICLE 0
+#include "Shaders/Particle.inl"
+#undef SOFT_PARTICLE
 }
-)";
-const Shader::ParamDecl decl[] = {
-	{ "ModelViewMatrix", Shader::ParamType::Matrix44, 0, 0 },
-};
+namespace SoftParticle
+{
+#define SOFT_PARTICLE 1
+#include "Shaders/Particle.inl"
+#undef SOFT_PARTICLE
+}
+#undef LIGHTING
+#undef DISTORTION
 }
 
 }
@@ -175,7 +168,7 @@ inline EffekseerRenderer::VertexFloat3 Cross(const EffekseerRenderer::VertexFloa
 	return result;
 }
 
-inline godot::Plane ConvertTangent(const EffekseerRenderer::VertexFloat3& n, const EffekseerRenderer::VertexFloat3& t)
+inline godot::Plane ConvertTangent(const EffekseerRenderer::VertexFloat3& t)
 {
 	return godot::Plane(t.X, t.Y, t.Z, 1.0f);
 }
@@ -224,7 +217,7 @@ void RenderCommand::DrawSprites(godot::World* world,
 				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
 				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
 				vs->immediate_normal(m_immediate, ConvertVector3(normal));
-				vs->immediate_tangent(m_immediate, ConvertTangent(normal, tangent));
+				vs->immediate_tangent(m_immediate, ConvertTangent(tangent));
 				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
 			}
 		}
@@ -243,7 +236,7 @@ void RenderCommand::DrawSprites(godot::World* world,
 				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
 				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
 				vs->immediate_normal(m_immediate, ConvertVector3(normal));
-				vs->immediate_tangent(m_immediate, ConvertTangent(normal, tangent));
+				vs->immediate_tangent(m_immediate, ConvertTangent(tangent));
 				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
 			}
 		}
@@ -336,35 +329,36 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 		using namespace EffekseerGodot3::StandardShaders;
 		using namespace EffekseerRenderer;
 
-		m_shader_unlit = Shader::Create("Unlit", Unlit::code, 
-			RendererShaderType::Unlit, Unlit::decl, COUNT_OF(Unlit::decl));
-		m_shader_unlit->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_shader_unlit->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_Lightweight", Unlit::Lightweight::code, 
+			RendererShaderType::Unlit, Unlit::Lightweight::decl, COUNT_OF(Unlit::Lightweight::decl));
+		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
 
-		m_shader_distortion = Shader::Create("Distortion", Distortion::code, 
-			RendererShaderType::BackDistortion, Distortion::decl, COUNT_OF(Distortion::decl));
-		m_shader_distortion->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_shader_distortion->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBufferDistortion));
+		m_softparticleShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_SoftParticle", Unlit::SoftParticle::code, 
+			RendererShaderType::Unlit, Unlit::SoftParticle::decl, COUNT_OF(Unlit::SoftParticle::decl));
+		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
+		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
 
-		m_shader_lighting = Shader::Create("Lighting", Lighting::code, 
-			RendererShaderType::Lit, Lighting::decl, COUNT_OF(Lighting::decl));
-		m_shader_lighting->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_shader_lighting->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_Lightweight", Lighting::Lightweight::code, 
+			RendererShaderType::Lit, Lighting::Lightweight::decl, COUNT_OF(Lighting::Lightweight::decl));
+		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
 
-		//m_shader_advanced_unlit = Shader::Create("Advanced Unlit", Unlit::code, 
-		//	RendererShaderType::AdvancedUnlit, Unlit::decl, COUNT_OF(Unlit::decl));
-		//m_shader_advanced_unlit->SetVertexConstantBufferSize(sizeof(Effekseer::Matrix44) * 2 + sizeof(float) * 4 + sizeof(float) * 4);
-		//m_shader_advanced_unlit->SetPixelConstantBufferSize(sizeof(float) * 4 * 6);
-		//
-		//m_shader_advanced_distortion = Shader::Create("Advanced Distortion", Unlit::code, 
-		//	RendererShaderType::AdvancedBackDistortion, Unlit::decl, COUNT_OF(Unlit::decl));
-		//m_shader_advanced_distortion->SetVertexConstantBufferSize(sizeof(Effekseer::Matrix44) * 2 + sizeof(float) * 4 + sizeof(float) * 4);
-		//m_shader_advanced_distortion->SetPixelConstantBufferSize(sizeof(float) * 4 * 5);
-		//
-		//m_shader_advanced_lighting = Shader::Create("Advanced Lighting", Unlit::code, 
-		//	RendererShaderType::AdvancedLit, Unlit::decl, COUNT_OF(Unlit::decl));
-		//m_shader_advanced_lighting->SetVertexConstantBufferSize(sizeof(Effekseer::Matrix44) * 2 + sizeof(float) * 4 + sizeof(float) * 4);
-		//m_shader_advanced_lighting->SetPixelConstantBufferSize(sizeof(float) * 4 * 9);
+		m_softparticleShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_SoftParticle", Lighting::SoftParticle::code, 
+			RendererShaderType::Lit, Lighting::SoftParticle::decl, COUNT_OF(Lighting::SoftParticle::decl));
+		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
+		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
+
+		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_Lightweight", Distortion::Lightweight::code, 
+			RendererShaderType::BackDistortion, Distortion::Lightweight::decl, COUNT_OF(Distortion::Lightweight::decl));
+		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBufferDistortion));
+
+		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_SoftParticle", Distortion::SoftParticle::code, 
+			RendererShaderType::BackDistortion, Distortion::SoftParticle::decl, COUNT_OF(Distortion::SoftParticle::decl));
+		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
+		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBufferDistortion));
+
 #undef COUNT_OF
 	}
 
@@ -584,29 +578,23 @@ void RendererImplemented::DrawPolygonInstanced(int32_t vertexCount, int32_t inde
 
 Shader* RendererImplemented::GetShader(::EffekseerRenderer::RendererShaderType type) const
 {
-	if (type == ::EffekseerRenderer::RendererShaderType::AdvancedBackDistortion)
+	const auto& state = m_standardRenderer->GetState();
+	const bool softparticleEnabled = !(
+		state.SoftParticleDistanceFar == 0.0f &&
+		state.SoftParticleDistanceNear == 0.0f &&
+		state.SoftParticleDistanceNearOffset == 0.0f);
+
+	if ((size_t)type >= (size_t)EffekseerRenderer::RendererShaderType::Unlit && 
+		(size_t)type <= (size_t)EffekseerRenderer::RendererShaderType::AdvancedBackDistortion)
 	{
-		return m_shader_advanced_distortion.get();
-	}
-	else if (type == ::EffekseerRenderer::RendererShaderType::AdvancedLit)
-	{
-		return m_shader_advanced_lighting.get();
-	}
-	else if (type == ::EffekseerRenderer::RendererShaderType::AdvancedUnlit)
-	{
-		return m_shader_advanced_unlit.get();
-	}
-	else if (type == ::EffekseerRenderer::RendererShaderType::BackDistortion)
-	{
-		return m_shader_distortion.get();
-	}
-	else if (type == ::EffekseerRenderer::RendererShaderType::Lit)
-	{
-		return m_shader_lighting.get();
-	}
-	else if (type == ::EffekseerRenderer::RendererShaderType::Unlit)
-	{
-		return m_shader_unlit.get();
+		if (softparticleEnabled)
+		{
+			return m_softparticleShaders[(size_t)type].get();
+		}
+		else
+		{
+			return m_lightweightShaders[(size_t)type].get();
+		}
 	}
 
 	assert(0);

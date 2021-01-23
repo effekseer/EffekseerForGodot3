@@ -25,12 +25,8 @@ class ModelRenderer : public ::EffekseerRenderer::ModelRendererBase
 {
 private:
 	RendererImplemented* m_renderer = nullptr;
-	std::unique_ptr<Shader> m_shader_advanced_lit;
-	std::unique_ptr<Shader> m_shader_advanced_unlit;
-	std::unique_ptr<Shader> m_shader_advanced_distortion;
-	std::unique_ptr<Shader> m_shader_lit;
-	std::unique_ptr<Shader> m_shader_unlit;
-	std::unique_ptr<Shader> m_shader_distortion;
+	std::array<std::unique_ptr<Shader>, 6> m_lightweightShaders;
+	std::array<std::unique_ptr<Shader>, 6> m_softparticleShaders;
 
 	ModelRenderer(RendererImplemented* renderer);
 

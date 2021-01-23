@@ -61,12 +61,8 @@ private:
 	IndexBufferRef m_indexBufferForWireframe;
 	int32_t m_squareMaxCount = 0;
 
-	std::unique_ptr<Shader> m_shader_unlit;
-	std::unique_ptr<Shader> m_shader_distortion;
-	std::unique_ptr<Shader> m_shader_lighting;
-	std::unique_ptr<Shader> m_shader_advanced_unlit;
-	std::unique_ptr<Shader> m_shader_advanced_distortion;
-	std::unique_ptr<Shader> m_shader_advanced_lighting;
+	std::array<std::unique_ptr<Shader>, 6> m_lightweightShaders;
+	std::array<std::unique_ptr<Shader>, 6> m_softparticleShaders;
 
 	Shader* m_currentShader = nullptr;
 	godot::World* m_world = nullptr;

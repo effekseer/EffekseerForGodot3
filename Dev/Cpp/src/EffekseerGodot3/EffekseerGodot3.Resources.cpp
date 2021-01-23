@@ -22,7 +22,7 @@ Model::Model(const void* data, int32_t size)
 
 	godot::PoolVector3Array positions; positions.resize(vertexCount);
 	godot::PoolVector3Array normals; normals.resize(vertexCount);
-	//godot::PoolVector3Array tangents; tangents.resize(vertexCount);
+	godot::PoolRealArray tangents; tangents.resize(vertexCount * 4);
 	godot::PoolColorArray colors; colors.resize(vertexCount);
 	godot::PoolVector2Array texUVs; texUVs.resize(vertexCount);
 	godot::PoolIntArray indeces; indeces.resize(faceCount * 3);
@@ -31,7 +31,10 @@ Model::Model(const void* data, int32_t size)
 	{
 		positions.set(i, Convert::Vector3(vertexData[i].Position));
 		normals.set(i, Convert::Vector3(vertexData[i].Normal));
-		//tangents.set(i, Convert::Vector3(vertexData[i].Tangent));
+		tangents.set(i * 4 + 0, vertexData[i].Tangent.X);
+		tangents.set(i * 4 + 1, vertexData[i].Tangent.Y);
+		tangents.set(i * 4 + 2, vertexData[i].Tangent.Z);
+		tangents.set(i * 4 + 3, 1.0f);
 		colors.set(i, Convert::Color(vertexData[i].VColor));
 		texUVs.set(i, Convert::Vector2(vertexData[i].UV));
 	}
@@ -46,7 +49,7 @@ Model::Model(const void* data, int32_t size)
 	arrays.resize(godot::VisualServer::ARRAY_MAX);
 	arrays[godot::VisualServer::ARRAY_VERTEX] = positions;
 	arrays[godot::VisualServer::ARRAY_NORMAL] = normals;
-	//arrays[godot::VisualServer::ARRAY_TANGENT] = tangents;
+	arrays[godot::VisualServer::ARRAY_TANGENT] = tangents;
 	arrays[godot::VisualServer::ARRAY_COLOR] = colors;
 	arrays[godot::VisualServer::ARRAY_TEX_UV] = texUVs;
 	arrays[godot::VisualServer::ARRAY_INDEX] = indeces;
