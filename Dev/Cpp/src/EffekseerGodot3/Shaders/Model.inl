@@ -14,18 +14,19 @@ uniform vec4 ModelColor : hint_color;
 )"
 
 #if DISTORTION
+
 R"(
 uniform float DistortionIntensity;
-uniform sampler2D Texture0 : hint_normal;
+uniform sampler2D DistortionTexture : hint_normal;
 )"
 #elif LIGHTING
 R"(
-uniform sampler2D Texture0 : hint_albedo;
-uniform sampler2D Texture1 : hint_normal;
+uniform sampler2D ColorTexture : hint_albedo;
+uniform sampler2D NormalTexture : hint_normal;
 )"
 #else
 R"(
-uniform sampler2D Texture0 : hint_albedo;
+uniform sampler2D ColorTexture : hint_albedo;
 )"
 #endif
 
@@ -51,19 +52,19 @@ void fragment() {
 )"
 #if DISTORTION
 R"(
-	vec2 distortionUV = DistortionMap(Texture0, UV, DistortionIntensity, COLOR.xy, TANGENT, BINORMAL);
+	vec2 distortionUV = DistortionMap(DistortionTexture, UV, DistortionIntensity, COLOR.xy, TANGENT, BINORMAL);
 	vec4 color = ColorMap(SCREEN_TEXTURE, SCREEN_UV + distortionUV, vec4(1.0, 1.0, 1.0, COLOR.a));
 	ALBEDO = color.rgb; ALPHA = color.a;
 )"
 #elif LIGHTING
 R"(
-	NORMAL = NormalMap(Texture1, UV, NORMAL, TANGENT, BINORMAL);
-	vec4 color = ColorMap(Texture0, UV, COLOR);
+	NORMAL = NormalMap(NormalTexture, UV, NORMAL, TANGENT, BINORMAL);
+	vec4 color = ColorMap(ColorTexture, UV, COLOR);
 	ALBEDO = color.rgb; ALPHA = color.a;
 )"
 #else
 R"(
-	vec4 color = ColorMap(Texture0, UV, COLOR);
+	vec4 color = ColorMap(ColorTexture, UV, COLOR);
 	ALBEDO = color.rgb; ALPHA = color.a;
 )"
 #endif
@@ -84,8 +85,18 @@ const Shader::ParamDecl decl[] = {
 	{ "ModelMatrix", Shader::ParamType::Matrix44, 0,  64 },
 	{ "ModelUV",     Shader::ParamType::Vector4,  0, 128 },
 	{ "ModelColor",  Shader::ParamType::Vector4,  0, 144 },
+
 #if DISTORTION
 	{ "DistortionIntensity", Shader::ParamType::Float, 1, 48 },
+	{ "DistortionTexture", Shader::ParamType::Texture, 0, 0 },
+#elif LIGHTING
+	{ "ColorTexture",  Shader::ParamType::Texture, 0, 0 },
+	{ "NormalTexture", Shader::ParamType::Texture, 1, 0 },
+#else
+	{ "ColorTexture",  Shader::ParamType::Texture, 0, 0 },
+#endif
+
+#if DISTORTION
 	#if SOFT_PARTICLE
 		{ "SoftParticleParams", Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBufferDistortion, SoftParticleParam) + 0 },
 		{ "SoftParticleReco",   Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBufferDistortion, SoftParticleParam) + 16 },

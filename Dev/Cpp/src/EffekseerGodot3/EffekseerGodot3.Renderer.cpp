@@ -325,41 +325,39 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 	}
 
 	{
-#define COUNT_OF(list) (sizeof(list) / sizeof(list[0]))
 		using namespace EffekseerGodot3::StandardShaders;
 		using namespace EffekseerRenderer;
 
-		m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_Lightweight", Unlit::Lightweight::code, 
-			RendererShaderType::Unlit, Unlit::Lightweight::decl, COUNT_OF(Unlit::Lightweight::decl));
-		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_Lightweight", 
+			Unlit::Lightweight::code, RendererShaderType::Unlit, Unlit::Lightweight::decl);
+		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
-		m_softparticleShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_SoftParticle", Unlit::SoftParticle::code, 
-			RendererShaderType::Unlit, Unlit::SoftParticle::decl, COUNT_OF(Unlit::SoftParticle::decl));
-		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
+		m_softparticleShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_SoftParticle", 
+			Unlit::SoftParticle::code, RendererShaderType::Unlit, Unlit::SoftParticle::decl);
+		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
-		m_lightweightShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_Lightweight", Lighting::Lightweight::code, 
-			RendererShaderType::Lit, Lighting::Lightweight::decl, COUNT_OF(Lighting::Lightweight::decl));
-		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_Lightweight", 
+			Lighting::Lightweight::code, RendererShaderType::Lit, Lighting::Lightweight::decl);
+		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
-		m_softparticleShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_SoftParticle", Lighting::SoftParticle::code, 
-			RendererShaderType::Lit, Lighting::SoftParticle::decl, COUNT_OF(Lighting::SoftParticle::decl));
-		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBuffer));
+		m_softparticleShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_SoftParticle",
+			Lighting::SoftParticle::code, RendererShaderType::Lit, Lighting::SoftParticle::decl);
+		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
-		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_Lightweight", Distortion::Lightweight::code, 
-			RendererShaderType::BackDistortion, Distortion::Lightweight::decl, COUNT_OF(Distortion::Lightweight::decl));
-		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBufferDistortion));
+		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_Lightweight",
+			Distortion::Lightweight::code, RendererShaderType::BackDistortion, Distortion::Lightweight::decl);
+		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
 
-		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_SoftParticle", Distortion::SoftParticle::code, 
-			RendererShaderType::BackDistortion, Distortion::SoftParticle::decl, COUNT_OF(Distortion::SoftParticle::decl));
-		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(EffekseerRenderer::StandardRendererVertexBuffer));
-		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(EffekseerRenderer::PixelConstantBufferDistortion));
+		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_SoftParticle",
+			Distortion::SoftParticle::code, RendererShaderType::BackDistortion, Distortion::SoftParticle::decl);
+		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
 
-#undef COUNT_OF
 	}
 
 	m_renderCommands.resize((size_t)drawMaxCount);
@@ -476,6 +474,11 @@ IndexBuffer* RendererImplemented::GetIndexBuffer()
 ::Effekseer::TrackRendererRef RendererImplemented::CreateTrackRenderer()
 {
 	return ::Effekseer::TrackRendererRef(new ::EffekseerRenderer::TrackRendererBase<RendererImplemented, false>(this));
+}
+
+::Effekseer::MaterialLoaderRef RendererImplemented::CreateMaterialLoader(::Effekseer::FileInterface* fileInterface)
+{
+	return ::Effekseer::MaterialLoaderRef(new MaterialLoader(RendererImplementedRef::FromPinned(this), fileInterface));
 }
 
 //----------------------------------------------------------------------------------

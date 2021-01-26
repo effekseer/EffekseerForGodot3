@@ -41,9 +41,9 @@ static const char* DepthWriteMode[] = {
 //-----------------------------------------------------------------------------------
 std::unique_ptr<Shader> Shader::Create(const char* name, const char* code, 
 	EffekseerRenderer::RendererShaderType shaderType,
-	const ParamDecl* paramDecls, uint32_t paramCount)
+	std::vector<ParamDecl>&& paramDecls)
 {
-	return std::unique_ptr<Shader>(new Shader(name, code, shaderType, paramDecls, paramCount));
+	return std::unique_ptr<Shader>(new Shader(name, code, shaderType, std::move(paramDecls)));
 }
 
 //-----------------------------------------------------------------------------------
@@ -51,11 +51,10 @@ std::unique_ptr<Shader> Shader::Create(const char* name, const char* code,
 //-----------------------------------------------------------------------------------
 Shader::Shader(const char* name, const char* code, 
 	EffekseerRenderer::RendererShaderType shaderType,
-	const ParamDecl* paramDecls, uint32_t paramCount)
+	std::vector<ParamDecl>&& paramDecls)
 {
 	m_name = name;
-	m_paramDecls = paramDecls;
-	m_paramCount = paramCount;
+	m_paramDecls = std::move(paramDecls);
 	m_shaderType = shaderType;
 
 	auto vs = godot::VisualServer::get_singleton();
@@ -85,13 +84,6 @@ Shader::Shader(const char* name, const char* code,
 		}
 	}
 #undef COUNT_OF
-
-	//printf("%s\n", name);
-	//auto list = vs->shader_get_param_list(m_rid[0][0][0][0]);
-	//for (int i = 0; i < list.size(); i++)
-	//{
-	//	printf("%s\n", ((godot::String)list[i]).utf8().get_data());
-	//}
 }
 
 //-----------------------------------------------------------------------------------
@@ -132,9 +124,9 @@ void Shader::ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderState
 
 	vs->material_set_shader(material, m_rid[dwm][dtm][cm][bm]);
 
-	for (uint32_t i = 0; i < m_paramCount; i++)
+	for (size_t i = 0; i < m_paramDecls.size(); i++)
 	{
-		auto& decl = m_paramDecls[i];
+		const auto& decl = m_paramDecls[i];
 
 		if (decl.type == ParamType::Int)
 		{
@@ -166,17 +158,22 @@ void Shader::ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderState
 			auto& matrix = *(const Effekseer::Matrix44*)&m_constantBuffers[decl.slot][decl.offset];
 			vs->material_set_param(material, decl.name, Convert::Matrix44(matrix));
 		}
+		else if (decl.type == ParamType::Texture)
+		{
+			vs->material_set_param(material, decl.name, 
+				Convert::Int64ToRID((int64_t)state.TextureIDs[decl.slot]));
+		}
 	}
 
-	const char* names[] = {
-		"Texture0", "Texture1", "Texture2", "Texture3",
-		"Texture4", "Texture5", "Texture6", "Texture7",
-	};
-	for (size_t i = 0; i < state.TextureIDs.size(); i++)
-	{
-		vs->material_set_param(material, names[i], 
-			Convert::Int64ToRID((int64_t)state.TextureIDs[i]));
-	}
+	//const char* names[] = {
+	//	"Texture0", "Texture1", "Texture2", "Texture3",
+	//	"Texture4", "Texture5", "Texture6", "Texture7",
+	//};
+	//for (size_t i = 0; i < state.TextureIDs.size(); i++)
+	//{
+	//	vs->material_set_param(material, names[i], 
+	//		Convert::Int64ToRID((int64_t)state.TextureIDs[i]));
+	//}
 }
 
 //-----------------------------------------------------------------------------------

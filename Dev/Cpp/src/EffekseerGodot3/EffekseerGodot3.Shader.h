@@ -25,6 +25,7 @@ public:
 		Vector3,
 		Vector4,
 		Matrix44,
+		Texture,
 	};
 
 	struct ParamDecl
@@ -39,7 +40,17 @@ public:
 
 	static std::unique_ptr<Shader> Create(const char* name, const char* code, 
 		EffekseerRenderer::RendererShaderType shaderType,
-		const ParamDecl* paramDecls, uint32_t paramCount);
+		std::vector<ParamDecl>&& paramDecls);
+
+	template <size_t N>
+	static std::unique_ptr<Shader> Create(const char* name, const char* code, 
+		EffekseerRenderer::RendererShaderType shaderType,
+		const ParamDecl (&paramDecls)[N])
+	{
+		std::vector<ParamDecl> v(N);
+		v.assign(paramDecls, paramDecls + N);
+		return Create(name, code, shaderType, std::move(v));
+	}
 
 	void SetVertexConstantBufferSize(int32_t size)
 	{
@@ -76,15 +87,14 @@ public:
 private:
 	std::vector<uint8_t> m_constantBuffers[2];
 
-	const char* m_name = nullptr;
-	const ParamDecl* m_paramDecls = nullptr;
-	uint32_t m_paramCount = 0;
+	std::string m_name;
+	std::vector<ParamDecl> m_paramDecls;
 	EffekseerRenderer::RendererShaderType m_shaderType = EffekseerRenderer::RendererShaderType::Unlit;
 	godot::RID m_rid[2][2][3][5];;
 
 	Shader(const char* name, const char* code, 
 		EffekseerRenderer::RendererShaderType shaderType, 
-		const ParamDecl* paramDecls, uint32_t paramCount);
+		std::vector<ParamDecl>&& paramDecls);
 
 };
 //----------------------------------------------------------------------------------
