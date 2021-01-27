@@ -17,7 +17,7 @@ namespace EffekseerGodot3
 class Shader : public ::EffekseerRenderer::ShaderBase
 {
 public:
-	enum class ParamType
+	enum class ParamType : uint8_t
 	{
 		Int,
 		Float,
@@ -25,12 +25,13 @@ public:
 		Vector3,
 		Vector4,
 		Matrix44,
+		Color,
 		Texture,
 	};
 
 	struct ParamDecl
 	{
-		const char* name;
+		char name[24];
 		ParamType type;
 		uint16_t slot;
 		uint16_t offset;

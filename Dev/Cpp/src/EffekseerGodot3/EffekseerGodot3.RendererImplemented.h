@@ -26,7 +26,7 @@ public:
 	~RenderCommand();
 	void Reset();
 	void DrawSprites(godot::World* world, 
-		const void* vertexData, const void* indexData, int32_t spriteCount, 
+		const void* vertexData, const void* indexData, int32_t stride, int32_t spriteCount, 
 		EffekseerRenderer::RendererShaderType shaderType, int32_t priority);
 	void DrawModel(godot::World* world, godot::RID mesh, int32_t priority);
 
@@ -167,7 +167,7 @@ public:
 
 	::Effekseer::ModelLoaderRef CreateModelLoader(::Effekseer::FileInterface* fileInterface = NULL) override { return nullptr; }
 
-	::Effekseer::MaterialLoaderRef CreateMaterialLoader(::Effekseer::FileInterface* fileInterface = nullptr) override  { return nullptr; }
+	::Effekseer::MaterialLoaderRef CreateMaterialLoader(::Effekseer::FileInterface* fileInterface = nullptr) override;
 
 	/**
 		@brief	背景を取得する。

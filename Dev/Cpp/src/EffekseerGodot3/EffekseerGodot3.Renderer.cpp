@@ -174,7 +174,7 @@ inline godot::Plane ConvertTangent(const EffekseerRenderer::VertexFloat3& t)
 }
 
 void RenderCommand::DrawSprites(godot::World* world, 
-	const void* vertexData, const void* indexData, int32_t spriteCount, 
+	const void* vertexData, const void* indexData, int32_t stride, int32_t spriteCount, 
 	EffekseerRenderer::RendererShaderType shaderType, int32_t priority)
 {
 	auto vs = godot::VisualServer::get_singleton();
@@ -233,6 +233,24 @@ void RenderCommand::DrawSprites(godot::World* world,
 				vs->immediate_color(m_immediate, ConvertColor(v.Col));
 				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
 				
+				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
+				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
+				vs->immediate_normal(m_immediate, ConvertVector3(normal));
+				vs->immediate_tangent(m_immediate, ConvertTangent(tangent));
+				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
+			}
+		}
+	}
+	else if (shaderType == RendererShaderType::Material)
+	{
+		for (int32_t i = 0; i < spriteCount; i++)
+		{
+			for (int32_t j = 0; j < 6; j++)
+			{
+				auto& v = *(DynamicVertex*)((uint8_t*)vertexData + indeces[i * 6 + j] * stride);
+				vs->immediate_color(m_immediate, ConvertColor(v.Col));
+				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
+
 				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
 				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
 				vs->immediate_normal(m_immediate, ConvertVector3(normal));
@@ -523,15 +541,36 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 		return;
 	}
 
+	const void* vertexData = GetVertexBuffer()->Refer();
+	const void* indexData = GetIndexBuffer()->Refer();
+
+	if (m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::Material)
+	{
+		const auto& state = m_standardRenderer->GetState();
+		const float* v = (const float*)((const uint8_t*)vertexData + sizeof(EffekseerRenderer::DynamicVertex));
+		int32_t offset = m_currentShader->GetVertexConstantBufferSize() - (state.CustomData1Count + state.CustomData2Count) * 4;
+	
+		if (state.CustomData1Count > 0)
+		{
+			SetVertexBufferToShader(v, state.CustomData1Count * 4, offset);
+			v += state.CustomData1Count;
+			offset += state.CustomData1Count * 4;
+		}
+		if (state.CustomData2Count > 0)
+		{
+			SetVertexBufferToShader(v, state.CustomData2Count * 4, offset);
+			v += state.CustomData2Count;
+			offset += state.CustomData2Count * 4;
+		}
+	}
+
 	m_currentShader->ApplyToMaterial(
 		m_renderCommands[m_renderCount].GetMaterial(), 
 		m_renderState->GetActiveState());
 
-	const void* vertexData = GetVertexBuffer()->Refer();
-	const void* indexData = GetIndexBuffer()->Refer();
-
 	m_renderCommands[m_renderCount].DrawSprites(m_world, vertexData, indexData, 
-		spriteCount, m_currentShader->GetShaderType(), (int32_t)m_renderCount);
+		m_standardRenderer->CalculateCurrentStride(), spriteCount, 
+		m_currentShader->GetShaderType(), (int32_t)m_renderCount);
 	m_renderCount++;
 
 	impl->drawcallCount++;

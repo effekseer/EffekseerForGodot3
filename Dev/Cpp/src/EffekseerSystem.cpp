@@ -53,6 +53,7 @@ EffekseerSystem::EffekseerSystem()
 	m_renderer = EffekseerGodot3::Renderer::Create(squareMaxCount, drawMaxCount);
 	m_renderer->SetProjectionMatrix(Effekseer::Matrix44().Indentity());
 
+	m_manager->SetMaterialLoader(m_renderer->CreateMaterialLoader());
 	m_manager->SetSpriteRenderer(m_renderer->CreateSpriteRenderer());
 	m_manager->SetRibbonRenderer(m_renderer->CreateRibbonRenderer());
 	m_manager->SetTrackRenderer(m_renderer->CreateTrackRenderer());
@@ -79,6 +80,8 @@ void EffekseerSystem::_process(float delta)
 	} else {
 		m_shouldResetState = true;
 	}
+
+	m_renderer->SetTime(m_renderer->GetTime() + delta);
 }
 
 void EffekseerSystem::draw(Camera* camera, Effekseer::Handle handle)

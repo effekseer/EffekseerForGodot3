@@ -81,38 +81,36 @@ namespace SoftParticle
 ModelRenderer::ModelRenderer(RendererImplemented* renderer)
 	: m_renderer(renderer)
 {
-	#define COUNT_OF(list) (sizeof(list) / sizeof(list[0]))
-
 	using namespace EffekseerGodot3::ModelShaders;
 	using namespace EffekseerRenderer;
 
-	m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Model_Basic_Unlit_Lightweight", Unlit::Lightweight::code, 
-		RendererShaderType::Unlit, Unlit::Lightweight::decl, COUNT_OF(Unlit::Lightweight::decl));
+	m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Model_Basic_Unlit_Lightweight",
+		Unlit::Lightweight::code, RendererShaderType::Unlit, Unlit::Lightweight::decl);
 	m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
 	m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
-	m_softparticleShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Model_Basic_Unlit_SoftParticle", Unlit::SoftParticle::code, 
-		RendererShaderType::Unlit, Unlit::SoftParticle::decl, COUNT_OF(Unlit::SoftParticle::decl));
+	m_softparticleShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Model_Basic_Unlit_SoftParticle",
+		Unlit::SoftParticle::code, RendererShaderType::Unlit, Unlit::SoftParticle::decl);
 	m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
 	m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
-	m_lightweightShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Model_Basic_Lighting_Lightweight", Lighting::Lightweight::code, 
-		RendererShaderType::Lit, Lighting::Lightweight::decl, COUNT_OF(Lighting::Lightweight::decl));
+	m_lightweightShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Model_Basic_Lighting_Lightweight",
+		Lighting::Lightweight::code, RendererShaderType::Lit, Lighting::Lightweight::decl);
 	m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
 	m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
-	m_softparticleShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Model_Basic_Lighting_SoftParticle", Lighting::SoftParticle::code, 
-		RendererShaderType::Lit, Lighting::SoftParticle::decl, COUNT_OF(Lighting::SoftParticle::decl));
+	m_softparticleShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Model_Basic_Lighting_SoftParticle",
+		Lighting::SoftParticle::code, RendererShaderType::Lit, Lighting::SoftParticle::decl);
 	m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
 	m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
-	m_lightweightShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Model_Basic_Distortion_Lightweight", Distortion::Lightweight::code, 
-		RendererShaderType::BackDistortion, Distortion::Lightweight::decl, COUNT_OF(Distortion::Lightweight::decl));
+	m_lightweightShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Model_Basic_Distortion_Lightweight",
+		Distortion::Lightweight::code, RendererShaderType::BackDistortion, Distortion::Lightweight::decl);
 	m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
 	m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
 
-	m_softparticleShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Model_Basic_Distortion_SoftParticle", Distortion::SoftParticle::code, 
-		RendererShaderType::BackDistortion, Distortion::SoftParticle::decl, COUNT_OF(Distortion::SoftParticle::decl));
+	m_softparticleShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Model_Basic_Distortion_SoftParticle",
+		Distortion::SoftParticle::code, RendererShaderType::BackDistortion, Distortion::SoftParticle::decl);
 	m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
 	m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
 }

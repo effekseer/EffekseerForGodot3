@@ -151,6 +151,12 @@ void Shader::ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderState
 		else if (decl.type == ParamType::Vector4)
 		{
 			auto& vector = *(const godot::Quat*)&m_constantBuffers[decl.slot][decl.offset];
+			//auto& vector = *(const godot::Color*)&m_constantBuffers[decl.slot][decl.offset];
+			vs->material_set_param(material, decl.name, vector);
+		}
+		else if (decl.type == ParamType::Color)
+		{
+			auto& vector = *(const godot::Color*)&m_constantBuffers[decl.slot][decl.offset];
 			vs->material_set_param(material, decl.name, vector);
 		}
 		else if (decl.type == ParamType::Matrix44)
