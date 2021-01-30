@@ -5,13 +5,13 @@
 //----------------------------------------------------------------------------------
 #include "EffekseerRenderer.RenderStateBase.h"
 #include "EffekseerRenderer.StandardRenderer.h"
-#include "EffekseerGodot3.Base.h"
-#include "EffekseerGodot3.Renderer.h"
-#include "EffekseerGodot3.RenderState.h"
-#include "EffekseerGodot3.VertexBuffer.h"
-#include "EffekseerGodot3.IndexBuffer.h"
+#include "EffekseerGodot.Base.h"
+#include "EffekseerGodot.Renderer.h"
+#include "EffekseerGodot.RenderState.h"
+#include "EffekseerGodot.VertexBuffer.h"
+#include "EffekseerGodot.IndexBuffer.h"
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 
 //----------------------------------------------------------------------------------
@@ -167,7 +167,7 @@ public:
 
 	::Effekseer::ModelLoaderRef CreateModelLoader(::Effekseer::FileInterface* fileInterface = NULL) override { return nullptr; }
 
-	::Effekseer::MaterialLoaderRef CreateMaterialLoader(::Effekseer::FileInterface* fileInterface = nullptr) override;
+	::Effekseer::MaterialLoaderRef CreateMaterialLoader(::Effekseer::FileInterface* fileInterface = nullptr) override { return nullptr; }
 
 	/**
 		@brief	背景を取得する。
@@ -213,7 +213,7 @@ public:
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------

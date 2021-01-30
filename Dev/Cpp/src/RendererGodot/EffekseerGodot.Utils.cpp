@@ -2,12 +2,12 @@
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-#include "EffekseerGodot3.Utils.h"
+#include "EffekseerGodot.Utils.h"
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 namespace Convert
 {
@@ -65,4 +65,4 @@ godot::String String16(const char16_t* from)
 }
 
 }
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot

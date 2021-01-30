@@ -6,18 +6,16 @@
 #include <World.hpp>
 #include <Mesh.hpp>
 #include <ImageTexture.hpp>
-#include "EffekseerGodot3.Renderer.h"
-#include "EffekseerGodot3.RenderState.h"
-#include "EffekseerGodot3.RendererImplemented.h"
+#include "EffekseerGodot.Renderer.h"
+#include "EffekseerGodot.RenderState.h"
+#include "EffekseerGodot.RendererImplemented.h"
 
-#include "EffekseerGodot3.IndexBuffer.h"
-#include "EffekseerGodot3.Shader.h"
-#include "EffekseerGodot3.VertexBuffer.h"
-#include "EffekseerGodot3.ModelRenderer.h"
-#include "EffekseerGodot3.MaterialLoader.h"
-#include "EffekseerGodot3.ModelLoader.h"
-#include "EffekseerGodot3.Resources.h"
-#include "EffekseerGodot3.Utils.h"
+#include "EffekseerGodot.IndexBuffer.h"
+#include "EffekseerGodot.Shader.h"
+#include "EffekseerGodot.VertexBuffer.h"
+#include "EffekseerGodot.ModelRenderer.h"
+#include "EffekseerGodot.RenderResources.h"
+#include "EffekseerGodot.Utils.h"
 
 #include "EffekseerRenderer.Renderer_Impl.h"
 #include "EffekseerRenderer.RibbonRendererBase.h"
@@ -28,7 +26,7 @@
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 
 namespace StandardShaders
@@ -343,7 +341,7 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 	}
 
 	{
-		using namespace EffekseerGodot3::StandardShaders;
+		using namespace EffekseerGodot::StandardShaders;
 		using namespace EffekseerRenderer;
 
 		m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_Lightweight", 
@@ -492,11 +490,6 @@ IndexBuffer* RendererImplemented::GetIndexBuffer()
 ::Effekseer::TrackRendererRef RendererImplemented::CreateTrackRenderer()
 {
 	return ::Effekseer::TrackRendererRef(new ::EffekseerRenderer::TrackRendererBase<RendererImplemented, false>(this));
-}
-
-::Effekseer::MaterialLoaderRef RendererImplemented::CreateMaterialLoader(::Effekseer::FileInterface* fileInterface)
-{
-	return ::Effekseer::MaterialLoaderRef(new MaterialLoader(RendererImplementedRef::FromPinned(this), fileInterface));
 }
 
 //----------------------------------------------------------------------------------
@@ -705,7 +698,7 @@ void RendererImplemented::DeleteProxyTexture(Effekseer::Backend::TextureRef& tex
 	texture = nullptr;
 }
 
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------

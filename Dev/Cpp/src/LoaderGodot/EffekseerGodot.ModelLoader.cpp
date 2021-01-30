@@ -1,19 +1,11 @@
 ﻿#include <ResourceLoader.hpp>
-#include "EffekseerGodot3.Resources.h"
-#include "EffekseerGodot3.ModelLoader.h"
-#include "EffekseerGodot3.Utils.h"
+#include "EffekseerGodot.ModelLoader.h"
+#include "../RendererGodot/EffekseerGodot.RenderResources.h"
+#include "../RendererGodot/EffekseerGodot.Utils.h"
 #include "../EffekseerResource.h"
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
-
-ModelLoader::ModelLoader()
-{
-}
-
-ModelLoader::~ModelLoader()
-{
-}
 
 Effekseer::ModelRef ModelLoader::Load(const char16_t* path)
 {
@@ -40,5 +32,5 @@ void ModelLoader::Unload(Effekseer::ModelRef data)
 {
 }
 
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot
 

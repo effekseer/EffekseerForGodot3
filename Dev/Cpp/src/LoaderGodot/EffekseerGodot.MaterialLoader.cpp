@@ -1,27 +1,13 @@
 ﻿#include <ResourceLoader.hpp>
-#include "EffekseerGodot3.MaterialLoader.h"
-#include "EffekseerGodot3.ShaderGenerator.h"
-#include "EffekseerGodot3.ModelRenderer.h"
-#include "EffekseerGodot3.Shader.h"
-#include "EffekseerGodot3.Utils.h"
+#include "EffekseerGodot.MaterialLoader.h"
+#include "../RendererGodot/EffekseerGodot.ShaderGenerator.h"
+#include "../RendererGodot/EffekseerGodot.Shader.h"
+#include "../RendererGodot/EffekseerGodot.RenderResources.h"
+#include "../RendererGodot/EffekseerGodot.Utils.h"
 #include "../EffekseerResource.h"
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
-
-MaterialLoader::MaterialLoader(const RendererImplementedRef& renderer, ::Effekseer::FileInterface* fileInterface)
-	: renderer_(renderer)
-	, fileInterface_(fileInterface)
-{
-	if (fileInterface == nullptr)
-	{
-		fileInterface_ = &defaultFileInterface_;
-	}
-}
-
-MaterialLoader ::~MaterialLoader()
-{
-}
 
 ::Effekseer::MaterialRef MaterialLoader::Load(const char16_t* path)
 {
@@ -116,4 +102,4 @@ void MaterialLoader::Unload(::Effekseer::MaterialRef data)
 	data->RefractionModelUserPtr = nullptr;
 }
 
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot

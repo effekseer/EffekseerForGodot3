@@ -7,8 +7,11 @@
     <Filter Include="src\RendererCommon">
       <UniqueIdentifier>{69fcce49-86ed-4208-9de5-1b8ac7e6ae94}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\EffekseerGodot3">
-      <UniqueIdentifier>{8666e2e7-ac87-4ccf-8e9d-8ccb54aaa86b}</UniqueIdentifier>
+    <Filter Include="src\RendererGodot">
+      <UniqueIdentifier>{52da9a98-2771-4d03-9a6b-9d0198afd5d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\LoaderGodot">
+      <UniqueIdentifier>{6fb77ccc-9767-45cb-b95e-2facdc325c63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,36 +51,6 @@
     <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.cpp">
       <Filter>src\RendererCommon</Filter>
     </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.IndexBuffer.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.Renderer.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.RenderState.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.Shader.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.TextureLoader.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.Utils.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.VertexBuffer.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.ModelLoader.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.Resources.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.ModelRenderer.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.cpp">
       <Filter>src\RendererCommon</Filter>
     </ClCompile>
@@ -87,14 +60,44 @@
     <ClCompile Include="src\EffekseerSystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.MaterialLoader.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.ShaderGenerator.cpp">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClCompile>
     <ClCompile Include="src\EffekseerResource.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.TextureLoader.cpp">
+      <Filter>src\LoaderGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.MaterialLoader.cpp">
+      <Filter>src\LoaderGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.ModelLoader.cpp">
+      <Filter>src\LoaderGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.RenderState.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.Shader.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.ShaderGenerator.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.Utils.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.VertexBuffer.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.IndexBuffer.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.ModelRenderer.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.Renderer.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.RenderResources.cpp">
+      <Filter>src\RendererGodot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,45 +143,6 @@
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.h">
       <Filter>src\RendererCommon</Filter>
     </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.Base.Pre.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.IndexBuffer.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.Renderer.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.RendererImplemented.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.RenderState.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.Shader.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.TextureLoader.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.Utils.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.VertexBuffer.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.Base.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.ModelLoader.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.Resources.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.ModelRenderer.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.h">
       <Filter>src\RendererCommon</Filter>
     </ClInclude>
@@ -188,14 +152,53 @@
     <ClInclude Include="src\EffekseerSystem.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.MaterialLoader.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.ShaderGenerator.h">
-      <Filter>src\EffekseerGodot3</Filter>
-    </ClInclude>
     <ClInclude Include="src\EffekseerResource.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.ModelLoader.h">
+      <Filter>src\LoaderGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.TextureLoader.h">
+      <Filter>src\LoaderGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.MaterialLoader.h">
+      <Filter>src\LoaderGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.RenderState.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.Shader.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.ShaderGenerator.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.Utils.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.VertexBuffer.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.Base.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.Base.Pre.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.IndexBuffer.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.ModelRenderer.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.Renderer.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.RendererImplemented.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RendererGodot\EffekseerGodot.RenderResources.h">
+      <Filter>src\RendererGodot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,9 +5,9 @@
 #include <Camera.hpp>
 #include <Node.hpp>
 #include <Effekseer.h>
-#include "EffekseerGodot3/EffekseerGodot3.Renderer.h"
+#include "RendererGodot/EffekseerGodot.Renderer.h"
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 class Renderer;
 }
@@ -53,7 +53,7 @@ private:
 	static EffekseerSystem* s_instance;
 
 	Effekseer::ManagerRef m_manager;
-	EffekseerGodot3::RendererRef m_renderer;
+	EffekseerGodot::RendererRef m_renderer;
 	bool m_shouldResetState = true;
 };
 

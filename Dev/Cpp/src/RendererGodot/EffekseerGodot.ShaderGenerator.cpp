@@ -1,7 +1,7 @@
 #include <iostream>
-#include "EffekseerGodot3.ShaderGenerator.h"
+#include "EffekseerGodot.ShaderGenerator.h"
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 
 static const char g_material_src_vertex_sprite_pre[] =  R"(

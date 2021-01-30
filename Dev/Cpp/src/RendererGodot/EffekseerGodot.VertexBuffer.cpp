@@ -2,64 +2,90 @@
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-#include "EffekseerGodot3.IndexBuffer.h"
+#include "EffekseerGodot.VertexBuffer.h"
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-IndexBuffer::IndexBuffer(RendererImplemented* renderer, int maxCount, bool isDynamic)
-	: IndexBufferBase(maxCount, isDynamic)
-	, m_buffer(sizeof(uint16_t) * maxCount)
-{
-}
-
-//-----------------------------------------------------------------------------------
-//
-//-----------------------------------------------------------------------------------
-IndexBuffer::~IndexBuffer()
+VertexBuffer::VertexBuffer(RendererImplemented* renderer, int size, bool isDynamic)
+	: VertexBufferBase(size, isDynamic)
+	, m_buffer((size_t)size)
+	, m_vertexRingOffset(0)
+	, m_ringBufferLock(false)
+	, m_ringLockedOffset(0)
+	, m_ringLockedSize(0)
 {
 }
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-Effekseer::RefPtr<IndexBuffer> IndexBuffer::Create(RendererImplemented* renderer, int maxCount, bool isDynamic)
+VertexBuffer::~VertexBuffer()
 {
-	return IndexBufferRef(new IndexBuffer(renderer, maxCount, isDynamic));
 }
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-void IndexBuffer::Lock()
+Effekseer::RefPtr<VertexBuffer> VertexBuffer::Create(RendererImplemented* renderer, int size, bool isDynamic)
+{
+	return VertexBufferRef(new VertexBuffer(renderer, size, isDynamic));
+}
+
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+void VertexBuffer::Lock()
 {
 	assert(!m_isLock);
+	assert(!m_ringBufferLock);
 
 	m_isLock = true;
 	m_resource = m_buffer.data();
-	m_indexCount = 0;
+	m_offset = 0;
 }
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-void IndexBuffer::Unlock()
+bool VertexBuffer::RingBufferLock(int32_t size, int32_t& offset, void*& data, int32_t alignment)
 {
-	assert(m_isLock);
+	assert(!m_isLock);
+	assert(!m_ringBufferLock);
+	
+	m_ringBufferLock = true;
+	data = m_resource = m_buffer.data();
+	offset = m_offset = 0;
+
+	return true;
+}
+
+bool VertexBuffer::TryRingBufferLock(int32_t size, int32_t& offset, void*& data, int32_t alignment)
+{
+	return RingBufferLock(size, offset, data, alignment);
+}
+
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+void VertexBuffer::Unlock()
+{
+	assert(m_isLock || m_ringBufferLock);
 
 	m_resource = NULL;
 	m_isLock = false;
+	m_ringBufferLock = false;
 }
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-} // namespace EffekseerGodot3
-//-----------------------------------------------------------------------------------
-//
-//-----------------------------------------------------------------------------------
+} // namespace EffekseerGodot
+  //-----------------------------------------------------------------------------------
+  //
+  //-----------------------------------------------------------------------------------

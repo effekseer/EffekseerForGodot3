@@ -3,13 +3,13 @@
 //
 //-----------------------------------------------------------------------------------
 #include <VisualServer.hpp>
-#include "EffekseerGodot3.Shader.h"
-#include "EffekseerGodot3.Utils.h"
+#include "EffekseerGodot.Shader.h"
+#include "EffekseerGodot.Utils.h"
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 
 static const char* ShaderType = 
@@ -185,4 +185,4 @@ void Shader::ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderState
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot

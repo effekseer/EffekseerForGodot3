@@ -5,10 +5,11 @@
 #include "GDLibrary.h"
 #include "EffekseerEffect.h"
 #include "Effekseer.h"
-#include "EffekseerGodot3/EffekseerGodot3.Utils.h"
-#include "EffekseerGodot3/EffekseerGodot3.Renderer.h"
-#include "EffekseerGodot3/EffekseerGodot3.TextureLoader.h"
-#include "EffekseerGodot3/EffekseerGodot3.ModelLoader.h"
+#include "RendererGodot/EffekseerGodot.Utils.h"
+#include "RendererGodot/EffekseerGodot.Renderer.h"
+#include "LoaderGodot/EffekseerGodot.TextureLoader.h"
+#include "LoaderGodot/EffekseerGodot.ModelLoader.h"
+#include "LoaderGodot/EffekseerGodot.MaterialLoader.h"
 #include "EffekseerSystem.h"
 
 namespace godot {
@@ -47,13 +48,13 @@ EffekseerSystem::EffekseerSystem()
 
 	m_manager = Effekseer::Manager::Create(instanceMaxCount);
 	m_manager->LaunchWorkerThreads(2);
-	m_manager->SetTextureLoader(Effekseer::TextureLoaderRef(new EffekseerGodot3::TextureLoader()));
-	m_manager->SetModelLoader(Effekseer::ModelLoaderRef(new EffekseerGodot3::ModelLoader()));
+	m_manager->SetTextureLoader(Effekseer::MakeRefPtr<EffekseerGodot::TextureLoader>());
+	m_manager->SetModelLoader(Effekseer::MakeRefPtr<EffekseerGodot::ModelLoader>());
+	m_manager->SetMaterialLoader(Effekseer::MakeRefPtr<EffekseerGodot::MaterialLoader>());
 
-	m_renderer = EffekseerGodot3::Renderer::Create(squareMaxCount, drawMaxCount);
+	m_renderer = EffekseerGodot::Renderer::Create(squareMaxCount, drawMaxCount);
 	m_renderer->SetProjectionMatrix(Effekseer::Matrix44().Indentity());
 
-	m_manager->SetMaterialLoader(m_renderer->CreateMaterialLoader());
 	m_manager->SetSpriteRenderer(m_renderer->CreateSpriteRenderer());
 	m_manager->SetRibbonRenderer(m_renderer->CreateRibbonRenderer());
 	m_manager->SetTrackRenderer(m_renderer->CreateTrackRenderer());
@@ -93,7 +94,7 @@ void EffekseerSystem::draw(Camera* camera, Effekseer::Handle handle)
 	auto camera_transform = camera->get_camera_transform().inverse();
 
 	m_renderer->SetWorld(camera->get_world().ptr());
-	m_renderer->SetCameraMatrix(EffekseerGodot3::Convert::Matrix44(camera_transform));
+	m_renderer->SetCameraMatrix(EffekseerGodot::Convert::Matrix44(camera_transform));
 
 	m_renderer->BeginRendering();
 	m_manager->DrawHandle(handle);
@@ -107,7 +108,7 @@ Effekseer::Handle EffekseerSystem::play(godot::Ref<EffekseerEffect> effect, cons
 		return -1;
 	}
 
-	Effekseer::Handle handle = m_manager->Play(effect->get_native(), EffekseerGodot3::Convert::Vector3(transform.origin));
+	Effekseer::Handle handle = m_manager->Play(effect->get_native(), EffekseerGodot::Convert::Vector3(transform.origin));
 	if (handle >= 0) {
 		auto rotation = transform.basis.get_euler_xyz();
 		auto scale = transform.basis.get_scale();

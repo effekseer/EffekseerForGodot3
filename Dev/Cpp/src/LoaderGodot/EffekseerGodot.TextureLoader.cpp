@@ -1,10 +1,11 @@
 #include <Image.hpp>
 #include <ImageTexture.hpp>
 #include <ResourceLoader.hpp>
-#include "EffekseerGodot3.TextureLoader.h"
-#include "EffekseerGodot3.Utils.h"
+#include "EffekseerGodot.TextureLoader.h"
+#include "../RendererGodot/EffekseerGodot.RenderResources.h"
+#include "../RendererGodot/EffekseerGodot.Utils.h"
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 
 Effekseer::TextureRef TextureLoader::Load(const char16_t* path, Effekseer::TextureType textureType)
@@ -49,4 +50,4 @@ void TextureLoader::Unload(Effekseer::TextureRef textureData)
 {
 }
 
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot

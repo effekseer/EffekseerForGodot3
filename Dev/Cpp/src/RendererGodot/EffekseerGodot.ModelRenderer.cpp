@@ -2,15 +2,15 @@
 //----------------------------------------------------------------------------------
 // Include
 //----------------------------------------------------------------------------------
-#include "EffekseerGodot3.RenderState.h"
-#include "EffekseerGodot3.RendererImplemented.h"
+#include "EffekseerGodot.RenderState.h"
+#include "EffekseerGodot.RendererImplemented.h"
 
-#include "EffekseerGodot3.IndexBuffer.h"
-#include "EffekseerGodot3.ModelRenderer.h"
-#include "EffekseerGodot3.Shader.h"
-#include "EffekseerGodot3.VertexBuffer.h"
+#include "EffekseerGodot.IndexBuffer.h"
+#include "EffekseerGodot.ModelRenderer.h"
+#include "EffekseerGodot.Shader.h"
+#include "EffekseerGodot.VertexBuffer.h"
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 	
 namespace ModelShaders
@@ -81,7 +81,7 @@ namespace SoftParticle
 ModelRenderer::ModelRenderer(RendererImplemented* renderer)
 	: m_renderer(renderer)
 {
-	using namespace EffekseerGodot3::ModelShaders;
+	using namespace EffekseerGodot::ModelShaders;
 	using namespace EffekseerRenderer;
 
 	m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Model_Basic_Unlit_Lightweight",
@@ -196,7 +196,7 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------

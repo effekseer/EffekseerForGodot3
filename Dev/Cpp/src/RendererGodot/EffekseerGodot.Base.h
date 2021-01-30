@@ -3,34 +3,53 @@
 //----------------------------------------------------------------------------------
 // Include
 //----------------------------------------------------------------------------------
+#include "EffekseerGodot.Base.Pre.h"
+
 #include <Effekseer.h>
-#include "EffekseerGodot3.Resources.h"
 
-//-----------------------------------------------------------------------------------
+#include <assert.h>
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <list>
+#include <map>
+#include <queue>
+#include <set>
+#include <string>
+#include <vector>
+
+//----------------------------------------------------------------------------------
 //
-//-----------------------------------------------------------------------------------
-namespace EffekseerGodot3
+//----------------------------------------------------------------------------------
+namespace EffekseerGodot
 {
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-class ModelLoader : public ::Effekseer::ModelLoader
-{
-public:
-	ModelLoader();
-	virtual ~ModelLoader();
+class RendererImplemented;
+class RenderStateBase;
 
-public:
-	Effekseer::ModelRef Load(const char16_t* path) override;
+class Texture;
+class TargetTexture;
+class DepthTexture;
+class VertexBuffer;
+class IndexBuffer;
+class Shader;
 
-	Effekseer::ModelRef Load(const void* data, int32_t size) override;
+class SpriteRenderer;
+class RibbonRenderer;
+class RingRenderer;
+class ModelRenderer;
+class TrackRenderer;
 
-	void Unload(Effekseer::ModelRef data) override;
-};
+class TextureLoader;
+
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------

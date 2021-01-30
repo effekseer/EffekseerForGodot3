@@ -4,7 +4,7 @@
 #include <Effekseer.h>
 #include <Resource.hpp>
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 	
 class Texture : public Effekseer::Backend::Texture

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "EffekseerGodot3.Shader.h"
+#include "EffekseerGodot.Shader.h"
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 
 struct ShaderData

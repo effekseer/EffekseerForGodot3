@@ -9,7 +9,7 @@
 #include <Transform.hpp>
 #include <Color.hpp>
 
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 
 namespace Convert

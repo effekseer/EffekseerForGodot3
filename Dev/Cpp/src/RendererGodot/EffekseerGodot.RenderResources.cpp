@@ -3,13 +3,13 @@
 //
 //-----------------------------------------------------------------------------------
 #include <VisualServer.hpp>
-#include "EffekseerGodot3.Utils.h"
-#include "EffekseerGodot3.Resources.h"
+#include "EffekseerGodot.Utils.h"
+#include "EffekseerGodot.RenderResources.h"
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-namespace EffekseerGodot3
+namespace EffekseerGodot
 {
 
 Model::Model(const void* data, int32_t size)
@@ -68,4 +68,4 @@ Model::~Model()
 	}
 }
 
-} // namespace EffekseerGodot3
+} // namespace EffekseerGodot
