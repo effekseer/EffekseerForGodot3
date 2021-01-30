@@ -35,6 +35,7 @@
     <ClCompile Include="src\EffekseerEffect.cpp" />
     <ClCompile Include="src\EffekseerEmitter.cpp" />
     <ClCompile Include="src\GDLibrary.cpp" />
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.CurveLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.MaterialLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.ModelLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.TextureLoader.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="src\EffekseerEffect.h" />
     <ClInclude Include="src\EffekseerEmitter.h" />
     <ClInclude Include="src\GDLibrary.h" />
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.CurveLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.MaterialLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.ModelLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.TextureLoader.h" />

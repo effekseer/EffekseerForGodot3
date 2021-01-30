@@ -99,6 +99,9 @@
     <ClCompile Include="src\RendererGodot\EffekseerGodot.RenderResources.cpp">
       <Filter>src\RendererGodot</Filter>
     </ClCompile>
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.CurveLoader.cpp">
+      <Filter>src\LoaderGodot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GDLibrary.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="src\RendererGodot\EffekseerGodot.RenderResources.h">
       <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.CurveLoader.h">
+      <Filter>src\LoaderGodot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
