@@ -9,15 +9,13 @@ namespace EffekseerGodot3
 
 Effekseer::TextureRef TextureLoader::Load(const char16_t* path, Effekseer::TextureType textureType)
 {
-	char path8[1024];
-	Effekseer::ConvertUtf16ToUtf8((int8_t*)path8, sizeof(path8), (const int16_t*)path);
+	godot::String gdpath = Convert::String16(path);
 
 	// Load by Godot
 	auto loader = godot::ResourceLoader::get_singleton();
-	auto resource = loader->load(path8);
+	auto resource = loader->load(gdpath);
 	if (!resource.is_valid())
 	{
-		printf("TextureLoader::Load path=%s Failed.\n", path8);
 		return nullptr;
 	}
 
@@ -40,7 +38,7 @@ Effekseer::TextureRef TextureLoader::Load(const char16_t* path, Effekseer::Textu
 	//default: printf("Unknown format.\n");
 	//}
 
-	printf("TextureLoader::Load path=%s (%dx%d)\n", path8, backend->GetSize()[0], backend->GetSize()[1]);
+	//printf("TextureLoader::Load path=%s (%dx%d)\n", path8, backend->GetSize()[0], backend->GetSize()[1]);
 
 	auto result = Effekseer::MakeRefPtr<Effekseer::Texture>();
 	result->SetBackend(backend);

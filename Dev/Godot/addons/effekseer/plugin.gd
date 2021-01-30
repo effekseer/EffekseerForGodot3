@@ -2,6 +2,7 @@ tool
 extends EditorPlugin
 
 var effect_import_plugin
+var resource_import_plugin
 var emitter_gizmo_plugin
 
 func _enter_tree():
@@ -14,12 +15,15 @@ func _enter_tree():
 	add_custom_type("EffekseerEmitter", "Spatial", preload("res://addons/effekseer/src/EffekseerEmitter.gdns"), null)
 	
 	effect_import_plugin = preload("res://addons/effekseer/src/EffekseerEffectImportPlugin.gd").new()
+	resource_import_plugin = preload("res://addons/effekseer/src/EffekseerResourceImportPlugin.gd").new()
 	emitter_gizmo_plugin = preload("res://addons/effekseer/src/EffekseerEmitterGizmoPlugin.gd").new()
 	add_spatial_gizmo_plugin(emitter_gizmo_plugin)
 	add_import_plugin(effect_import_plugin)
+	add_import_plugin(resource_import_plugin)
 	
 
 func _exit_tree():
+	remove_import_plugin(resource_import_plugin)
 	remove_import_plugin(effect_import_plugin)
 	remove_spatial_gizmo_plugin(emitter_gizmo_plugin)
 	

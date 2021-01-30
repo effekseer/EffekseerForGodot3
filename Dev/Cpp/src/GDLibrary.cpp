@@ -2,6 +2,7 @@
 #include <ClassDB.hpp>
 #include "EffekseerSystem.h"
 #include "EffekseerEffect.h"
+#include "EffekseerResource.h"
 #include "EffekseerEmitter.h"
 
 using namespace godot;
@@ -22,5 +23,6 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *handle)
 
 	register_class<EffekseerSystem>();
 	register_class<EffekseerEffect>();
+	register_class<EffekseerResource>();
 	register_class<EffekseerEmitter>();
 }

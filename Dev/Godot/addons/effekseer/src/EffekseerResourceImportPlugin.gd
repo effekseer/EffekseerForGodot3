@@ -1,16 +1,16 @@
 extends EditorImportPlugin
 
 func get_importer_name():
-	return "effekseer.effect"
+	return "effekseer.resource"
 
 func get_visible_name():
-	return "Effekseer Effect";
+	return "Effekseer Resource";
 
 func get_recognized_extensions():
-	return ["efkefc"]
+	return ["efkmat", "efkmodel", "efkcurve"]
 
 func get_save_extension():
-	return "res";
+	return "tres";
 
 func get_resource_type():
 	return "Resource";
@@ -23,11 +23,11 @@ func get_preset_count():
 
 
 func import(source_file, save_path, options, r_platform_variants, r_gen_files):
-	#print(source_file)
+	print(source_file)
 	
-	var effect = preload("res://addons/effekseer/src/EffekseerEffect.gdns").new()
+	var resource = preload("res://addons/effekseer/src/EffekseerResource.gdns").new()
 	
-	effect.load(source_file)
+	resource.load(source_file)
 	
 	return ResourceSaver.save(
-		"%s.%s" % [save_path, get_save_extension()], effect)
+		"%s.%s" % [save_path, get_save_extension()], resource)

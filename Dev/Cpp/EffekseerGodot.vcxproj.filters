@@ -93,6 +93,9 @@
     <ClCompile Include="src\EffekseerGodot3\EffekseerGodot3.ShaderGenerator.cpp">
       <Filter>src\EffekseerGodot3</Filter>
     </ClCompile>
+    <ClCompile Include="src\EffekseerResource.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GDLibrary.h">
@@ -190,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="src\EffekseerGodot3\EffekseerGodot3.ShaderGenerator.h">
       <Filter>src\EffekseerGodot3</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EffekseerResource.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

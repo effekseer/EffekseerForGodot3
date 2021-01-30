@@ -1,8 +1,10 @@
-﻿#include <File.hpp>
+﻿#include <ResourceLoader.hpp>
 #include "EffekseerGodot3.MaterialLoader.h"
 #include "EffekseerGodot3.ShaderGenerator.h"
 #include "EffekseerGodot3.ModelRenderer.h"
 #include "EffekseerGodot3.Shader.h"
+#include "EffekseerGodot3.Utils.h"
+#include "../EffekseerResource.h"
 
 namespace EffekseerGodot3
 {
@@ -23,22 +25,18 @@ MaterialLoader ::~MaterialLoader()
 
 ::Effekseer::MaterialRef MaterialLoader::Load(const char16_t* path)
 {
-	char path8[1024];
-	Effekseer::ConvertUtf16ToUtf8((int8_t*)path8, sizeof(path8), (const int16_t*)path);
-
-	godot::Ref<godot::File> file = godot::File::_new();
-	if (file->open(path8, godot::File::READ) != godot::Error::OK)
+	// Load by Godot
+	auto loader = godot::ResourceLoader::get_singleton();
+	auto resource = loader->load(Convert::String16(path), "");
+	if (!resource.is_valid())
 	{
-		printf("MaterialLoader::Load path=%s Failed.\n", path8);
 		return nullptr;
 	}
 
-	auto buffer = file->get_buffer(file->get_len());
-	auto bufferReader = buffer.read();
+	auto efkres = godot::as<godot::EffekseerResource>(resource.ptr());
+	auto& data = efkres->get_data_ref();
 
-	printf("MaterialLoader::Load path=%s\n", path8);
-
-	return Load(bufferReader.ptr(), buffer.size(), Effekseer::MaterialFileType::Code);
+	return Load(data.read().ptr(), data.size(), Effekseer::MaterialFileType::Code);
 }
 
 ::Effekseer::MaterialRef MaterialLoader::LoadAcutually(const ::Effekseer::MaterialFile& materialFile)
