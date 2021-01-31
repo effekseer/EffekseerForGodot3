@@ -6,6 +6,7 @@
 #include <Node.hpp>
 #include <Effekseer.h>
 #include "RendererGodot/EffekseerGodot.Renderer.h"
+#include "SoundGodot/EffekseerGodot.SoundPlayer.h"
 
 namespace EffekseerGodot
 {
@@ -35,7 +36,7 @@ public:
 
 	void draw(Camera* camera, Effekseer::Handle handle);
 
-	Effekseer::Handle play(godot::Ref<EffekseerEffect> effect, const Transform& transform);
+	Effekseer::Handle play(godot::Ref<EffekseerEffect> effect, Spatial* node);
 
 	void stop(Effekseer::Handle handle);
 	
@@ -54,6 +55,7 @@ private:
 
 	Effekseer::ManagerRef m_manager;
 	EffekseerGodot::RendererRef m_renderer;
+	EffekseerGodot::SoundPlayerRef m_soundPlayer;
 	bool m_shouldResetState = true;
 };
 

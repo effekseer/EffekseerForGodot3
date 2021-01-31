@@ -2,7 +2,7 @@
 #include <ResourceLoader.hpp>
 #include "EffekseerSystem.h"
 #include "EffekseerEffect.h"
-#include "RendererGodot/EffekseerGodot.Utils.h"
+#include "RendererGodot/../Utils/EffekseerGodot.Utils.h"
 
 namespace godot {
 
@@ -67,7 +67,7 @@ void EffekseerEffect::load_in_editor()
 	
 	char16_t materialPath[1024];
 	get_material_path(materialPath, sizeof(materialPath) / sizeof(materialPath[0]));
-	godot::String materialPathStr = EffekseerGodot::Convert::String16(materialPath) + "/";
+	godot::String materialPathStr = EffekseerGodot::ToGdString(materialPath) + "/";
 
 	auto loader = godot::ResourceLoader::get_singleton();
 	
@@ -75,7 +75,7 @@ void EffekseerEffect::load_in_editor()
 	{
 		for (int i = 0; i < count; i++)
 		{
-			godot::String path = materialPathStr + EffekseerGodot::Convert::String16((nativeptr->*getter)(i));
+			godot::String path = materialPathStr + EffekseerGodot::ToGdString((nativeptr->*getter)(i));
 			m_subresources.append(loader->load(path));
 		}
 	};
@@ -111,7 +111,7 @@ void EffekseerEffect::load_in_runtime()
 
 void EffekseerEffect::get_material_path(char16_t* path, size_t path_size)
 {
-	int len = (int)EffekseerGodot::Convert::String16(path, m_data_path, path_size);
+	int len = (int)EffekseerGodot::ToEfkString(path, m_data_path, path_size);
 	
 	for (int i = len - 1; i >= 0; i--) {
 		if (path[i] == u'/') {

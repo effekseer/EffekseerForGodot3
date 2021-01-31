@@ -1,16 +1,20 @@
 #include <ProjectSettings.hpp>
+#include <ResourceLoader.hpp>
 #include <Viewport.hpp>
 #include <Camera.hpp>
 #include <Transform.hpp>
-#include "GDLibrary.h"
-#include "EffekseerEffect.h"
-#include "Effekseer.h"
-#include "RendererGodot/EffekseerGodot.Utils.h"
+#include <GDScript.hpp>
+
 #include "RendererGodot/EffekseerGodot.Renderer.h"
 #include "LoaderGodot/EffekseerGodot.TextureLoader.h"
 #include "LoaderGodot/EffekseerGodot.ModelLoader.h"
 #include "LoaderGodot/EffekseerGodot.MaterialLoader.h"
+#include "LoaderGodot/EffekseerGodot.CurveLoader.h"
+#include "LoaderGodot/EffekseerGodot.SoundLoader.h"
+#include "SoundGodot/EffekseerGodot.SoundPlayer.h"
+#include "Utils/EffekseerGodot.Utils.h"
 #include "EffekseerSystem.h"
+#include "EffekseerEffect.h"
 
 namespace godot {
 
@@ -33,6 +37,7 @@ EffekseerSystem::EffekseerSystem()
 	int32_t instanceMaxCount = 2000;
 	int32_t squareMaxCount = 8000;
 	int32_t drawMaxCount = 128;
+	Ref<Script> soundScript;
 
 	auto settings = ProjectSettings::get_singleton();
 
@@ -45,12 +50,20 @@ EffekseerSystem::EffekseerSystem()
 	if (settings->has_setting("effekseer/draw_max_count")) {
 		drawMaxCount = (int32_t)settings->get_setting("effekseer/draw_max_count");
 	}
-
+	if (settings->has_setting("effekseer/sound_script")) {
+		soundScript = Ref<Script>(settings->get_setting("effekseer/sound_script"));
+	} else {
+		soundScript = ResourceLoader::get_singleton()->load("res://addons/effekseer/src/EffekseerSound.gd", "");
+	}
+	Ref<Reference> sound = EffekseerGodot::ScriptNew(soundScript);
+	
 	m_manager = Effekseer::Manager::Create(instanceMaxCount);
 	m_manager->LaunchWorkerThreads(2);
 	m_manager->SetTextureLoader(Effekseer::MakeRefPtr<EffekseerGodot::TextureLoader>());
 	m_manager->SetModelLoader(Effekseer::MakeRefPtr<EffekseerGodot::ModelLoader>());
 	m_manager->SetMaterialLoader(Effekseer::MakeRefPtr<EffekseerGodot::MaterialLoader>());
+	m_manager->SetCurveLoader(Effekseer::MakeRefPtr<EffekseerGodot::CurveLoader>());
+	m_manager->SetSoundLoader(Effekseer::MakeRefPtr<EffekseerGodot::SoundLoader>(sound));
 
 	m_renderer = EffekseerGodot::Renderer::Create(squareMaxCount, drawMaxCount);
 	m_renderer->SetProjectionMatrix(Effekseer::Matrix44().Indentity());
@@ -60,6 +73,7 @@ EffekseerSystem::EffekseerSystem()
 	m_manager->SetTrackRenderer(m_renderer->CreateTrackRenderer());
 	m_manager->SetRingRenderer(m_renderer->CreateRingRenderer());
 	m_manager->SetModelRenderer(m_renderer->CreateModelRenderer());
+	m_manager->SetSoundPlayer(Effekseer::MakeRefPtr<EffekseerGodot::SoundPlayer>(sound));
 }
 
 EffekseerSystem::~EffekseerSystem()
@@ -94,26 +108,28 @@ void EffekseerSystem::draw(Camera* camera, Effekseer::Handle handle)
 	auto camera_transform = camera->get_camera_transform().inverse();
 
 	m_renderer->SetWorld(camera->get_world().ptr());
-	m_renderer->SetCameraMatrix(EffekseerGodot::Convert::Matrix44(camera_transform));
+	m_renderer->SetCameraMatrix(EffekseerGodot::ToEfkMatrix44(camera_transform));
 
 	m_renderer->BeginRendering();
 	m_manager->DrawHandle(handle);
 	m_renderer->EndRendering();
 }
 
-Effekseer::Handle EffekseerSystem::play(godot::Ref<EffekseerEffect> effect, const Transform& transform)
+Effekseer::Handle EffekseerSystem::play(godot::Ref<EffekseerEffect> effect, Spatial* node)
 {
 	if (effect == nullptr) {
 		Godot::print_error("Effect is null", __FUNCTION__, __FILE__, __LINE__);
 		return -1;
 	}
 
-	Effekseer::Handle handle = m_manager->Play(effect->get_native(), EffekseerGodot::Convert::Vector3(transform.origin));
+	Transform transform = node->get_transform();
+	Effekseer::Handle handle = m_manager->Play(effect->get_native(), EffekseerGodot::ToEfkVector3(transform.origin));
 	if (handle >= 0) {
 		auto rotation = transform.basis.get_euler_xyz();
 		auto scale = transform.basis.get_scale();
 		m_manager->SetRotation(handle, rotation.x, rotation.y, rotation.z);
 		m_manager->SetScale(handle, scale.x, scale.y, scale.z);
+		m_manager->SetUserPtr(handle, reinterpret_cast<uintptr_t>(node));
 	}
 	return handle;
 }

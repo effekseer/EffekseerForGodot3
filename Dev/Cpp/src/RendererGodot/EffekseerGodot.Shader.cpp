@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------------
 #include <VisualServer.hpp>
 #include "EffekseerGodot.Shader.h"
-#include "EffekseerGodot.Utils.h"
+#include "../Utils/EffekseerGodot.Utils.h"
 
 //-----------------------------------------------------------------------------------
 //
@@ -162,24 +162,14 @@ void Shader::ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderState
 		else if (decl.type == ParamType::Matrix44)
 		{
 			auto& matrix = *(const Effekseer::Matrix44*)&m_constantBuffers[decl.slot][decl.offset];
-			vs->material_set_param(material, decl.name, Convert::Matrix44(matrix));
+			vs->material_set_param(material, decl.name, ToGdMatrix(matrix));
 		}
 		else if (decl.type == ParamType::Texture)
 		{
 			vs->material_set_param(material, decl.name, 
-				Convert::Int64ToRID((int64_t)state.TextureIDs[decl.slot]));
+				Int64ToRID((int64_t)state.TextureIDs[decl.slot]));
 		}
 	}
-
-	//const char* names[] = {
-	//	"Texture0", "Texture1", "Texture2", "Texture3",
-	//	"Texture4", "Texture5", "Texture6", "Texture7",
-	//};
-	//for (size_t i = 0; i < state.TextureIDs.size(); i++)
-	//{
-	//	vs->material_set_param(material, names[i], 
-	//		Convert::Int64ToRID((int64_t)state.TextureIDs[i]));
-	//}
 }
 
 //-----------------------------------------------------------------------------------

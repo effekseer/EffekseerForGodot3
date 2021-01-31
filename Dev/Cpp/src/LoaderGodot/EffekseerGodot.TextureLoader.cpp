@@ -3,14 +3,14 @@
 #include <ResourceLoader.hpp>
 #include "EffekseerGodot.TextureLoader.h"
 #include "../RendererGodot/EffekseerGodot.RenderResources.h"
-#include "../RendererGodot/EffekseerGodot.Utils.h"
+#include "../Utils/EffekseerGodot.Utils.h"
 
 namespace EffekseerGodot
 {
 
 Effekseer::TextureRef TextureLoader::Load(const char16_t* path, Effekseer::TextureType textureType)
 {
-	godot::String gdpath = Convert::String16(path);
+	godot::String gdpath = ToGdString(path);
 
 	// Load by Godot
 	auto loader = godot::ResourceLoader::get_singleton();

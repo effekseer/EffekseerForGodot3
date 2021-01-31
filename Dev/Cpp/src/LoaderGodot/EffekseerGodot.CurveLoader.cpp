@@ -1,6 +1,6 @@
 ﻿#include <ResourceLoader.hpp>
 #include "EffekseerGodot.CurveLoader.h"
-#include "../RendererGodot/EffekseerGodot.Utils.h"
+#include "../Utils/EffekseerGodot.Utils.h"
 #include "../EffekseerResource.h"
 
 namespace EffekseerGodot
@@ -10,7 +10,7 @@ Effekseer::CurveRef CurveLoader::Load(const char16_t* path)
 {
 	// Load by Godot
 	auto loader = godot::ResourceLoader::get_singleton();
-	auto resource = loader->load(Convert::String16(path), "");
+	auto resource = loader->load(ToGdString(path), "");
 	if (!resource.is_valid())
 	{
 		return nullptr;

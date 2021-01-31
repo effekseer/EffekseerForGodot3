@@ -1,18 +1,12 @@
-﻿
-//-----------------------------------------------------------------------------------
-//
-//-----------------------------------------------------------------------------------
+﻿#include <GDScript.hpp>
+#include <NativeScript.hpp>
+#include <VisualScript.hpp>
 #include "EffekseerGodot.Utils.h"
 
-//-----------------------------------------------------------------------------------
-//
-//-----------------------------------------------------------------------------------
 namespace EffekseerGodot
 {
-namespace Convert
-{
 
-size_t String16(char16_t* to, const godot::String& from, size_t size) {
+size_t ToEfkString(char16_t* to, const godot::String& from, size_t size) {
 #ifdef _MSC_VER
 	// Simple copy
 	const wchar_t* ustr = from.unicode_str();
@@ -45,7 +39,7 @@ size_t String16(char16_t* to, const godot::String& from, size_t size) {
 #endif
 }
 
-godot::String String16(const char16_t* from)
+godot::String ToGdString(const char16_t* from)
 {
 #ifdef _MSC_VER
 	return godot::String((const wchar_t*)from);
@@ -64,5 +58,19 @@ godot::String String16(const char16_t* from)
 #endif
 }
 
+godot::Variant ScriptNew(godot::Ref<godot::Script> script)
+{
+	using namespace godot;
+
+	auto className = script->get_class();
+	if (className == "GDScript") {
+		return Ref<GDScript>(script)->new_();
+	} else if (className == "NativeScript") {
+		return Ref<NativeScript>(script)->new_();
+	} else if (className == "VisualScript") {
+		return Variant();
+	}
+	return Variant();
 }
+
 } // namespace EffekseerGodot

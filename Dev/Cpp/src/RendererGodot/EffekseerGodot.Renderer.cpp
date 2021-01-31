@@ -6,6 +6,8 @@
 #include <World.hpp>
 #include <Mesh.hpp>
 #include <ImageTexture.hpp>
+#include "../Utils/EffekseerGodot.Utils.h"
+
 #include "EffekseerGodot.Renderer.h"
 #include "EffekseerGodot.RenderState.h"
 #include "EffekseerGodot.RendererImplemented.h"
@@ -15,7 +17,6 @@
 #include "EffekseerGodot.VertexBuffer.h"
 #include "EffekseerGodot.ModelRenderer.h"
 #include "EffekseerGodot.RenderResources.h"
-#include "EffekseerGodot.Utils.h"
 
 #include "EffekseerRenderer.Renderer_Impl.h"
 #include "EffekseerRenderer.RibbonRendererBase.h"
@@ -678,7 +679,7 @@ void RendererImplemented::SetTextures(Shader* shader, Effekseer::Backend::Textur
 	for (int32_t i = 0; i < count; i++)
 	{
 		state.TextureIDs[i] = (textures[i] != nullptr) ? 
-			Convert::RIDToInt64(textures[i].DownCast<Texture>()->GetRID()) : 0;
+			RIDToInt64(textures[i].DownCast<Texture>()->GetRID()) : 0;
 	}
 }
 

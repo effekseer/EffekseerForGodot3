@@ -3,7 +3,7 @@
 //
 //-----------------------------------------------------------------------------------
 #include <VisualServer.hpp>
-#include "EffekseerGodot.Utils.h"
+#include "../Utils/EffekseerGodot.Utils.h"
 #include "EffekseerGodot.RenderResources.h"
 
 //-----------------------------------------------------------------------------------
@@ -29,14 +29,14 @@ Model::Model(const void* data, int32_t size)
 
 	for (int32_t i = 0; i < vertexCount; i++)
 	{
-		positions.set(i, Convert::Vector3(vertexData[i].Position));
-		normals.set(i, Convert::Vector3(vertexData[i].Normal));
+		positions.set(i, ToGdVector3(vertexData[i].Position));
+		normals.set(i, ToGdVector3(vertexData[i].Normal));
 		tangents.set(i * 4 + 0, vertexData[i].Tangent.X);
 		tangents.set(i * 4 + 1, vertexData[i].Tangent.Y);
 		tangents.set(i * 4 + 2, vertexData[i].Tangent.Z);
 		tangents.set(i * 4 + 3, 1.0f);
-		colors.set(i, Convert::Color(vertexData[i].VColor));
-		texUVs.set(i, Convert::Vector2(vertexData[i].UV));
+		colors.set(i, ToGdColor(vertexData[i].VColor));
+		texUVs.set(i, ToGdVector2(vertexData[i].UV));
 	}
 	for (int32_t i = 0; i < faceCount; i++)
 	{

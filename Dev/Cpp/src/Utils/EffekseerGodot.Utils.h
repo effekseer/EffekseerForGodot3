@@ -8,11 +8,9 @@
 #include <Vector3.hpp>
 #include <Transform.hpp>
 #include <Color.hpp>
+#include <Script.hpp>
 
 namespace EffekseerGodot
-{
-
-namespace Convert
 {
 
 inline int64_t RIDToInt64(godot::RID rid)
@@ -29,27 +27,27 @@ inline godot::RID Int64ToRID(int64_t val)
 	return rid;
 }
 
-inline Effekseer::Vector2D Vector2(godot::Vector2 v)
+inline Effekseer::Vector2D ToEfkVector2(godot::Vector2 v)
 {
 	return { v.x, v.y };
 }
 
-inline godot::Vector2 Vector2(Effekseer::Vector2D v)
+inline godot::Vector2 ToGdVector2(Effekseer::Vector2D v)
 {
 	return { v.X, v.Y };
 }
 
-inline Effekseer::Vector3D Vector3(godot::Vector3 v)
+inline Effekseer::Vector3D ToEfkVector3(godot::Vector3 v)
 {
 	return { v.x, v.y, v.z };
 }
 
-inline godot::Vector3 Vector3(Effekseer::Vector3D v)
+inline godot::Vector3 ToGdVector3(Effekseer::Vector3D v)
 {
 	return { v.X, v.Y, v.Z };
 }
 
-inline Effekseer::Matrix44 Matrix44(godot::Transform transform)
+inline Effekseer::Matrix44 ToEfkMatrix44(godot::Transform transform)
 {
 	Effekseer::Matrix44 matrix;
 	matrix.Values[0][0] = transform.basis[0][0];
@@ -71,7 +69,7 @@ inline Effekseer::Matrix44 Matrix44(godot::Transform transform)
 	return matrix;
 }
 
-inline godot::Transform Matrix44(Effekseer::Matrix44 matrix)
+inline godot::Transform ToGdMatrix(Effekseer::Matrix44 matrix)
 {
 	godot::Transform transform;
 	transform.basis[0][0] = matrix.Values[0][0];
@@ -89,20 +87,20 @@ inline godot::Transform Matrix44(Effekseer::Matrix44 matrix)
 	return transform;
 }
 
-inline Effekseer::Color Color(godot::Color c)
+inline Effekseer::Color ToEfkColor(godot::Color c)
 {
 	return { (uint8_t)(c.r * 255.0f), (uint8_t)(c.g * 255.0f), (uint8_t)(c.b * 255.0f), (uint8_t)(c.a * 255.0f) };
 }
 
-inline godot::Color Color(Effekseer::Color c)
+inline godot::Color ToGdColor(Effekseer::Color c)
 {
 	return { c.R / 255.0f, c.G / 255.0f, c.B / 255.0f, c.A / 255.0f };
 }
 
-size_t String16(char16_t* to, const godot::String& from, size_t size);
+size_t ToEfkString(char16_t* to, const godot::String& from, size_t size);
 
-godot::String String16(const char16_t* from);
+godot::String ToGdString(const char16_t* from);
 
-}
+godot::Variant ScriptNew(godot::Ref<godot::Script> script);
 
 }
