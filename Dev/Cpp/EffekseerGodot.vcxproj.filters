@@ -13,6 +13,12 @@
     <Filter Include="src\LoaderGodot">
       <UniqueIdentifier>{6fb77ccc-9767-45cb-b95e-2facdc325c63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\SoundGodot">
+      <UniqueIdentifier>{42c9a55a-6661-49d6-b02e-35b629c1f62f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Utils">
+      <UniqueIdentifier>{ff5eed6d-fc59-4d04-9ac6-bd9129a85fe6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GDLibrary.cpp">
@@ -81,9 +87,6 @@
     <ClCompile Include="src\RendererGodot\EffekseerGodot.ShaderGenerator.cpp">
       <Filter>src\RendererGodot</Filter>
     </ClCompile>
-    <ClCompile Include="src\RendererGodot\EffekseerGodot.Utils.cpp">
-      <Filter>src\RendererGodot</Filter>
-    </ClCompile>
     <ClCompile Include="src\RendererGodot\EffekseerGodot.VertexBuffer.cpp">
       <Filter>src\RendererGodot</Filter>
     </ClCompile>
@@ -101,6 +104,18 @@
     </ClCompile>
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.CurveLoader.cpp">
       <Filter>src\LoaderGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.SoundLoader.cpp">
+      <Filter>src\LoaderGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundGodot\EffekseerGodot.SoundResources.cpp">
+      <Filter>src\SoundGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundGodot\EffekseerGodot.SoundPlayer.cpp">
+      <Filter>src\SoundGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\EffekseerGodot.Utils.cpp">
+      <Filter>src\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +191,6 @@
     <ClInclude Include="src\RendererGodot\EffekseerGodot.ShaderGenerator.h">
       <Filter>src\RendererGodot</Filter>
     </ClInclude>
-    <ClInclude Include="src\RendererGodot\EffekseerGodot.Utils.h">
-      <Filter>src\RendererGodot</Filter>
-    </ClInclude>
     <ClInclude Include="src\RendererGodot\EffekseerGodot.VertexBuffer.h">
       <Filter>src\RendererGodot</Filter>
     </ClInclude>
@@ -205,6 +217,18 @@
     </ClInclude>
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.CurveLoader.h">
       <Filter>src\LoaderGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.SoundLoader.h">
+      <Filter>src\LoaderGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundGodot\EffekseerGodot.SoundResources.h">
+      <Filter>src\SoundGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundGodot\EffekseerGodot.SoundPlayer.h">
+      <Filter>src\SoundGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\EffekseerGodot.Utils.h">
+      <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

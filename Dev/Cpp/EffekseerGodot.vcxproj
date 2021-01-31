@@ -38,6 +38,7 @@
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.CurveLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.MaterialLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.ModelLoader.cpp" />
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.SoundLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.TextureLoader.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.IndexBuffer.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.ModelRenderer.cpp" />
@@ -46,8 +47,10 @@
     <ClCompile Include="src\RendererGodot\EffekseerGodot.RenderState.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.Shader.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.ShaderGenerator.cpp" />
-    <ClCompile Include="src\RendererGodot\EffekseerGodot.Utils.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.VertexBuffer.cpp" />
+    <ClCompile Include="src\SoundGodot\EffekseerGodot.SoundPlayer.cpp" />
+    <ClCompile Include="src\SoundGodot\EffekseerGodot.SoundResources.cpp" />
+    <ClCompile Include="src\Utils\EffekseerGodot.Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.h" />
@@ -71,6 +74,7 @@
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.CurveLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.MaterialLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.ModelLoader.h" />
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.SoundLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.TextureLoader.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.Base.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.Base.Pre.h" />
@@ -82,8 +86,10 @@
     <ClInclude Include="src\RendererGodot\EffekseerGodot.RenderState.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.Shader.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.ShaderGenerator.h" />
-    <ClInclude Include="src\RendererGodot\EffekseerGodot.Utils.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.VertexBuffer.h" />
+    <ClInclude Include="src\SoundGodot\EffekseerGodot.SoundPlayer.h" />
+    <ClInclude Include="src\SoundGodot\EffekseerGodot.SoundResources.h" />
+    <ClInclude Include="src\Utils\EffekseerGodot.Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Effekseer\build\Dev\Cpp\Effekseer\Effekseer.vcxproj">

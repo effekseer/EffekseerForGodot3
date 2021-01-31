@@ -65,7 +65,7 @@ void EffekseerEmitter::play()
 {
 	if (m_effect.is_valid()) {
 		auto system = EffekseerSystem::get_instance();
-		auto handle = system->play(m_effect.ptr(), get_transform());
+		auto handle = system->play(m_effect, this);
 		if (handle >= 0) {
 			if (m_paused) {
 				system->set_paused(handle, true);
