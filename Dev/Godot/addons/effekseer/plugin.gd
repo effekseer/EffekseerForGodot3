@@ -4,19 +4,22 @@ extends EditorPlugin
 var effect_import_plugin
 var resource_import_plugin
 var emitter_gizmo_plugin
+const plugin_path = "res://addons/effekseer"
+const plugin_source_path = "res://addons/effekseer/src"
 
 func _enter_tree():
 	add_project_setting("effekseer/instance_max_count", 2000, TYPE_INT, PROPERTY_HINT_RANGE, "40,8000")
 	add_project_setting("effekseer/square_max_count", 8000, TYPE_INT, PROPERTY_HINT_RANGE, "80,32000")
 	add_project_setting("effekseer/draw_max_count", 128, TYPE_INT, PROPERTY_HINT_RANGE, "16,1024")
+	add_project_setting("effekseer/sound_script", load(plugin_source_path + "/EffekseerSound.gd"), TYPE_OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Script")
 	
-	add_autoload_singleton("EffekseerSystem", "res://addons/effekseer/src/EffekseerSystem.gdns")
-	#add_custom_type("EffekseerEffect", "Resource", preload("res://addons/effekseer/src/EffekseerEffect.gdns"), null)
-	add_custom_type("EffekseerEmitter", "Spatial", preload("res://addons/effekseer/src/EffekseerEmitter.gdns"), null)
+	add_autoload_singleton("EffekseerSystem", plugin_source_path + "/EffekseerSystem.gdns")
+	#add_custom_type("EffekseerEffect", "Resource", load(plugin_source_path + "/EffekseerEffect.gdns"), null)
+	add_custom_type("EffekseerEmitter", "Spatial", load(plugin_source_path + "/EffekseerEmitter.gdns"), null)
 	
-	effect_import_plugin = preload("res://addons/effekseer/src/EffekseerEffectImportPlugin.gd").new()
-	resource_import_plugin = preload("res://addons/effekseer/src/EffekseerResourceImportPlugin.gd").new()
-	emitter_gizmo_plugin = preload("res://addons/effekseer/src/EffekseerEmitterGizmoPlugin.gd").new()
+	effect_import_plugin = load(plugin_source_path + "/EffekseerEffectImportPlugin.gd").new()
+	resource_import_plugin = load(plugin_source_path + "/EffekseerResourceImportPlugin.gd").new()
+	emitter_gizmo_plugin = load(plugin_source_path + "/EffekseerEmitterGizmoPlugin.gd").new()
 	add_spatial_gizmo_plugin(emitter_gizmo_plugin)
 	add_import_plugin(effect_import_plugin)
 	add_import_plugin(resource_import_plugin)
@@ -31,6 +34,7 @@ func _exit_tree():
 	#remove_custom_type("EffekseerEffect")
 	remove_autoload_singleton("EffekseerSystem")
 
+	remove_project_setting("effekseer/sound_script")
 	remove_project_setting("effekseer/draw_max_count")
 	remove_project_setting("effekseer/square_max_count")
 	remove_project_setting("effekseer/instance_max_count")
