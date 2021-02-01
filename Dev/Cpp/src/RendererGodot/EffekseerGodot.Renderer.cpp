@@ -184,7 +184,7 @@ void RenderCommand::DrawSprites(godot::World* world,
 	vs->instance_set_scenario(m_instance, world->get_scenario());
 	vs->material_set_render_priority(m_material, priority);
 
-	vs->immediate_begin(m_immediate, godot::Mesh::PRIMITIVE_TRIANGLES);
+	vs->immediate_begin(m_immediate, godot::Mesh::PRIMITIVE_TRIANGLE_STRIP);
 
 	using namespace EffekseerRenderer;
 
@@ -193,69 +193,78 @@ void RenderCommand::DrawSprites(godot::World* world,
 		const SimpleVertex* vertices = (const SimpleVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
-			for (int32_t j = 0; j < 6; j++)
-			{
-				auto& v = vertices[indeces[i * 6 + j]];
-				vs->immediate_color(m_immediate, ConvertColor(v.Col));
-				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
-				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
-			}
-		}
-	}
-	else if (shaderType == RendererShaderType::BackDistortion)
-	{
-		const DynamicVertex* vertices = (const DynamicVertex*)vertexData;
-		for (int32_t i = 0; i < spriteCount; i++)
-		{
-			for (int32_t j = 0; j < 6; j++)
-			{
-				auto& v = vertices[indeces[i * 6 + j]];
-				vs->immediate_color(m_immediate, ConvertColor(v.Col));
-				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
+			vs->immediate_color(m_immediate, godot::Color());
+			vs->immediate_uv(m_immediate, godot::Vector2());
+			vs->immediate_vertex(m_immediate, ConvertVector3(vertices[i * 4 + 0].Pos));
 
-				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
-				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
-				vs->immediate_normal(m_immediate, ConvertVector3(normal));
-				vs->immediate_tangent(m_immediate, ConvertTangent(tangent));
+			for (int32_t j = 0; j < 4; j++)
+			{
+				auto& v = vertices[i * 4 + j];
+				vs->immediate_color(m_immediate, ConvertColor(v.Col));
+				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
 				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
 			}
+
+			vs->immediate_color(m_immediate, godot::Color());
+			vs->immediate_uv(m_immediate, godot::Vector2());
+			vs->immediate_vertex(m_immediate, ConvertVector3(vertices[i * 4 + 3].Pos));
 		}
 	}
-	else if (shaderType == RendererShaderType::Lit)
+	else if (shaderType == RendererShaderType::BackDistortion || shaderType == RendererShaderType::Lit)
 	{
 		const LightingVertex* vertices = (const LightingVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
-			for (int32_t j = 0; j < 6; j++)
+			vs->immediate_color(m_immediate, godot::Color());
+			vs->immediate_uv(m_immediate, godot::Vector2());
+			vs->immediate_normal(m_immediate, godot::Vector3());
+			vs->immediate_tangent(m_immediate, godot::Plane());
+			vs->immediate_vertex(m_immediate, ConvertVector3(vertices[i * 4 + 0].Pos));
+
+			for (int32_t j = 0; j < 4; j++)
 			{
-				auto& v = vertices[indeces[i * 6 + j]];
+				auto& v = vertices[i * 4 + j];
 				vs->immediate_color(m_immediate, ConvertColor(v.Col));
 				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
-				
-				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
-				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
-				vs->immediate_normal(m_immediate, ConvertVector3(normal));
-				vs->immediate_tangent(m_immediate, ConvertTangent(tangent));
+				vs->immediate_normal(m_immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
+				vs->immediate_tangent(m_immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
 				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
 			}
+
+			vs->immediate_color(m_immediate, godot::Color());
+			vs->immediate_uv(m_immediate, godot::Vector2());
+			vs->immediate_normal(m_immediate, godot::Vector3());
+			vs->immediate_tangent(m_immediate, godot::Plane());
+			vs->immediate_vertex(m_immediate, ConvertVector3(vertices[i * 4 + 3].Pos));
 		}
 	}
 	else if (shaderType == RendererShaderType::Material)
 	{
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
-			for (int32_t j = 0; j < 6; j++)
+			const uint8_t* vertices = (const uint8_t*)vertexData + i * 4 * stride;
+
+			vs->immediate_color(m_immediate, godot::Color());
+			vs->immediate_uv(m_immediate, godot::Vector2());
+			vs->immediate_normal(m_immediate, godot::Vector3());
+			vs->immediate_tangent(m_immediate, godot::Plane());
+			vs->immediate_vertex(m_immediate, ConvertVector3((*(const DynamicVertex*)(vertices + 0 * stride)).Pos));
+
+			for (int32_t j = 0; j < 4; j++)
 			{
-				auto& v = *(DynamicVertex*)((uint8_t*)vertexData + indeces[i * 6 + j] * stride);
+				auto& v = *(const DynamicVertex*)(vertices + j * stride);
 				vs->immediate_color(m_immediate, ConvertColor(v.Col));
 				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
-
-				VertexFloat3 normal = Normalize(UnpackVector3DF(v.Normal));
-				VertexFloat3 tangent = Normalize(UnpackVector3DF(v.Tangent));
-				vs->immediate_normal(m_immediate, ConvertVector3(normal));
-				vs->immediate_tangent(m_immediate, ConvertTangent(tangent));
+				vs->immediate_normal(m_immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
+				vs->immediate_tangent(m_immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
 				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
 			}
+
+			vs->immediate_color(m_immediate, godot::Color());
+			vs->immediate_uv(m_immediate, godot::Vector2());
+			vs->immediate_normal(m_immediate, godot::Vector3());
+			vs->immediate_tangent(m_immediate, godot::Plane());
+			vs->immediate_vertex(m_immediate, ConvertVector3((*(const DynamicVertex*)(vertices + 3 * stride)).Pos));
 		}
 	}
 
