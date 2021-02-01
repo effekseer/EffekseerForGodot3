@@ -41,12 +41,6 @@ public:
 	static RendererRef Create(int32_t squareMaxCount, int32_t drawMaxCount);
 
 	/**
-		@brief	\~English	Set Godot World instance
-				\~Japanese	GodotのWorldインスタンスを指定
-	*/
-	virtual void SetWorld(godot::World* world) = 0;
-
-	/**
 		@brief	状態リセット
 	*/
 	virtual void ResetState() = 0;

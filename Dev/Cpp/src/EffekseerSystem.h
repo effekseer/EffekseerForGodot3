@@ -55,7 +55,6 @@ private:
 
 	Effekseer::ManagerRef m_manager;
 	EffekseerGodot::RendererRef m_renderer;
-	EffekseerGodot::SoundPlayerRef m_soundPlayer;
 	bool m_shouldResetState = true;
 };
 

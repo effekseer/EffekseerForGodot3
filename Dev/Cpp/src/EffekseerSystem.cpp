@@ -106,8 +106,6 @@ void EffekseerSystem::draw(Camera* camera, Effekseer::Handle handle)
 	}
 
 	auto camera_transform = camera->get_camera_transform().inverse();
-
-	m_renderer->SetWorld(camera->get_world().ptr());
 	m_renderer->SetCameraMatrix(EffekseerGodot::ToEfkMatrix44(camera_transform));
 
 	m_renderer->BeginRendering();
@@ -129,7 +127,7 @@ Effekseer::Handle EffekseerSystem::play(godot::Ref<EffekseerEffect> effect, Spat
 		auto scale = transform.basis.get_scale();
 		m_manager->SetRotation(handle, rotation.x, rotation.y, rotation.z);
 		m_manager->SetScale(handle, scale.x, scale.y, scale.z);
-		m_manager->SetUserPtr(handle, reinterpret_cast<uintptr_t>(node));
+		m_manager->SetUserData(handle, node);
 	}
 	return handle;
 }

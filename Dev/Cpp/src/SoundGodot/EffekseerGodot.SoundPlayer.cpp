@@ -21,7 +21,7 @@ Effekseer::SoundHandle SoundPlayer::Play(Effekseer::SoundTag tag, const Instance
 
 	godot::Dictionary args;
 	args["tag"] = reinterpret_cast<size_t>(tag);
-	args["emitter"] = reinterpret_cast<godot::Object*>(parameter.UserPtr);
+	args["emitter"] = reinterpret_cast<godot::Object*>(parameter.UserData);
 	args["stream"] = data->GetStream();
 	args["volume"] = parameter.Volume;
 	args["pitch"] = parameter.Pitch;

@@ -4,6 +4,8 @@
 //----------------------------------------------------------------------------------
 #include <VisualServer.hpp>
 #include <World.hpp>
+#include <Node.hpp>
+#include <Viewport.hpp>
 #include <Mesh.hpp>
 #include <ImageTexture.hpp>
 #include "../Utils/EffekseerGodot.Utils.h"
@@ -544,6 +546,12 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 		return;
 	}
 
+	godot::Node* node = reinterpret_cast<godot::Node*>(GetImpl()->CurrentHandleUserData);
+	godot::Viewport* viewport = node->get_viewport();
+	if (viewport == nullptr) return;
+	godot::World* world = viewport->get_world().ptr();
+	if (world == nullptr) return;
+
 	const void* vertexData = GetVertexBuffer()->Refer();
 	const void* indexData = GetIndexBuffer()->Refer();
 
@@ -571,7 +579,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 		m_renderCommands[m_renderCount].GetMaterial(), 
 		m_renderState->GetActiveState());
 
-	m_renderCommands[m_renderCount].DrawSprites(m_world, vertexData, indexData, 
+	m_renderCommands[m_renderCount].DrawSprites(world, vertexData, indexData, 
 		m_standardRenderer->CalculateCurrentStride(), spriteCount, 
 		m_currentShader->GetShaderType(), (int32_t)m_renderCount);
 	m_renderCount++;
@@ -601,13 +609,18 @@ void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
 		return;
 	}
 
+	godot::Node* node = reinterpret_cast<godot::Node*>(GetImpl()->CurrentHandleUserData);
+	godot::Viewport* viewport = node->get_viewport();
+	if (viewport == nullptr) return;
+	godot::World* world = viewport->get_world().ptr();
+	if (world == nullptr) return;
+
 	m_currentShader->ApplyToMaterial(
 		m_renderCommands[m_renderCount].GetMaterial(), 
 		m_renderState->GetActiveState());
 
-	
 	auto mesh = m_currentModel.DownCast<Model>()->GetRID();
-	m_renderCommands[m_renderCount].DrawModel(m_world, mesh, (int32_t)m_renderCount);
+	m_renderCommands[m_renderCount].DrawModel(world, mesh, (int32_t)m_renderCount);
 	m_renderCount++;
 
 	impl->drawcallCount++;

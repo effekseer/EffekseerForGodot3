@@ -99,8 +99,6 @@ public:
 
 	void Destroy();
 
-	void SetWorld(godot::World* world) { m_world = world; }
-
 	/**
 	@brief	ステートを復帰するかどうかのフラグを設定する。
 	*/
