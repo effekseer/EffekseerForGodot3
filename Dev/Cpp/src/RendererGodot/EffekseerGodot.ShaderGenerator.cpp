@@ -4,20 +4,24 @@
 namespace EffekseerGodot
 {
 
+static const char* g_material_src_common = R"(
+float atan2(float y, float x) {
+	return x == 0.0 ? sign(y)* 3.141592 / 2.0 : atan(y, x);
+}
+)";
+
 static const char g_material_src_vertex_sprite_pre[] =  R"(
 void vertex()
 {
-MODELVIEW_MATRIX = ModelViewMatrix;
-
-vec3 worldNormal = NORMAL;
-vec3 worldTangent = TANGENT;
-vec3 worldBinormal = BINORMAL;
+	vec3 worldNormal = NORMAL;
+	vec3 worldTangent = TANGENT;
+	vec3 worldBinormal = BINORMAL;
+	vec3 worldPos = VERTEX;
 )";
 
 static const char g_material_src_vertex_model_pre[] =  R"(
 void vertex()
 {
-	MODELVIEW_MATRIX = ViewMatrix * ModelMatrix;
 	UV = (UV.xy * ModelUV.zw) + ModelUV.xy;
 	COLOR = COLOR * ModelColor;
 
@@ -25,6 +29,7 @@ void vertex()
 	vec3 worldNormal = normalMatrix * NORMAL;
 	vec3 worldTangent = normalMatrix * TANGENT;
 	vec3 worldBinormal = normalMatrix * BINORMAL;
+	vec3 worldPos = (ModelMatrix * vec4(VERTEX, 1.0)).xyz;
 )";
 
 static const char g_material_src_vertex_common[] =  R"(
@@ -43,18 +48,20 @@ static const char g_material_src_vertex_common[] =  R"(
 )";
 
 static const char g_material_src_vertex_sprite_post[] = R"(
-	vec4 worldPos = vec4(VERTEX, 1.0);
+	worldPos += worldPositionOffset;
 	v_WorldN_PX.w = worldPos.x;
 	v_WorldB_PY.w = worldPos.y;
 	v_WorldT_PZ.w = worldPos.z;
+	POSITION = PROJECTION_MATRIX * ViewMatrix * vec4(worldPos, 1.0);
 }
 )";
 
 static const char g_material_src_vertex_model_post[] = R"(
-	vec4 worldPos = ModelMatrix * vec4(VERTEX, 1.0);
+	worldPos += worldPositionOffset;
 	v_WorldN_PX.w = worldPos.x;
 	v_WorldB_PY.w = worldPos.y;
 	v_WorldT_PZ.w = worldPos.z;
+	POSITION = PROJECTION_MATRIX * ViewMatrix * vec4(worldPos, 1.0);
 }
 )";
 
@@ -111,7 +118,7 @@ uniform vec4 ReconstructionParam2;
 )";
 
 static const char g_material_uniforms_sprite[] = R"(
-uniform mat4 ModelViewMatrix;
+uniform mat4 ViewMatrix;
 )";
 
 static const char g_material_uniforms_model[] = R"(
@@ -207,6 +214,9 @@ void ShaderGenerator::GenerateShaderCode(ShaderData& shaderData, const Effekseer
 		maincode << "uniform sampler2D " << textureName << ";" << std::endl;
 	}
 
+	// Common code
+	maincode << g_material_src_common;
+
 	// Output user code
 	auto baseCode = std::string(materialFile.GetGenericCode());
 	baseCode = Replace(baseCode, "$F1$", "float");
@@ -216,7 +226,9 @@ void ShaderGenerator::GenerateShaderCode(ShaderData& shaderData, const Effekseer
 	baseCode = Replace(baseCode, "$TIME$", "PredefinedData.x");
 	baseCode = Replace(baseCode, "$EFFECTSCALE$", "PredefinedData.y");
 	baseCode = Replace(baseCode, "$UV$", "uv");
-	baseCode = Replace(baseCode, "$MOD", "mod");
+	baseCode = Replace(baseCode, "MOD", "mod");
+	baseCode = Replace(baseCode, "FRAC", "fract");
+	baseCode = Replace(baseCode, "LERP", "mix");
 
 	// replace textures
 	for (int32_t i = 0; i < actualTextureCount; i++)
@@ -373,7 +385,7 @@ void ShaderGenerator::GenerateParamDecls(ShaderData& shaderData, const Effekseer
 		}
 
 		std::vector<Shader::ParamDecl> decls;
-		appendDecls(decls, "ModelViewMatrix",  Shader::ParamType::Matrix44, 0, parameterGenerator.VertexCameraMatrixOffset);
+		appendDecls(decls, "ViewMatrix",  Shader::ParamType::Matrix44, 0, parameterGenerator.VertexCameraMatrixOffset);
 		appendDecls(decls, "PredefinedData",  Shader::ParamType::Vector4, 1, parameterGenerator.PixelPredefinedOffset);
 		appendCustomDataDecls(decls, materialFile, parameterGenerator);
 		appendUserUniformDecls(decls, materialFile, parameterGenerator);
