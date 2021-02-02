@@ -21,7 +21,7 @@ Effekseer::TextureRef TextureLoader::Load(const char16_t* path, Effekseer::Textu
 	}
 
 	auto texture = (godot::ImageTexture*)resource.ptr();
-	texture->set_flags(texture->get_flags() | godot::Texture::FLAG_MIPMAPS | godot::Texture::FLAG_FILTER | godot::Texture::FLAG_REPEAT);
+	texture->set_flags(texture->get_flags() | godot::Texture::FLAG_MIPMAPS | godot::Texture::FLAG_FILTER);
 
 	auto backend = Effekseer::MakeRefPtr<Texture>();
 	backend->size_[0] = (int32_t)texture->get_width();
