@@ -26,9 +26,9 @@ void vertex()
 	COLOR = COLOR * ModelColor;
 
 	mat3 normalMatrix = mat3(ModelMatrix);
-	vec3 worldNormal = normalMatrix * NORMAL;
-	vec3 worldTangent = normalMatrix * TANGENT;
-	vec3 worldBinormal = normalMatrix * BINORMAL;
+	vec3 worldNormal = normalize(normalMatrix * NORMAL);
+	vec3 worldTangent = normalize(normalMatrix * TANGENT);
+	vec3 worldBinormal = normalize(normalMatrix * BINORMAL);
 	vec3 worldPos = (ModelMatrix * vec4(VERTEX, 1.0)).xyz;
 )";
 
@@ -113,6 +113,7 @@ varying mediump vec4 v_WorldT_PZ;
 
 static const char g_material_uniforms_common[] = R"(
 uniform vec4 PredefinedData;
+uniform vec3 CameraPosition;
 uniform vec4 ReconstructionParam1;
 uniform vec4 ReconstructionParam2;
 )";
@@ -229,6 +230,7 @@ void ShaderGenerator::GenerateShaderCode(ShaderData& shaderData, const Effekseer
 	baseCode = Replace(baseCode, "MOD", "mod");
 	baseCode = Replace(baseCode, "FRAC", "fract");
 	baseCode = Replace(baseCode, "LERP", "mix");
+	baseCode = Replace(baseCode, "cameraPosition", "CameraPosition");
 
 	// replace textures
 	for (int32_t i = 0; i < actualTextureCount; i++)
@@ -386,7 +388,8 @@ void ShaderGenerator::GenerateParamDecls(ShaderData& shaderData, const Effekseer
 
 		std::vector<Shader::ParamDecl> decls;
 		appendDecls(decls, "ViewMatrix",  Shader::ParamType::Matrix44, 0, parameterGenerator.VertexCameraMatrixOffset);
-		appendDecls(decls, "PredefinedData",  Shader::ParamType::Vector4, 1, parameterGenerator.PixelPredefinedOffset);
+		appendDecls(decls, "PredefinedData", Shader::ParamType::Vector4, 1, parameterGenerator.PixelPredefinedOffset);
+		appendDecls(decls, "CameraPosition", Shader::ParamType::Vector3, 1, parameterGenerator.PixelCameraPositionOffset);
 		appendCustomDataDecls(decls, materialFile, parameterGenerator);
 		appendUserUniformDecls(decls, materialFile, parameterGenerator);
 		appendTextureDecls(decls, materialFile);
@@ -401,6 +404,7 @@ void ShaderGenerator::GenerateParamDecls(ShaderData& shaderData, const Effekseer
 		appendDecls(decls, "ModelUV",     Shader::ParamType::Vector4,  0, parameterGenerator.VertexModelUVOffset);
 		appendDecls(decls, "ModelColor",  Shader::ParamType::Vector4,  0, parameterGenerator.VertexModelColorOffset);
 		appendDecls(decls, "PredefinedData", Shader::ParamType::Vector4, 1, parameterGenerator.PixelPredefinedOffset);
+		appendDecls(decls, "CameraPosition", Shader::ParamType::Vector3, 1, parameterGenerator.PixelCameraPositionOffset);
 		appendCustomDataDecls(decls, materialFile, parameterGenerator);
 		appendUserUniformDecls(decls, materialFile, parameterGenerator);
 		appendTextureDecls(decls, materialFile);
