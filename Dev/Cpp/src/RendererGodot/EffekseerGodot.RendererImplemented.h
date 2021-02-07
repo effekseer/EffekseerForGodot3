@@ -25,9 +25,7 @@ public:
 	RenderCommand();
 	~RenderCommand();
 	void Reset();
-	void DrawSprites(godot::World* world, 
-		const void* vertexData, const void* indexData, int32_t stride, int32_t spriteCount, 
-		EffekseerRenderer::RendererShaderType shaderType, int32_t priority);
+	void DrawSprites(godot::World* world, int32_t priority);
 	void DrawModel(godot::World* world, godot::RID mesh, int32_t priority);
 
 	godot::RID GetImmediate() { return m_immediate; }
@@ -43,6 +41,36 @@ private:
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
+
+/**
+	@brief	ダイナミックテクスチャ
+*/
+class DynamicTexture
+{
+public:
+	struct LockedRect {
+		float* ptr;
+		size_t pitch;
+		int32_t x;
+		int32_t y;
+		int32_t width;
+		int32_t height;
+	};
+
+	DynamicTexture();
+	~DynamicTexture();
+	void Init(int32_t width, int32_t height);
+	const LockedRect* Lock(int32_t x, int32_t y, int32_t width, int32_t height);
+	void Unlock();
+
+	godot::RID GetRID() { return m_imageTexture; }
+
+private:
+	godot::RID m_imageTexture;
+	godot::PoolByteArray m_rectData;
+	LockedRect m_lockedRect{};
+};
+
 class RendererImplemented;
 using RendererImplementedRef = Effekseer::RefPtr<RendererImplemented>;
 
@@ -71,6 +99,9 @@ private:
 	size_t m_renderCount = 0;
 
 	Effekseer::ModelRef m_currentModel = nullptr;
+	DynamicTexture m_customData1Texture;
+	DynamicTexture m_customData2Texture;
+	int32_t m_customDataCount = 0;
 	
 	std::unique_ptr<StandardRenderer> m_standardRenderer;
 	std::unique_ptr<RenderState> m_renderState;

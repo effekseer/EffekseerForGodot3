@@ -7,7 +7,7 @@
 #include <Node.hpp>
 #include <Viewport.hpp>
 #include <Mesh.hpp>
-#include <ImageTexture.hpp>
+#include <Image.hpp>
 #include "../Utils/EffekseerGodot.Utils.h"
 
 #include "EffekseerGodot.Renderer.h"
@@ -97,6 +97,62 @@ namespace SoftParticle
 
 }
 
+static constexpr int32_t CUSTOM_DATA_TEXTURE_WIDTH = 256;
+static constexpr int32_t CUSTOM_DATA_TEXTURE_HEIGHT = 256;
+
+DynamicTexture::DynamicTexture()
+{
+}
+
+DynamicTexture::~DynamicTexture()
+{
+	auto vs = godot::VisualServer::get_singleton();
+	vs->free_rid(m_imageTexture);
+}
+
+void DynamicTexture::Init(int32_t width, int32_t height)
+{
+	auto vs = godot::VisualServer::get_singleton();
+	godot::Ref<godot::Image> image;
+	image.instance();
+	image->create(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT, false, godot::Image::FORMAT_RGBAF);
+	m_imageTexture = vs->texture_create_from_image(image, 0);
+}
+
+const DynamicTexture::LockedRect* DynamicTexture::Lock(int32_t x, int32_t y, int32_t width, int32_t height)
+{
+	assert(m_lockedRect.ptr == nullptr);
+	assert(m_lockedRect.width == 0 && m_lockedRect.height == 0);
+
+	m_rectData.resize(width * height * sizeof(godot::Color));
+	m_lockedRect.ptr = (float*)m_rectData.write().ptr();
+	m_lockedRect.pitch = width * sizeof(godot::Color);
+	m_lockedRect.x = x;
+	m_lockedRect.y = y;
+	m_lockedRect.width = width;
+	m_lockedRect.height = height;
+	return &m_lockedRect;
+}
+
+void DynamicTexture::Unlock()
+{
+	assert(m_lockedRect.ptr != nullptr);
+	assert(m_lockedRect.width > 0 && m_lockedRect.height > 0);
+
+	godot::Ref<godot::Image> image;
+	image.instance();
+	image->create_from_data(m_lockedRect.width, m_lockedRect.height, 
+		false, godot::Image::FORMAT_RGBAF, m_rectData);
+
+	auto vs = godot::VisualServer::get_singleton();
+	vs->texture_set_data_partial(m_imageTexture, image, 
+		0, 0, m_lockedRect.width, m_lockedRect.height, 
+		m_lockedRect.x, m_lockedRect.y, 0, 0);
+
+	m_rectData.resize(0);
+	m_lockedRect = {};
+}
+
 RenderCommand::RenderCommand()
 {
 	auto vs = godot::VisualServer::get_singleton();
@@ -174,103 +230,13 @@ inline godot::Plane ConvertTangent(const EffekseerRenderer::VertexFloat3& t)
 	return godot::Plane(t.X, t.Y, t.Z, 1.0f);
 }
 
-void RenderCommand::DrawSprites(godot::World* world, 
-	const void* vertexData, const void* indexData, int32_t stride, int32_t spriteCount, 
-	EffekseerRenderer::RendererShaderType shaderType, int32_t priority)
+void RenderCommand::DrawSprites(godot::World* world, int32_t priority)
 {
 	auto vs = godot::VisualServer::get_singleton();
-
-	const uint16_t* indeces = (const uint16_t*)indexData;
 
 	vs->instance_set_base(m_instance, m_immediate);
 	vs->instance_set_scenario(m_instance, world->get_scenario());
 	vs->material_set_render_priority(m_material, priority);
-
-	vs->immediate_begin(m_immediate, godot::Mesh::PRIMITIVE_TRIANGLE_STRIP);
-
-	using namespace EffekseerRenderer;
-
-	if (shaderType == RendererShaderType::Unlit)
-	{
-		const SimpleVertex* vertices = (const SimpleVertex*)vertexData;
-		for (int32_t i = 0; i < spriteCount; i++)
-		{
-			vs->immediate_color(m_immediate, godot::Color());
-			vs->immediate_uv(m_immediate, godot::Vector2());
-			vs->immediate_vertex(m_immediate, ConvertVector3(vertices[i * 4 + 0].Pos));
-
-			for (int32_t j = 0; j < 4; j++)
-			{
-				auto& v = vertices[i * 4 + j];
-				vs->immediate_color(m_immediate, ConvertColor(v.Col));
-				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
-				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
-			}
-
-			vs->immediate_color(m_immediate, godot::Color());
-			vs->immediate_uv(m_immediate, godot::Vector2());
-			vs->immediate_vertex(m_immediate, ConvertVector3(vertices[i * 4 + 3].Pos));
-		}
-	}
-	else if (shaderType == RendererShaderType::BackDistortion || shaderType == RendererShaderType::Lit)
-	{
-		const LightingVertex* vertices = (const LightingVertex*)vertexData;
-		for (int32_t i = 0; i < spriteCount; i++)
-		{
-			vs->immediate_color(m_immediate, godot::Color());
-			vs->immediate_uv(m_immediate, godot::Vector2());
-			vs->immediate_normal(m_immediate, godot::Vector3());
-			vs->immediate_tangent(m_immediate, godot::Plane());
-			vs->immediate_vertex(m_immediate, ConvertVector3(vertices[i * 4 + 0].Pos));
-
-			for (int32_t j = 0; j < 4; j++)
-			{
-				auto& v = vertices[i * 4 + j];
-				vs->immediate_color(m_immediate, ConvertColor(v.Col));
-				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
-				vs->immediate_normal(m_immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
-				vs->immediate_tangent(m_immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
-				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
-			}
-
-			vs->immediate_color(m_immediate, godot::Color());
-			vs->immediate_uv(m_immediate, godot::Vector2());
-			vs->immediate_normal(m_immediate, godot::Vector3());
-			vs->immediate_tangent(m_immediate, godot::Plane());
-			vs->immediate_vertex(m_immediate, ConvertVector3(vertices[i * 4 + 3].Pos));
-		}
-	}
-	else if (shaderType == RendererShaderType::Material)
-	{
-		for (int32_t i = 0; i < spriteCount; i++)
-		{
-			const uint8_t* vertices = (const uint8_t*)vertexData + i * 4 * stride;
-
-			vs->immediate_color(m_immediate, godot::Color());
-			vs->immediate_uv(m_immediate, godot::Vector2());
-			vs->immediate_normal(m_immediate, godot::Vector3());
-			vs->immediate_tangent(m_immediate, godot::Plane());
-			vs->immediate_vertex(m_immediate, ConvertVector3((*(const DynamicVertex*)(vertices + 0 * stride)).Pos));
-
-			for (int32_t j = 0; j < 4; j++)
-			{
-				auto& v = *(const DynamicVertex*)(vertices + j * stride);
-				vs->immediate_color(m_immediate, ConvertColor(v.Col));
-				vs->immediate_uv(m_immediate, ConvertUV(v.UV));
-				vs->immediate_normal(m_immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
-				vs->immediate_tangent(m_immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
-				vs->immediate_vertex(m_immediate, ConvertVector3(v.Pos));
-			}
-
-			vs->immediate_color(m_immediate, godot::Color());
-			vs->immediate_uv(m_immediate, godot::Vector2());
-			vs->immediate_normal(m_immediate, godot::Vector3());
-			vs->immediate_tangent(m_immediate, godot::Plane());
-			vs->immediate_vertex(m_immediate, ConvertVector3((*(const DynamicVertex*)(vertices + 3 * stride)).Pos));
-		}
-	}
-
-	vs->immediate_end(m_immediate);
 }
 
 void RenderCommand::DrawModel(godot::World* world, godot::RID mesh, int32_t priority)
@@ -392,6 +358,9 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 
 	m_standardRenderer.reset(new StandardRenderer(this));
 
+	m_customData1Texture.Init(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT);
+	m_customData2Texture.Init(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT);
+
 	return true;
 }
 
@@ -406,6 +375,7 @@ void RendererImplemented::Destroy()
 void RendererImplemented::ResetState()
 {
 	m_renderCount = 0;
+	m_customDataCount = 0;
 
 	for (auto& batch : m_renderCommands)
 	{
@@ -539,6 +509,8 @@ void RendererImplemented::SetLayout(Shader* shader)
 //----------------------------------------------------------------------------------
 void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 {
+	using namespace EffekseerRenderer;
+
 	assert(m_currentShader != nullptr);
 
 	if (m_renderCount >= m_renderCommands.size())
@@ -546,42 +518,213 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 		return;
 	}
 
+	auto vs = godot::VisualServer::get_singleton();
 	godot::Node* node = reinterpret_cast<godot::Node*>(GetImpl()->CurrentHandleUserData);
 	godot::Viewport* viewport = node->get_viewport();
 	if (viewport == nullptr) return;
 	godot::World* world = viewport->get_world().ptr();
 	if (world == nullptr) return;
 
+	const auto& state = m_standardRenderer->GetState();
+	auto& command = m_renderCommands[m_renderCount];
+
+	// Transfer vertex data
 	const void* vertexData = GetVertexBuffer()->Refer();
 	const void* indexData = GetIndexBuffer()->Refer();
 
-	if (m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::Material)
+	godot::RID immediate = command.GetImmediate();
+
+	vs->immediate_begin(immediate, godot::Mesh::PRIMITIVE_TRIANGLE_STRIP);
+
+	RendererShaderType shaderType = m_currentShader->GetShaderType();
+
+	if (shaderType == RendererShaderType::Unlit)
 	{
-		const auto& state = m_standardRenderer->GetState();
-		const float* v = (const float*)((const uint8_t*)vertexData + sizeof(EffekseerRenderer::DynamicVertex));
-		int32_t offset = m_currentShader->GetVertexConstantBufferSize() - (state.CustomData1Count + state.CustomData2Count) * 4;
-	
-		if (state.CustomData1Count > 0)
+		const SimpleVertex* vertices = (const SimpleVertex*)vertexData;
+		for (int32_t i = 0; i < spriteCount; i++)
 		{
-			SetVertexBufferToShader(v, state.CustomData1Count * 4, offset);
-			v += state.CustomData1Count;
-			offset += state.CustomData1Count * 4;
+			vs->immediate_color(immediate, godot::Color());
+			vs->immediate_uv(immediate, godot::Vector2());
+			vs->immediate_vertex(immediate, ConvertVector3(vertices[i * 4 + 0].Pos));
+
+			for (int32_t j = 0; j < 4; j++)
+			{
+				auto& v = vertices[i * 4 + j];
+				vs->immediate_color(immediate, ConvertColor(v.Col));
+				vs->immediate_uv(immediate, ConvertUV(v.UV));
+				vs->immediate_vertex(immediate, ConvertVector3(v.Pos));
+			}
+
+			vs->immediate_color(immediate, godot::Color());
+			vs->immediate_uv(immediate, godot::Vector2());
+			vs->immediate_vertex(immediate, ConvertVector3(vertices[i * 4 + 3].Pos));
 		}
-		if (state.CustomData2Count > 0)
+	}
+	else if (shaderType == RendererShaderType::BackDistortion || shaderType == RendererShaderType::Lit)
+	{
+		const LightingVertex* vertices = (const LightingVertex*)vertexData;
+		for (int32_t i = 0; i < spriteCount; i++)
 		{
-			SetVertexBufferToShader(v, state.CustomData2Count * 4, offset);
-			v += state.CustomData2Count;
-			offset += state.CustomData2Count * 4;
+			vs->immediate_color(immediate, godot::Color());
+			vs->immediate_uv(immediate, godot::Vector2());
+			vs->immediate_normal(immediate, godot::Vector3());
+			vs->immediate_tangent(immediate, godot::Plane());
+			vs->immediate_vertex(immediate, ConvertVector3(vertices[i * 4 + 0].Pos));
+
+			for (int32_t j = 0; j < 4; j++)
+			{
+				auto& v = vertices[i * 4 + j];
+				vs->immediate_color(immediate, ConvertColor(v.Col));
+				vs->immediate_uv(immediate, ConvertUV(v.UV));
+				vs->immediate_normal(immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
+				vs->immediate_tangent(immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
+				vs->immediate_vertex(immediate, ConvertVector3(v.Pos));
+			}
+
+			vs->immediate_color(immediate, godot::Color());
+			vs->immediate_uv(immediate, godot::Vector2());
+			vs->immediate_normal(immediate, godot::Vector3());
+			vs->immediate_tangent(immediate, godot::Plane());
+			vs->immediate_vertex(immediate, ConvertVector3(vertices[i * 4 + 3].Pos));
+		}
+	}
+	else if (shaderType == RendererShaderType::Material)
+	{
+		const int32_t stride = m_standardRenderer->CalculateCurrentStride();
+		const int32_t customData1Count = state.CustomData1Count;
+		const int32_t customData2Count = state.CustomData2Count;
+
+		if (customData1Count > 0 || customData2Count > 0)
+		{
+			const int32_t width = CUSTOM_DATA_TEXTURE_WIDTH;
+			const int32_t height = (spriteCount * 4 + width - 1) / width;
+			float* customData1TexPtr = nullptr;
+			float* customData2TexPtr = nullptr;
+
+			if (customData1Count > 0)
+			{
+				customData1TexPtr = m_customData1Texture.Lock(0, m_customDataCount / width, width, height)->ptr;
+			}
+			if (customData2Count > 0)
+			{
+				customData2TexPtr = m_customData2Texture.Lock(0, m_customDataCount / width, width, height)->ptr;
+			}
+
+			for (int32_t i = 0; i < spriteCount; i++)
+			{
+				const uint8_t* vertexPtr = (const uint8_t*)vertexData + i * 4 * stride;
+
+				vs->immediate_color(immediate, godot::Color());
+				vs->immediate_uv(immediate, godot::Vector2());
+				vs->immediate_uv2(immediate, godot::Vector2());
+				vs->immediate_normal(immediate, godot::Vector3());
+				vs->immediate_tangent(immediate, godot::Plane());
+				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertexPtr)).Pos));
+
+				for (int32_t j = 0; j < 4; j++)
+				{
+					const godot::Vector2 uv2(
+						((float)(m_customDataCount % width) + 0.5f) / width, 
+						((float)(m_customDataCount / width) + 0.5f) / width);
+					
+					auto& v = *(const DynamicVertex*)vertexPtr;
+					vs->immediate_color(immediate, ConvertColor(v.Col));
+					vs->immediate_uv(immediate, ConvertUV(v.UV));
+					vs->immediate_uv2(immediate, uv2);
+					vs->immediate_normal(immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
+					vs->immediate_tangent(immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
+					vs->immediate_vertex(immediate, ConvertVector3(v.Pos));
+
+					const float* customData1VertexPtr = (const float*)(vertexPtr + sizeof(DynamicVertex));
+					for (int32_t i = 0; i < customData1Count; i++)
+					{
+						customData1TexPtr[i] = customData1VertexPtr[i];
+					}
+					for (int32_t i = customData1Count; i < 4; i++)
+					{
+						customData1TexPtr[i] = 0.0f;
+					}
+					customData1TexPtr += 4;
+
+					const float* customData2VertexPtr = customData1VertexPtr + customData1Count;
+					for (int32_t i = 0; i < customData2Count; i++)
+					{
+						customData2TexPtr[i] = customData2VertexPtr[i];
+					}
+					for (int32_t i = customData2Count; i < 4; i++)
+					{
+						customData2TexPtr[i] = 0.0f;
+					}
+					customData2TexPtr += 4;
+
+					vertexPtr += stride;
+					m_customDataCount++;
+				}
+
+				vs->immediate_color(immediate, godot::Color());
+				vs->immediate_uv(immediate, godot::Vector2());
+				vs->immediate_uv2(immediate, godot::Vector2());
+				vs->immediate_normal(immediate, godot::Vector3());
+				vs->immediate_tangent(immediate, godot::Plane());
+				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertexPtr - stride)).Pos));
+			}
+
+			if (customData1Count > 0)
+			{
+				m_customData1Texture.Unlock();
+			}
+			if (customData2Count > 0)
+			{
+				m_customData2Texture.Unlock();
+			}
+			m_customDataCount = (m_customDataCount + width - 1) / width * width;
+		}
+		else
+		{
+			for (int32_t i = 0; i < spriteCount; i++)
+			{
+				const uint8_t* vertices = (const uint8_t*)vertexData + i * 4 * stride;
+
+				vs->immediate_color(immediate, godot::Color());
+				vs->immediate_uv(immediate, godot::Vector2());
+				vs->immediate_normal(immediate, godot::Vector3());
+				vs->immediate_tangent(immediate, godot::Plane());
+				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertices + 0 * stride)).Pos));
+
+				for (int32_t j = 0; j < 4; j++)
+				{
+					auto& v = *(const DynamicVertex*)(vertices + j * stride);
+					vs->immediate_color(immediate, ConvertColor(v.Col));
+					vs->immediate_uv(immediate, ConvertUV(v.UV));
+					vs->immediate_normal(immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
+					vs->immediate_tangent(immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
+					vs->immediate_vertex(immediate, ConvertVector3(v.Pos));
+				}
+
+				vs->immediate_color(immediate, godot::Color());
+				vs->immediate_uv(immediate, godot::Vector2());
+				vs->immediate_normal(immediate, godot::Vector3());
+				vs->immediate_tangent(immediate, godot::Plane());
+				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertices + 3 * stride)).Pos));
+			}
 		}
 	}
 
-	m_currentShader->ApplyToMaterial(
-		m_renderCommands[m_renderCount].GetMaterial(), 
-		m_renderState->GetActiveState());
+	vs->immediate_end(immediate);
 
-	m_renderCommands[m_renderCount].DrawSprites(world, vertexData, indexData, 
-		m_standardRenderer->CalculateCurrentStride(), spriteCount, 
-		m_currentShader->GetShaderType(), (int32_t)m_renderCount);
+	// Setup material
+	m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
+
+	if (state.CustomData1Count > 0)
+	{
+		vs->material_set_param(command.GetMaterial(), "CustomData1", m_customData1Texture.GetRID());
+	}
+	if (state.CustomData2Count > 0)
+	{
+		vs->material_set_param(command.GetMaterial(), "CustomData2", m_customData2Texture.GetRID());
+	}
+
+	command.DrawSprites(world, (int32_t)m_renderCount);
 	m_renderCount++;
 
 	impl->drawcallCount++;
@@ -615,12 +758,12 @@ void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
 	godot::World* world = viewport->get_world().ptr();
 	if (world == nullptr) return;
 
-	m_currentShader->ApplyToMaterial(
-		m_renderCommands[m_renderCount].GetMaterial(), 
-		m_renderState->GetActiveState());
+	auto& command = m_renderCommands[m_renderCount];
+
+	m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
 
 	auto mesh = m_currentModel.DownCast<Model>()->GetRID();
-	m_renderCommands[m_renderCount].DrawModel(world, mesh, (int32_t)m_renderCount);
+	command.DrawModel(world, mesh, (int32_t)m_renderCount);
 	m_renderCount++;
 
 	impl->drawcallCount++;
