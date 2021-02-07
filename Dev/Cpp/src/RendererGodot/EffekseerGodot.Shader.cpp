@@ -1,8 +1,5 @@
-﻿
-//-----------------------------------------------------------------------------------
-//
-//-----------------------------------------------------------------------------------
-#include <VisualServer.hpp>
+﻿#include <VisualServer.hpp>
+#include <Texture.hpp>
 #include "EffekseerGodot.Shader.h"
 #include "../Utils/EffekseerGodot.Utils.h"
 
@@ -166,8 +163,11 @@ void Shader::ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderState
 		}
 		else if (decl.type == ParamType::Texture)
 		{
-			vs->material_set_param(material, decl.name, 
-				Int64ToRID((int64_t)state.TextureIDs[decl.slot]));
+			godot::RID texture = Int64ToRID((int64_t)state.TextureIDs[decl.slot]);
+			vs->texture_set_flags(texture, godot::Texture::FLAG_MIPMAPS | 
+				((state.TextureFilterTypes[decl.slot] == Effekseer::TextureFilterType::Linear) ? godot::Texture::FLAG_FILTER : 0) | 
+				((state.TextureWrapTypes[decl.slot] == Effekseer::TextureWrapType::Repeat) ? godot::Texture::FLAG_REPEAT : 0));
+			vs->material_set_param(material, decl.name, texture);
 		}
 	}
 }
