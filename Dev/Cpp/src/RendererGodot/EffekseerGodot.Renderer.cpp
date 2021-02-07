@@ -635,27 +635,32 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 					vs->immediate_tangent(immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
 					vs->immediate_vertex(immediate, ConvertVector3(v.Pos));
 
-					const float* customData1VertexPtr = (const float*)(vertexPtr + sizeof(DynamicVertex));
-					for (int32_t i = 0; i < customData1Count; i++)
+					if (customData1Count)
 					{
-						customData1TexPtr[i] = customData1VertexPtr[i];
+						const float* customData1VertexPtr = (const float*)(vertexPtr + sizeof(DynamicVertex));
+						for (int32_t i = 0; i < customData1Count; i++)
+						{
+							customData1TexPtr[i] = customData1VertexPtr[i];
+						}
+						for (int32_t i = customData1Count; i < 4; i++)
+						{
+							customData1TexPtr[i] = 0.0f;
+						}
+						customData1TexPtr += 4;
 					}
-					for (int32_t i = customData1Count; i < 4; i++)
+					if (customData2Count > 0)
 					{
-						customData1TexPtr[i] = 0.0f;
+						const float* customData2VertexPtr = (const float*)(vertexPtr + sizeof(DynamicVertex)) + customData1Count;
+						for (int32_t i = 0; i < customData2Count; i++)
+						{
+							customData2TexPtr[i] = customData2VertexPtr[i];
+						}
+						for (int32_t i = customData2Count; i < 4; i++)
+						{
+							customData2TexPtr[i] = 0.0f;
+						}
+						customData2TexPtr += 4;
 					}
-					customData1TexPtr += 4;
-
-					const float* customData2VertexPtr = customData1VertexPtr + customData1Count;
-					for (int32_t i = 0; i < customData2Count; i++)
-					{
-						customData2TexPtr[i] = customData2VertexPtr[i];
-					}
-					for (int32_t i = customData2Count; i < 4; i++)
-					{
-						customData2TexPtr[i] = 0.0f;
-					}
-					customData2TexPtr += 4;
 
 					vertexPtr += stride;
 					m_customDataCount++;
