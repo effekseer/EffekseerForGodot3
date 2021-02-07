@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_Sprite_FixedYAxis.efkefc-9e662567e7e32d30a681ae739379ae4a.tres"
+
+[deps]
+
+source_file="res://effect/samples/Simple_Sprite_FixedYAxis.efkefc"
+dest_files=[ "res://.import/Simple_Sprite_FixedYAxis.efkefc-9e662567e7e32d30a681ae739379ae4a.tres" ]
+
+[params]
+

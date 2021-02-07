@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Homing_Laser01.efkefc-3080b9d779c397a2e140ce01887367d5.tres"
+
+[deps]
+
+source_file="res://effect/samples/Homing_Laser01.efkefc"
+dest_files=[ "res://.import/Homing_Laser01.efkefc-3080b9d779c397a2e140ce01887367d5.tres" ]
+
+[params]
+

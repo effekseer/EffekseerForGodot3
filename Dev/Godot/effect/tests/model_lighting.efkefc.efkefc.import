@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/model_lighting.efkefc.efkefc-60301220ab4684c3f6027c9aaf88c084.tres"
+
+[deps]
+
+source_file="res://effect/tests/model_lighting.efkefc.efkefc"
+dest_files=[ "res://.import/model_lighting.efkefc.efkefc-60301220ab4684c3f6027c9aaf88c084.tres" ]
+
+[params]
+

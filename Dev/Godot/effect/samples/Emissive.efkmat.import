@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Emissive.efkmat-13ccae889c0d297cc69f58bf8042aa49.res"
+
+[deps]
+
+source_file="res://effect/samples/Emissive.efkmat"
+dest_files=[ "res://.import/Emissive.efkmat-13ccae889c0d297cc69f58bf8042aa49.res" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Sphare.efkmodel-b623d773cd6d5f6438ca7e22ef2db080.tres"
+
+[deps]
+
+source_file="res://effect/sample-material1/Models/Sphare.efkmodel"
+dest_files=[ "res://.import/Sphare.efkmodel-b623d773cd6d5f6438ca7e22ef2db080.tres" ]
+
+[params]
+

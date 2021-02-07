@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/ToonBase.efkmat-e152352d6c7e70ae60dc4d455f187a25.tres"
+
+[deps]
+
+source_file="res://effect/sample-material2/Parts/ToonBase.efkmat"
+dest_files=[ "res://.import/ToonBase.efkmat-e152352d6c7e70ae60dc4d455f187a25.tres" ]
+
+[params]
+

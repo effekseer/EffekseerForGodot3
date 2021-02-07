@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/SpawnMethodParameter1.efkefc-30840d8f81a19bb878c77a250439b204.res"
+
+[deps]
+
+source_file="res://effect/tests/15/SpawnMethodParameter1.efkefc"
+dest_files=[ "res://.import/SpawnMethodParameter1.efkefc-30840d8f81a19bb878c77a250439b204.res" ]
+
+[params]
+

@@ -1,14 +1,18 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://grid.png" type="Texture" id=1]
 [ext_resource path="res://addons/effekseer/src/EffekseerEmitter.gdns" type="Script" id=2]
-[ext_resource path="res://effect/Laser01.efkefc" type="Resource" id=3]
+[ext_resource path="res://effect/sample-material2/ToonWater.efkefc" type="Resource" id=3]
 [ext_resource path="res://Test.gd" type="Script" id=4]
+[ext_resource path="res://Camera.gd" type="Script" id=5]
 
 [sub_resource type="PlaneMesh" id=1]
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_texture = ExtResource( 1 )
+
+[sub_resource type="Environment" id=3]
+glow_enabled = true
 
 [node name="Scene3D" type="Spatial"]
 script = ExtResource( 4 )
@@ -19,12 +23,17 @@ mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.715424, -0.261564, 0.647883, 0, 0.927282, 0.374364, -0.69869, -0.267829, 0.6634, 14.4216, 8.94071, 12.308 )
+transform = Transform( 0.707107, -0.241845, 0.664463, 0, 0.939693, 0.34202, -0.707107, -0.241845, 0.664463, 8.09255, 9.01818, 8.09256 )
+fov = 45.0
+script = ExtResource( 5 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.441882, 0.897073, 0, -0.897073, 0.441882, 0, 4.11189, 0 )
+transform = Transform( 1, 0, 0, 0, 0.200531, 0.979687, 0, -0.979687, 0.200531, 0, 6.95046, -4.86754e-07 )
 
 [node name="Effect" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00312006, 2.7396, 0.00309992 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.16313, 0 )
 script = ExtResource( 2 )
 effect = ExtResource( 3 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )

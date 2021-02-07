@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/DynamicParameter1.efkefc-b8d877edcaba3e4830d4da055245f998.res"
+
+[deps]
+
+source_file="res://effect/tests/15/DynamicParameter1.efkefc"
+dest_files=[ "res://.import/DynamicParameter1.efkefc-b8d877edcaba3e4830d4da055245f998.res" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Material_WorldPositionOffset.efkefc-236e5b9d335db3382ef1308c291caaa5.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Material_WorldPositionOffset.efkefc"
+dest_files=[ "res://.import/Material_WorldPositionOffset.efkefc-236e5b9d335db3382ef1308c291caaa5.res" ]
+
+[params]
+

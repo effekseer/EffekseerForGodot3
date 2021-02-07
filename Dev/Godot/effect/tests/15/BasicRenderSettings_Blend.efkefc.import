@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/BasicRenderSettings_Blend.efkefc-91200315a215e4a4e462e941c6cd4456.res"
+
+[deps]
+
+source_file="res://effect/tests/15/BasicRenderSettings_Blend.efkefc"
+dest_files=[ "res://.import/BasicRenderSettings_Blend.efkefc-91200315a215e4a4e462e941c6cd4456.res" ]
+
+[params]
+

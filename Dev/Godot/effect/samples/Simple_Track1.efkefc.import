@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_Track1.efkefc-e09d12c853f743cef66812a97717cd3c.tres"
+
+[deps]
+
+source_file="res://effect/samples/Simple_Track1.efkefc"
+dest_files=[ "res://.import/Simple_Track1.efkefc-e09d12c853f743cef66812a97717cd3c.tres" ]
+
+[params]
+

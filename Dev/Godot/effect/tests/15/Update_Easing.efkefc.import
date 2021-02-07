@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Update_Easing.efkefc-c0f410a9cb28e80bb113768f30e72031.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Update_Easing.efkefc"
+dest_files=[ "res://.import/Update_Easing.efkefc-c0f410a9cb28e80bb113768f30e72031.res" ]
+
+[params]
+

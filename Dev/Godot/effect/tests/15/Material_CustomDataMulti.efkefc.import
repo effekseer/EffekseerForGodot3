@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Material_CustomDataMulti.efkefc-4ffea0f3744a6cf0f6f879a966ec7703.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Material_CustomDataMulti.efkefc"
+dest_files=[ "res://.import/Material_CustomDataMulti.efkefc-4ffea0f3744a6cf0f6f879a966ec7703.res" ]
+
+[params]
+

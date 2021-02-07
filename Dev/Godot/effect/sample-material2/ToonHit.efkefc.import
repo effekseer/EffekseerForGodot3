@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/ToonHit.efkefc-9ef6e65c354bc160260b96d3e0776fe4.res"
+
+[deps]
+
+source_file="res://effect/sample-material2/ToonHit.efkefc"
+dest_files=[ "res://.import/ToonHit.efkefc-9ef6e65c354bc160260b96d3e0776fe4.res" ]
+
+[params]
+

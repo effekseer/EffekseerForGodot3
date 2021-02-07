@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/RampMap.efkefc-2dfeb2a9d6e87423aa2b77e6285d7519.res"
+
+[deps]
+
+source_file="res://effect/sample-material1/RampMap.efkefc"
+dest_files=[ "res://.import/RampMap.efkefc-2dfeb2a9d6e87423aa2b77e6285d7519.res" ]
+
+[params]
+

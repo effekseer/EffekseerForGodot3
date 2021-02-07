@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Lighing_Parameters1.efkefc-0e4cccb4c6e2c40cc2faf798f8d8ba7f.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Lighing_Parameters1.efkefc"
+dest_files=[ "res://.import/Lighing_Parameters1.efkefc-0e4cccb4c6e2c40cc2faf798f8d8ba7f.res" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Round.efkmodel-6cb373c40f08d31a7ca522ee0c878ccd.tres"
+
+[deps]
+
+source_file="res://effect/sample-material2/Parts/Round.efkmodel"
+dest_files=[ "res://.import/Round.efkmodel-6cb373c40f08d31a7ca522ee0c878ccd.tres" ]
+
+[params]
+

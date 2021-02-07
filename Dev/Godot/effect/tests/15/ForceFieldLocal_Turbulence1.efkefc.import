@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/ForceFieldLocal_Turbulence1.efkefc-7c52f472bc7cce8a169670375617ff25.res"
+
+[deps]
+
+source_file="res://effect/tests/15/ForceFieldLocal_Turbulence1.efkefc"
+dest_files=[ "res://.import/ForceFieldLocal_Turbulence1.efkefc-7c52f472bc7cce8a169670375617ff25.res" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/sprite_lighting.efkefc.efkefc-44887836c9128e00abb55ac2071493bc.tres"
+
+[deps]
+
+source_file="res://effect/tests/sprite_lighting.efkefc.efkefc"
+dest_files=[ "res://.import/sprite_lighting.efkefc.efkefc-44887836c9128e00abb55ac2071493bc.tres" ]
+
+[params]
+

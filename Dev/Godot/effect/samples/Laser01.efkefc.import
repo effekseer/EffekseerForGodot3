@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Laser01.efkefc-bf36cbb5c3f60c17f532629d8881fde0.tres"
+
+[deps]
+
+source_file="res://effect/samples/Laser01.efkefc"
+dest_files=[ "res://.import/Laser01.efkefc-bf36cbb5c3f60c17f532629d8881fde0.tres" ]
+
+[params]
+

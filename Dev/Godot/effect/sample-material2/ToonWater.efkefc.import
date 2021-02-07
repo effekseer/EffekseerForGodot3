@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/ToonWater.efkefc-837a9b6f801dc80c808d7199c5c726a9.res"
+
+[deps]
+
+source_file="res://effect/sample-material2/ToonWater.efkefc"
+dest_files=[ "res://.import/ToonWater.efkefc-837a9b6f801dc80c808d7199c5c726a9.res" ]
+
+[params]
+

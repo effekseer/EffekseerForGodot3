@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/ForceFieldLocal_Old.efkefc-68f992af1d97eaeea8f424ba1d88ef43.res"
+
+[deps]
+
+source_file="res://effect/tests/15/ForceFieldLocal_Old.efkefc"
+dest_files=[ "res://.import/ForceFieldLocal_Old.efkefc-68f992af1d97eaeea8f424ba1d88ef43.res" ]
+
+[params]
+

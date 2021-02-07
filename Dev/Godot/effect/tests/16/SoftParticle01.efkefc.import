@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/SoftParticle01.efkefc-cd8ccc5342a1b2430eec57eb6bed1965.tres"
+
+[deps]
+
+source_file="res://effect/tests/16/SoftParticle01.efkefc"
+dest_files=[ "res://.import/SoftParticle01.efkefc-cd8ccc5342a1b2430eec57eb6bed1965.tres" ]
+
+[params]
+

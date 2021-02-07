@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/lighting_normalmap.efkefc-aa6d61fdc44aa5a107e7bbbcd451bfc6.tres"
+
+[deps]
+
+source_file="res://effect/tests/lighting_normalmap.efkefc"
+dest_files=[ "res://.import/lighting_normalmap.efkefc-aa6d61fdc44aa5a107e7bbbcd451bfc6.tres" ]
+
+[params]
+

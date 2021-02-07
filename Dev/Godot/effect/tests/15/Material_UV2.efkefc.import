@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Material_UV2.efkefc-ed3ab2fb3e55364e35c4e42e3f62e3c9.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Material_UV2.efkefc"
+dest_files=[ "res://.import/Material_UV2.efkefc-ed3ab2fb3e55364e35c4e42e3f62e3c9.res" ]
+
+[params]
+

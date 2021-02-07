@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Flip01.efkefc-7ed86509ed1b46c97604ce740a86e64a.tres"
+
+[deps]
+
+source_file="res://effect/tests/16/Flip01.efkefc"
+dest_files=[ "res://.import/Flip01.efkefc-7ed86509ed1b46c97604ce740a86e64a.tres" ]
+
+[params]
+

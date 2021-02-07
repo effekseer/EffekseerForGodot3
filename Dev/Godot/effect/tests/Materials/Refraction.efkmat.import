@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Refraction.efkmat-0c808818258ddc592c2258a466f7f632.res"
+
+[deps]
+
+source_file="res://effect/tests/Materials/Refraction.efkmat"
+dest_files=[ "res://.import/Refraction.efkmat-0c808818258ddc592c2258a466f7f632.res" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_Ribbon_Sword.efkefc-ff67610c602d67dc633152b078e01c22.tres"
+
+[deps]
+
+source_file="res://effect/samples/Simple_Ribbon_Sword.efkefc"
+dest_files=[ "res://.import/Simple_Ribbon_Sword.efkefc-ff67610c602d67dc633152b078e01c22.tres" ]
+
+[params]
+

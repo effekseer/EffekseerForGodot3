@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Material_Parameter23.efkefc-ca97cd912a783f19266ec3c86cb7cc7d.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Material_Parameter23.efkefc"
+dest_files=[ "res://.import/Material_Parameter23.efkefc-ca97cd912a783f19266ec3c86cb7cc7d.res" ]
+
+[params]
+

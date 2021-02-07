@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Normal.efkmat-4ec628f0bcac273fdfb8685a1eb0322a.res"
+
+[deps]
+
+source_file="res://effect/tests/Materials/Normal.efkmat"
+dest_files=[ "res://.import/Normal.efkmat-4ec628f0bcac273fdfb8685a1eb0322a.res" ]
+
+[params]
+

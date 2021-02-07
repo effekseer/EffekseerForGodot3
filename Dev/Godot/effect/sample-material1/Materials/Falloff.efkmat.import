@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Falloff.efkmat-ce683268b423c9d800594c9038e0ed64.tres"
+
+[deps]
+
+source_file="res://effect/sample-material1/Materials/Falloff.efkmat"
+dest_files=[ "res://.import/Falloff.efkmat-ce683268b423c9d800594c9038e0ed64.tres" ]
+
+[params]
+

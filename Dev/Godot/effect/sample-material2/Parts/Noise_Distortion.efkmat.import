@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Noise_Distortion.efkmat-6846941edd4039aebcef973f44d67d57.tres"
+
+[deps]
+
+source_file="res://effect/sample-material2/Parts/Noise_Distortion.efkmat"
+dest_files=[ "res://.import/Noise_Distortion.efkmat-6846941edd4039aebcef973f44d67d57.tres" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/VertexTransform.efkefc-c62d894ddf2f305ddd9991e276d5923a.res"
+
+[deps]
+
+source_file="res://effect/sample-material1/VertexTransform.efkefc"
+dest_files=[ "res://.import/VertexTransform.efkefc-c62d894ddf2f305ddd9991e276d5923a.res" ]
+
+[params]
+

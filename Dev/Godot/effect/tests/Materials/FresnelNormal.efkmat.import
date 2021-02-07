@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/FresnelNormal.efkmat-350b8d479e81630793cc2a83a0a33d20.res"
+
+[deps]
+
+source_file="res://effect/tests/Materials/FresnelNormal.efkmat"
+dest_files=[ "res://.import/FresnelNormal.efkmat-350b8d479e81630793cc2a83a0a33d20.res" ]
+
+[params]
+

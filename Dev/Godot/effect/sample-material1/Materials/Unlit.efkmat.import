@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Unlit.efkmat-6de18f29c130ecf8dc63678b4151c0f5.tres"
+
+[deps]
+
+source_file="res://effect/sample-material1/Materials/Unlit.efkmat"
+dest_files=[ "res://.import/Unlit.efkmat-6de18f29c130ecf8dc63678b4151c0f5.tres" ]
+
+[params]
+

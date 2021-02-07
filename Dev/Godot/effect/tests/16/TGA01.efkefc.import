@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/TGA01.efkefc-09fc13671c717c6b7cbd9fc5c1e734e7.tres"
+
+[deps]
+
+source_file="res://effect/tests/16/TGA01.efkefc"
+dest_files=[ "res://.import/TGA01.efkefc-09fc13671c717c6b7cbd9fc5c1e734e7.tres" ]
+
+[params]
+

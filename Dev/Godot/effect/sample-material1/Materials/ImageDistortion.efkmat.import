@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/ImageDistortion.efkmat-8682a32d9db5afaeb927702fcfb85044.tres"
+
+[deps]
+
+source_file="res://effect/sample-material1/Materials/ImageDistortion.efkmat"
+dest_files=[ "res://.import/ImageDistortion.efkmat-8682a32d9db5afaeb927702fcfb85044.tres" ]
+
+[params]
+

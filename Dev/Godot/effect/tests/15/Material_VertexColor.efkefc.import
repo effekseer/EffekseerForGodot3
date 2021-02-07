@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Material_VertexColor.efkefc-a2e702d00adfecef81635e7995f86a5d.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Material_VertexColor.efkefc"
+dest_files=[ "res://.import/Material_VertexColor.efkefc-a2e702d00adfecef81635e7995f86a5d.res" ]
+
+[params]
+

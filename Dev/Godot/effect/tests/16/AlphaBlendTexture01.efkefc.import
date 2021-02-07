@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/AlphaBlendTexture01.efkefc-ed0f27d0a9c3666f327841d26ea64d77.tres"
+
+[deps]
+
+source_file="res://effect/tests/16/AlphaBlendTexture01.efkefc"
+dest_files=[ "res://.import/AlphaBlendTexture01.efkefc-ed0f27d0a9c3666f327841d26ea64d77.tres" ]
+
+[params]
+

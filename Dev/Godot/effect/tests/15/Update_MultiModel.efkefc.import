@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Update_MultiModel.efkefc-02f5134dc897eca4557b5346dd44b465.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Update_MultiModel.efkefc"
+dest_files=[ "res://.import/Update_MultiModel.efkefc-02f5134dc897eca4557b5346dd44b465.res" ]
+
+[params]
+

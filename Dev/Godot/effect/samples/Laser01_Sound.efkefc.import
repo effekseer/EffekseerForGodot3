@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Laser01_Sound.efkefc-b7c75c7c3ad4760dfd40ddcf564a7726.res"
+
+[deps]
+
+source_file="res://effect/samples/Laser01_Sound.efkefc"
+dest_files=[ "res://.import/Laser01_Sound.efkefc-b7c75c7c3ad4760dfd40ddcf564a7726.res" ]
+
+[params]
+

@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Material_FresnelLike.efkefc-4eb755cd8c963156728a003dbffc9335.res"
+
+[deps]
+
+source_file="res://effect/tests/15/Material_FresnelLike.efkefc"
+dest_files=[ "res://.import/Material_FresnelLike.efkefc-4eb755cd8c963156728a003dbffc9335.res" ]
+
+[params]
+

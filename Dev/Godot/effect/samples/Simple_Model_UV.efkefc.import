@@ -1,0 +1,13 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Simple_Model_UV.efkefc-d8910141af73be5252d0bfa282297753.tres"
+
+[deps]
+
+source_file="res://effect/samples/Simple_Model_UV.efkefc"
+dest_files=[ "res://.import/Simple_Model_UV.efkefc-d8910141af73be5252d0bfa282297753.tres" ]
+
+[params]
+

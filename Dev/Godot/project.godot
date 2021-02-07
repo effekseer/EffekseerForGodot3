@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "EffekseerEmitter",
 "language": "NativeScript",
 "path": "res://addons/effekseer/src/EffekseerEmitter.gdns"
+}, {
+"base": "Resource",
+"class": "EffekseerResource",
+"language": "NativeScript",
+"path": "res://addons/effekseer/src/EffekseerResource.gdns"
 } ]
 _global_script_class_icons={
 "EffekseerEffect": "res://addons/effekseer/icon16.png",
-"EffekseerEmitter": "res://addons/effekseer/icon16.png"
+"EffekseerEmitter": "res://addons/effekseer/icon16.png",
+"EffekseerResource": "res://addons/effekseer/icon16.png"
 }
 
 [application]
@@ -37,3 +43,9 @@ EffekseerSystem="*res://addons/effekseer/src/EffekseerSystem.gdns"
 [editor_plugins]
 
 enabled=PoolStringArray( "effekseer" )
+
+[importer_defaults]
+
+effekseer.effect={
+
+}
