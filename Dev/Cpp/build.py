@@ -29,6 +29,13 @@ if "platform=windows" in sys.argv:
     shutil.copy2("bin/libeffekseer.win32.dll", "../Godot/addons/effekseer/bin/win32/")
     shutil.copy2("bin/libeffekseer.win64.dll", "../Godot/addons/effekseer/bin/win64/")
 
+elif "platform=osx" in sys.argv:
+    subprocess.run("scons platform=osx bits=64 generate_bindings=yes target=release -j4", cwd = "godot-cpp", shell = True)
+
+    subprocess.run("scons platform=osx bits=64 target=release -j4", shell = True)
+
+    shutil.copy2("bin/libeffekseer.osx.dylib", "../Godot/addons/effekseer/bin/osx/")
+
 elif "platform=android" in sys.argv:
     subprocess.run("scons platform=android android_arch=armv7 generate_bindings=yes target=release -j4", cwd = "godot-cpp", shell = True)
     subprocess.run("scons platform=android android_arch=arm64v8 generate_bindings=yes target=release -j4", cwd = "godot-cpp", shell = True)

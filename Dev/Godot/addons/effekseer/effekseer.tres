@@ -1,5 +1,9 @@
 [gd_resource type="GDNativeLibrary" format=2]
 
 [resource]
+entry/OSX.64 = "res://addons/effekseer/bin/osx/libeffekseer.osx.dylib"
 entry/Windows.64 = "res://addons/effekseer/bin/win64/libeffekseer.win64.dll"
 entry/Windows.32 = "res://addons/effekseer/bin/win32/libeffekseer.win32.dll"
+dependency/OSX.64 = [  ]
+dependency/Windows.64 = [  ]
+dependency/Windows.32 = [  ]

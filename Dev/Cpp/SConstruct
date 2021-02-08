@@ -208,6 +208,8 @@ elif env["platform"] == "osx":
     elif env["target"] == "release":
         env.Append(CCFLAGS=["-O3"])
 
+    target_path = "libeffekseer.osx.dylib"
+
 elif env["platform"] == "ios":
     if env["ios_arch"] == "x86_64":
         sdk_name = "iphonesimulator"
