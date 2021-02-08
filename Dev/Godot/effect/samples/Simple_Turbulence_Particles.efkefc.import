@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/Simple_Turbulence_Particles.efkefc-6e7037990819e6d04e17a7323a9da838.tres"
+path="res://.import/Simple_Turbulence_Particles.efkefc-6e7037990819e6d04e17a7323a9da838.res"
 
 [deps]
 
 source_file="res://effect/samples/Simple_Turbulence_Particles.efkefc"
-dest_files=[ "res://.import/Simple_Turbulence_Particles.efkefc-6e7037990819e6d04e17a7323a9da838.tres" ]
+dest_files=[ "res://.import/Simple_Turbulence_Particles.efkefc-6e7037990819e6d04e17a7323a9da838.res" ]
 
 [params]
 

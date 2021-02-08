@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/Lighting1.efkmat-face850d6858f9a62478c2e90b4d3979.res"
+path="res://.import/Lighting1.efkmat-face850d6858f9a62478c2e90b4d3979.tres"
 
 [deps]
 
 source_file="res://effect/tests/Materials/Lighting1.efkmat"
-dest_files=[ "res://.import/Lighting1.efkmat-face850d6858f9a62478c2e90b4d3979.res" ]
+dest_files=[ "res://.import/Lighting1.efkmat-face850d6858f9a62478c2e90b4d3979.tres" ]
 
 [params]
 

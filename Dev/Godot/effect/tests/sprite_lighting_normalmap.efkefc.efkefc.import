@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/sprite_lighting_normalmap.efkefc.efkefc-ed01dad36a48d41575309f2f20b03cd0.tres"
+path="res://.import/sprite_lighting_normalmap.efkefc.efkefc-ed01dad36a48d41575309f2f20b03cd0.res"
 
 [deps]
 
 source_file="res://effect/tests/sprite_lighting_normalmap.efkefc.efkefc"
-dest_files=[ "res://.import/sprite_lighting_normalmap.efkefc.efkefc-ed01dad36a48d41575309f2f20b03cd0.tres" ]
+dest_files=[ "res://.import/sprite_lighting_normalmap.efkefc.efkefc-ed01dad36a48d41575309f2f20b03cd0.res" ]
 
 [params]
 

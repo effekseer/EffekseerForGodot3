@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/AlphaCutoffEdgeColor01.efkefc-1947e92e2a6f50005d2e50cc33a61fe7.tres"
+path="res://.import/AlphaCutoffEdgeColor01.efkefc-1947e92e2a6f50005d2e50cc33a61fe7.res"
 
 [deps]
 
 source_file="res://effect/tests/16/AlphaCutoffEdgeColor01.efkefc"
-dest_files=[ "res://.import/AlphaCutoffEdgeColor01.efkefc-1947e92e2a6f50005d2e50cc33a61fe7.tres" ]
+dest_files=[ "res://.import/AlphaCutoffEdgeColor01.efkefc-1947e92e2a6f50005d2e50cc33a61fe7.res" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/Laser03.efkefc-dbec544febf49d370d34caa58714336c.tres"
+path="res://.import/Laser03.efkefc-dbec544febf49d370d34caa58714336c.res"
 
 [deps]
 
 source_file="res://effect/samples/Laser03.efkefc"
-dest_files=[ "res://.import/Laser03.efkefc-dbec544febf49d370d34caa58714336c.tres" ]
+dest_files=[ "res://.import/Laser03.efkefc-dbec544febf49d370d34caa58714336c.res" ]
 
 [params]
 

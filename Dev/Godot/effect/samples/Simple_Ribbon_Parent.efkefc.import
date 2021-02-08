@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/Simple_Ribbon_Parent.efkefc-cb68cae0189a85121d1f8bc7b93a1e8a.tres"
+path="res://.import/Simple_Ribbon_Parent.efkefc-cb68cae0189a85121d1f8bc7b93a1e8a.res"
 
 [deps]
 
 source_file="res://effect/samples/Simple_Ribbon_Parent.efkefc"
-dest_files=[ "res://.import/Simple_Ribbon_Parent.efkefc-cb68cae0189a85121d1f8bc7b93a1e8a.tres" ]
+dest_files=[ "res://.import/Simple_Ribbon_Parent.efkefc-cb68cae0189a85121d1f8bc7b93a1e8a.res" ]
 
 [params]
 

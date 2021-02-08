@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/Simple_Distortion.efkefc-ba063639f8e0a7f4970a7dd6527bd2d1.tres"
+path="res://.import/Simple_Distortion.efkefc-ba063639f8e0a7f4970a7dd6527bd2d1.res"
 
 [deps]
 
 source_file="res://effect/samples/Simple_Distortion.efkefc"
-dest_files=[ "res://.import/Simple_Distortion.efkefc-ba063639f8e0a7f4970a7dd6527bd2d1.tres" ]
+dest_files=[ "res://.import/Simple_Distortion.efkefc-ba063639f8e0a7f4970a7dd6527bd2d1.res" ]
 
 [params]
 

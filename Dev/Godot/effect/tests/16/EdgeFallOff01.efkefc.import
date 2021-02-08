@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/EdgeFallOff01.efkefc-c84fa3e356e7d21429be292975c31267.tres"
+path="res://.import/EdgeFallOff01.efkefc-c84fa3e356e7d21429be292975c31267.res"
 
 [deps]
 
 source_file="res://effect/tests/16/EdgeFallOff01.efkefc"
-dest_files=[ "res://.import/EdgeFallOff01.efkefc-c84fa3e356e7d21429be292975c31267.tres" ]
+dest_files=[ "res://.import/EdgeFallOff01.efkefc-c84fa3e356e7d21429be292975c31267.res" ]
 
 [params]
 

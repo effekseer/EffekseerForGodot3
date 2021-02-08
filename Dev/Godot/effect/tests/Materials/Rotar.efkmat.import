@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/Rotar.efkmat-49dd65af62305dff5d954eeba0fba3ed.res"
+path="res://.import/Rotar.efkmat-49dd65af62305dff5d954eeba0fba3ed.tres"
 
 [deps]
 
 source_file="res://effect/tests/Materials/Rotar.efkmat"
-dest_files=[ "res://.import/Rotar.efkmat-49dd65af62305dff5d954eeba0fba3ed.res" ]
+dest_files=[ "res://.import/Rotar.efkmat-49dd65af62305dff5d954eeba0fba3ed.tres" ]
 
 [params]
 

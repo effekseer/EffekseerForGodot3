@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/Simple_Sprite_BillBoard.efkefc-26a99fdb561eb452efaa0356dfee97d0.tres"
+path="res://.import/Simple_Sprite_BillBoard.efkefc-26a99fdb561eb452efaa0356dfee97d0.res"
 
 [deps]
 
 source_file="res://effect/samples/Simple_Sprite_BillBoard.efkefc"
-dest_files=[ "res://.import/Simple_Sprite_BillBoard.efkefc-26a99fdb561eb452efaa0356dfee97d0.tres" ]
+dest_files=[ "res://.import/Simple_Sprite_BillBoard.efkefc-26a99fdb561eb452efaa0356dfee97d0.res" ]
 
 [params]
 

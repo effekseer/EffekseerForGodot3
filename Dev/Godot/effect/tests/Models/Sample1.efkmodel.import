@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/Sample1.efkmodel-40aaf9bb55a25e827aa5587533f234ff.res"
+path="res://.import/Sample1.efkmodel-40aaf9bb55a25e827aa5587533f234ff.tres"
 
 [deps]
 
 source_file="res://effect/tests/Models/Sample1.efkmodel"
-dest_files=[ "res://.import/Sample1.efkmodel-40aaf9bb55a25e827aa5587533f234ff.res" ]
+dest_files=[ "res://.import/Sample1.efkmodel-40aaf9bb55a25e827aa5587533f234ff.tres" ]
 
 [params]
 

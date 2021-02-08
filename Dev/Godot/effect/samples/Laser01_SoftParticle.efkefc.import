@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/Laser01_SoftParticle.efkefc-74e396495066930098a8fe7f303f0ef4.tres"
+path="res://.import/Laser01_SoftParticle.efkefc-74e396495066930098a8fe7f303f0ef4.res"
 
 [deps]
 
 source_file="res://effect/samples/Laser01_SoftParticle.efkefc"
-dest_files=[ "res://.import/Laser01_SoftParticle.efkefc-74e396495066930098a8fe7f303f0ef4.tres" ]
+dest_files=[ "res://.import/Laser01_SoftParticle.efkefc-74e396495066930098a8fe7f303f0ef4.res" ]
 
 [params]
 

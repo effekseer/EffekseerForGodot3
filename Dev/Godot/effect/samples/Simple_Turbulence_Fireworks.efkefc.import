@@ -2,12 +2,12 @@
 
 importer="effekseer.effect"
 type="Resource"
-path="res://.import/Simple_Turbulence_Fireworks.efkefc-6f166ddd8ca589267aa72399666837c2.tres"
+path="res://.import/Simple_Turbulence_Fireworks.efkefc-6f166ddd8ca589267aa72399666837c2.res"
 
 [deps]
 
 source_file="res://effect/samples/Simple_Turbulence_Fireworks.efkefc"
-dest_files=[ "res://.import/Simple_Turbulence_Fireworks.efkefc-6f166ddd8ca589267aa72399666837c2.tres" ]
+dest_files=[ "res://.import/Simple_Turbulence_Fireworks.efkefc-6f166ddd8ca589267aa72399666837c2.res" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/Arrow.efkmodel-e4f29d138f98e4b06bdfca6c8f325849.res"
+path="res://.import/Arrow.efkmodel-e4f29d138f98e4b06bdfca6c8f325849.tres"
 
 [deps]
 
 source_file="res://effect/samples/Model/Arrow.efkmodel"
-dest_files=[ "res://.import/Arrow.efkmodel-e4f29d138f98e4b06bdfca6c8f325849.res" ]
+dest_files=[ "res://.import/Arrow.efkmodel-e4f29d138f98e4b06bdfca6c8f325849.tres" ]
 
 [params]
 
