@@ -49,6 +49,13 @@ elif "platform=android" in sys.argv:
     subprocess.run("scons platform=android android_arch=x86 target=release -j4", shell = True)
     subprocess.run("scons platform=android android_arch=x86_64 target=release -j4", shell = True)
 
+    os.makedirs("../Godot/addons/effekseer/bin/android", exist_ok = True)
+
+    shutil.copy2("bin/libeffekseer.android-armv7.so", "../Godot/addons/effekseer/bin/android/")
+    shutil.copy2("bin/libeffekseer.android-arm64v8.so", "../Godot/addons/effekseer/bin/android/")
+    shutil.copy2("bin/libeffekseer.android-x86.so", "../Godot/addons/effekseer/bin/android/")
+    shutil.copy2("bin/libeffekseer.android-x86_64.so", "../Godot/addons/effekseer/bin/android/")
+
 elif "platform=ios" in sys.argv:
     replace_word("godot-cpp/Sconstruct", "-version-min=10.0", "-version-min=9.0")
 
