@@ -235,8 +235,6 @@ elif env["platform"] == "ios":
     env.Append(LINKFLAGS=[
         "-arch",
         env["ios_arch"],
-        "-framework",
-        "Cocoa",
         "-Wl,-undefined,dynamic_lookup",
         "-isysroot", sdk_path,
         "-F" + sdk_path
@@ -246,6 +244,8 @@ elif env["platform"] == "ios":
         env.Append(CCFLAGS=["-Og"])
     elif env["target"] == "release":
         env.Append(CCFLAGS=["-O3"])
+
+    target_path = "libeffekseer.ios-" + env["ios_arch"] + ".dylib"
 
 elif env["platform"] == "windows":
     # MSVC
@@ -380,7 +380,5 @@ env.Append(LIBS=[
     )
 ])
 
-library = env.SharedLibrary(
-    "bin/" + target_path, source=sources
-)
+library = env.SharedLibrary("bin/" + target_path, source=sources)
 Default(library)
