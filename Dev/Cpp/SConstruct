@@ -185,6 +185,8 @@ if env["platform"] == "linux":
         env.Append(CCFLAGS=["-m32"])
         env.Append(LINKFLAGS=["-m32"])
 
+    target_path = "libeffekseer.linux-" + env["bits"] + ".so"
+
 elif env["platform"] == "osx":
     # Use Clang on macOS by default
     env["CXX"] = "clang++"
@@ -256,7 +258,7 @@ elif env["platform"] == "windows":
         env.Append(CCFLAGS=["/O2", "/EHsc", "/DNDEBUG", "/MT"])
 
     target_path = "libeffekseer.win" + env["bits"] + ".dll"
-            
+    
 elif env["platform"] == "android":
     if host_platform == "windows":
         raise ValueError("Not supported that build by windows host platform.")
@@ -309,8 +311,7 @@ elif env["platform"] == "android":
     }
     arch_info = arch_info_table[env["android_arch"]]
     target_path = "libeffekseer.android-" + env["android_arch"] + ".so"
-        
-
+    
     # Setup tools
     env["CC"] = toolchain + "/bin/clang"
     env["CXX"] = toolchain + "/bin/clang++"
@@ -319,6 +320,7 @@ elif env["platform"] == "android":
     env.Append(CCFLAGS=["--target=" + arch_info["target"] + env["android_api_level"], "-march=" + arch_info["march"], "-fPIC"])#, "-fPIE", "-fno-addrsig", "-Oz"])
     env.Append(CCFLAGS=arch_info["ccflags"])
     env.Append(LINKFLAGS=["--target=" + arch_info["target"] + env["android_api_level"], "-march=" + arch_info["march"]])
+
 
 # Generate bindings?
 json_api_file = ""

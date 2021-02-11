@@ -72,3 +72,15 @@ elif "platform=ios" in sys.argv:
     os.makedirs("../Godot/addons/effekseer/bin/ios", exist_ok = True)
     
     shutil.copy2("bin/libeffekseer.ios.dylib", "../Godot/addons/effekseer/bin/ios/")
+
+if "platform=linux" in sys.argv:
+    subprocess.run("scons platform=linux bits=32 generate_bindings=yes target=release use_llvm=1 -j4", cwd = "godot-cpp", shell = True)
+    subprocess.run("scons platform=linux bits=64 generate_bindings=yes target=release use_llvm=1 -j4", cwd = "godot-cpp", shell = True)
+
+    subprocess.run("scons platform=linux bits=32 target=release use_llvm=1 -j4", shell = True)
+    subprocess.run("scons platform=linux bits=64 target=release use_llvm=1 -j4", shell = True)
+
+    os.makedirs("../Godot/addons/effekseer/bin/linux", exist_ok = True)
+
+    shutil.copy2("bin/libeffekseer.linux-32.so", "../Godot/addons/effekseer/bin/linux/")
+    shutil.copy2("bin/libeffekseer.linux-64.so", "../Godot/addons/effekseer/bin/linux/")
