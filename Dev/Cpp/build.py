@@ -23,8 +23,7 @@ if "platform=windows" in sys.argv:
     subprocess.run("scons platform=windows bits=32 target=release -j4", shell = True)
     subprocess.run("scons platform=windows bits=64 target=release -j4", shell = True)
 
-    os.makedirs("../Godot/addons/effekseer/bin/win32", exist_ok = True)
-    os.makedirs("../Godot/addons/effekseer/bin/win64", exist_ok = True)
+    os.makedirs("../Godot/addons/effekseer/bin/windows", exist_ok = True)
 
     shutil.copy2("bin/libeffekseer.win32.dll", "../Godot/addons/effekseer/bin/windows/")
     shutil.copy2("bin/libeffekseer.win64.dll", "../Godot/addons/effekseer/bin/windows/")
