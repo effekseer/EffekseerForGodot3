@@ -133,22 +133,22 @@ public:
 	/**
 	@brief	ステートを復帰するかどうかのフラグを設定する。
 	*/
-	void SetRestorationOfStatesFlag(bool flag) {}
+	void SetRestorationOfStatesFlag(bool flag) override {}
 
 	/**
 		@brief	状態リセット
 	*/
-	void ResetState();
+	void ResetState() override;
 
 	/**
 		@brief	描画開始
 	*/
-	bool BeginRendering();
+	bool BeginRendering() override;
 
 	/**
 		@brief	描画終了
 	*/
-	bool EndRendering();
+	bool EndRendering() override;
 
 	/**
 		@brief	頂点バッファ取得
@@ -163,34 +163,34 @@ public:
 	/**
 		@brief	最大描画スプライト数
 	*/
-	int32_t GetSquareMaxCount() const { return m_squareMaxCount; }
+	int32_t GetSquareMaxCount() const override { return m_squareMaxCount; }
 
 	::EffekseerRenderer::RenderStateBase* GetRenderState() { return m_renderState.get(); } 
 
 	/**
 		@brief	スプライトレンダラーを生成する。
 	*/
-	::Effekseer::SpriteRendererRef CreateSpriteRenderer();
+	::Effekseer::SpriteRendererRef CreateSpriteRenderer() override;
 
 	/**
 		@brief	リボンレンダラーを生成する。
 	*/
-	::Effekseer::RibbonRendererRef CreateRibbonRenderer();
+	::Effekseer::RibbonRendererRef CreateRibbonRenderer() override;
 
 	/**
 		@brief	リングレンダラーを生成する。
 	*/
-	::Effekseer::RingRendererRef CreateRingRenderer();
+	::Effekseer::RingRendererRef CreateRingRenderer() override;
 
 	/**
 		@brief	モデルレンダラーを生成する。
 	*/
-	::Effekseer::ModelRendererRef CreateModelRenderer();
+	::Effekseer::ModelRendererRef CreateModelRenderer() override;
 
 	/**
 		@brief	軌跡レンダラーを生成する。
 	*/
-	::Effekseer::TrackRendererRef CreateTrackRenderer();
+	::Effekseer::TrackRendererRef CreateTrackRenderer() override;
 
 	::Effekseer::TextureLoaderRef CreateTextureLoader(::Effekseer::FileInterface* fileInterface = NULL) override { return nullptr; }
 
@@ -228,15 +228,15 @@ public:
 	void SetVertexBufferToShader(const void* data, int32_t size, int32_t dstOffset);
 	void SetPixelBufferToShader(const void* data, int32_t size, int32_t dstOffset);
 	void SetTextures(Shader* shader, Effekseer::Backend::TextureRef* textures, int32_t count);
-	void ResetRenderState();
+	void ResetRenderState() override;
 
 	Effekseer::Backend::TextureRef CreateProxyTexture(EffekseerRenderer::ProxyTextureType type) override;
 
 	void DeleteProxyTexture(Effekseer::Backend::TextureRef& texture) override;
 
-	virtual int GetRef() { return Effekseer::ReferenceObject::GetRef(); }
-	virtual int AddRef() { return Effekseer::ReferenceObject::AddRef(); }
-	virtual int Release() { return Effekseer::ReferenceObject::Release();; }
+	virtual int GetRef() override { return Effekseer::ReferenceObject::GetRef(); }
+	virtual int AddRef() override { return Effekseer::ReferenceObject::AddRef(); }
+	virtual int Release() override { return Effekseer::ReferenceObject::Release();; }
 };
 
 //----------------------------------------------------------------------------------

@@ -35,10 +35,10 @@ public:
 	static Effekseer::RefPtr<VertexBuffer> Create(RendererImplemented* renderer, int size, bool isDynamic);
 
 public:
-	void Lock();
+	void Lock() override;
 	bool RingBufferLock(int32_t size, int32_t& offset, void*& data, int32_t alignment) override;
 	bool TryRingBufferLock(int32_t size, int32_t& offset, void*& data, int32_t alignment) override;
-	void Unlock();
+	void Unlock() override;
 
 	const uint8_t* Refer() const { return m_buffer.data(); }
 };

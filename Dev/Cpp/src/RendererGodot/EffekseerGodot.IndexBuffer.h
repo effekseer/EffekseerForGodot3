@@ -29,8 +29,8 @@ public:
 	static Effekseer::RefPtr<IndexBuffer> Create(RendererImplemented* renderer, int maxCount, bool isDynamic);
 
 public:
-	void Lock();
-	void Unlock();
+	void Lock() override;
+	void Unlock() override;
 
 	const uint8_t* Refer() const { return m_buffer.data(); }
 };
