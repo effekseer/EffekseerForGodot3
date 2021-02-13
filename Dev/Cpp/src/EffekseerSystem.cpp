@@ -58,7 +58,9 @@ EffekseerSystem::EffekseerSystem()
 	Ref<Reference> sound = EffekseerGodot::ScriptNew(soundScript);
 	
 	m_manager = Effekseer::Manager::Create(instanceMaxCount);
+#ifndef __EMSCRIPTEN__
 	m_manager->LaunchWorkerThreads(2);
+#endif
 	m_manager->SetTextureLoader(Effekseer::MakeRefPtr<EffekseerGodot::TextureLoader>());
 	m_manager->SetModelLoader(Effekseer::MakeRefPtr<EffekseerGodot::ModelLoader>());
 	m_manager->SetMaterialLoader(Effekseer::MakeRefPtr<EffekseerGodot::MaterialLoader>());

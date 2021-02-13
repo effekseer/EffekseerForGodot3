@@ -77,3 +77,10 @@ elif "platform=linux" in sys.argv:
 
     shutil.copy2("bin/libeffekseer.linux-32.so", "../Godot/addons/effekseer/bin/linux/")
     shutil.copy2("bin/libeffekseer.linux-64.so", "../Godot/addons/effekseer/bin/linux/")
+
+elif "platform=html5" in sys.argv:
+    subprocess.run("scons platform=html5 bits=32 target=release" + job_opt, shell = True)
+
+    os.makedirs("../Godot/addons/effekseer/bin/html5", exist_ok = True)
+
+    shutil.copy2("bin/libeffekseer.wasm32.wasm", "../Godot/addons/effekseer/bin/html5/")
