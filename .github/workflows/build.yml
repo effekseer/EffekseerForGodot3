@@ -14,10 +14,10 @@ jobs:
         run: git clone https://github.com/effekseer/Effekseer --depth 1 ../Effekseer
       - name: Build binaries
         run: |
-          cd ./Dev/Cpp
           sudo apt-get install scons
           sudo apt-get install gcc-multilib
           sudo apt-get install g++-multilib
+          cd ./Dev/Cpp
           python3 build.py platform=linux
       - name: Upload binaries
         uses: actions/upload-artifact@v1
@@ -36,8 +36,8 @@ jobs:
         run: git clone https://github.com/effekseer/Effekseer --depth 1 ../Effekseer
       - name: Build binaries
         run: |
-          cd ./Dev/Cpp
           sudo apt-get install scons
+          cd ./Dev/Cpp
           python3 build.py platform=android
       - name: Upload binaries
         uses: actions/upload-artifact@v1
@@ -56,8 +56,8 @@ jobs:
         run: git clone https://github.com/effekseer/Effekseer --depth 1 ../Effekseer
       - name: Build binaries
         run: |
-          cd ./Dev/Cpp
           brew install scons
+          cd ./Dev/Cpp
           python3 build.py platform=osx
       - name: Upload binaries
         uses: actions/upload-artifact@v1
@@ -76,8 +76,8 @@ jobs:
         run: git clone https://github.com/effekseer/Effekseer --depth 1 ../Effekseer
       - name: Build binaries
         run: |
-          cd ./Dev/Cpp
           brew install scons
+          cd ./Dev/Cpp
           python3 build.py platform=ios
       - name: Upload binaries
         uses: actions/upload-artifact@v1
@@ -96,8 +96,8 @@ jobs:
         run: git clone https://github.com/effekseer/Effekseer --depth 1 ../Effekseer
       - name: Build binaries
         run: |
-          cd ./Dev/Cpp
           python -m pip install scons
+          cd ./Dev/Cpp
           python build.py platform=windows
         shell: cmd
       - name: Upload binaries
@@ -106,10 +106,43 @@ jobs:
           name: bin_windows
           path: ./Dev/Godot/addons/effekseer/bin
 
+  html5:
+    name: Build for HTML5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update Submodules
+        run: git submodule update --init --recursive
+      - name: Clone dependency repository
+        run: git clone https://github.com/effekseer/Effekseer --depth 1 ../Effekseer
+      - name: Cache emsdk
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ./emsdk
+          key: ${{ runner.os }}-emsdk-2_0_10-v1
+      - name: Install emsdk 2.0.10
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git clone --depth 1 https://github.com/emscripten-core/emsdk.git
+          ./emsdk/emsdk install 2.0.10
+      - name: Build binaries
+        run: |
+          ./emsdk/emsdk activate 2.0.10
+          source ./emsdk/emsdk_env.sh
+          sudo apt-get install scons
+          cd ./Dev/Cpp
+          python3 build.py platform=html5
+      - name: Upload binaries
+        uses: actions/upload-artifact@v1
+        with:
+          name: bin_html5
+          path: ./Dev/Godot/addons/effekseer/bin
+
   merge:
     name: Merge 
     runs-on: ubuntu-latest
-    needs: [linux, android, macos, ios, windows]
+    needs: [linux, android, macos, ios, windows, html5]
     steps:
       - uses: actions/checkout@v2
 
@@ -138,6 +171,11 @@ jobs:
         with:
           name: bin_windows
 
+      - name: Download HTML5 binaries
+        uses: actions/download-artifact@v1
+        with:
+          name: bin_html5
+
       - name: Copy binaries
         run: |
           mkdir ./Dev/Godot/addons/effekseer/bin
@@ -146,6 +184,7 @@ jobs:
           cp -r bin_macos/osx ./Dev/Godot/addons/effekseer/bin/
           cp -r bin_ios/ios ./Dev/Godot/addons/effekseer/bin/
           cp -r bin_windows/windows ./Dev/Godot/addons/effekseer/bin/
+          cp -r bin_html5/html5 ./Dev/Godot/addons/effekseer/bin/
 
       - name: Upload built package
         uses: actions/upload-artifact@v1
