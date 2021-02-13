@@ -53,6 +53,15 @@ def add_sources(sources, dir, extension):
         if f.endswith("." + extension):
             sources.append(dir + "/" + f)
 
+def import_generate_bindings():
+    import importlib
+    binding_generator = importlib.import_module("godot-cpp.binding_generator")
+    cwd = os.getcwd()
+    os.chdir(os.path.join(cwd, "godot-cpp"))
+    binding_generator.generate_bindings("godot_headers/api.json")
+    os.chdir(cwd)
+
+import_generate_bindings()
 
 # Try to detect the host platform automatically.
 # This is used if no `platform` argument is passed
@@ -328,6 +337,10 @@ json_api_file = ""
 # Sources to compile
 sources = []
 
+## godot-cpp bindings
+add_sources(sources, 'godot-cpp/src/core', 'cpp')
+add_sources(sources, 'godot-cpp/src/gen', 'cpp')
+
 ## Effekseer
 effekseer_source_root = "../../../Effekseer/Dev/Cpp"
 add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer", "cpp")
@@ -370,17 +383,17 @@ env.Append(CPPPATH=[".",
     "../../../Effekseer/Dev/Cpp/EffekseerRendererCommon"
 ])
 
-env.Append(LIBPATH=[
-    godot_cpp_path + "bin/"
-])
-env.Append(LIBS=[
-    "libgodot-cpp.{}.{}.{}{}".format(
-        env["platform"],
-        env["target"],
-        arch_suffix,
-        env["LIBSUFFIX"]
-    )
-])
+#env.Append(LIBPATH=[
+#    godot_cpp_path + "bin/"
+#])
+#env.Append(LIBS=[
+#    "libgodot-cpp.{}.{}.{}{}".format(
+#        env["platform"],
+#        env["target"],
+#        arch_suffix,
+#        env["LIBSUFFIX"]
+#    )
+#])
 
 library = env.SharedLibrary("bin/" + target_path, source=sources)
 Default(library)
