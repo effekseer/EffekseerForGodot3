@@ -53,15 +53,6 @@ def add_sources(sources, dir, extension):
         if f.endswith("." + extension):
             sources.append(dir + "/" + f)
 
-def import_generate_bindings():
-    binding_generator = __import__("godot-cpp.binding_generator").binding_generator
-    cwd = os.getcwd()
-    os.chdir(os.path.join(cwd, "godot-cpp"))
-    binding_generator.generate_bindings("godot_headers/api.json")
-    os.chdir(cwd)
-
-import_generate_bindings()
-
 # Try to detect the host platform automatically.
 # This is used if no `platform` argument is passed
 if sys.platform.startswith("linux"):
