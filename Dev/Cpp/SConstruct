@@ -54,8 +54,7 @@ def add_sources(sources, dir, extension):
             sources.append(dir + "/" + f)
 
 def import_generate_bindings():
-    import importlib
-    binding_generator = importlib.import_module("godot-cpp.binding_generator")
+    binding_generator = __import__("godot-cpp.binding_generator").binding_generator
     cwd = os.getcwd()
     os.chdir(os.path.join(cwd, "godot-cpp"))
     binding_generator.generate_bindings("godot_headers/api.json")
