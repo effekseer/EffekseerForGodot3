@@ -36,15 +36,9 @@ public:
 
 	void draw(Camera* camera, Effekseer::Handle handle);
 
-	Effekseer::Handle play(godot::Ref<EffekseerEffect> effect, Spatial* node);
+	void stop_all_effects();
 
-	void stop(Effekseer::Handle handle);
-	
-	void stop_root(Effekseer::Handle handle);
-	
-	void set_paused(Effekseer::Handle handle, bool paused);
-
-	bool exists(Effekseer::Handle handle);
+	void set_paused_to_all_effects(bool paused);
 
 	int get_total_instance_count() const;
 

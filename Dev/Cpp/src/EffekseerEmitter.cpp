@@ -2,6 +2,7 @@
 #include "GDLibrary.h"
 #include "EffekseerSystem.h"
 #include "EffekseerEmitter.h"
+#include "Utils/EffekseerGodot.Utils.h"
 
 namespace godot {
 
@@ -20,7 +21,13 @@ void EffekseerEmitter::_register_methods()
 		&EffekseerEmitter::set_autoplay, &EffekseerEmitter::is_autoplay, true);
 	register_property<EffekseerEmitter, bool>("paused", 
 		&EffekseerEmitter::set_paused, &EffekseerEmitter::is_paused, false);
-}	
+	register_property<EffekseerEmitter, float>("speed", 
+		&EffekseerEmitter::set_speed, &EffekseerEmitter::get_speed, 1.0f,
+		GODOT_METHOD_RPC_MODE_DISABLED, GODOT_PROPERTY_USAGE_DEFAULT,
+		GODOT_PROPERTY_HINT_RANGE, "0.0,10.0,0.01");
+	register_property<EffekseerEmitter, Color>("color", 
+		&EffekseerEmitter::set_color, &EffekseerEmitter::get_color, Color(1.0f, 1.0f, 1.0f, 1.0f));
+}
 
 EffekseerEmitter::EffekseerEmitter()
 {
@@ -48,14 +55,16 @@ void EffekseerEmitter::_process(float delta)
 	}
 
 	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
 
 	for (int i = 0; i < m_handles.size(); ) {
 		auto handle = m_handles[i];
-		if (!system->exists(handle)) {
+		if (!manager->Exists(handle)) {
 			m_handles.remove(i);
 			continue;
 		}
 
+		manager->SetBaseMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_transform()));
 		system->draw(get_viewport()->get_camera(), handle);
 		i++;
 	}
@@ -63,12 +72,24 @@ void EffekseerEmitter::_process(float delta)
 
 void EffekseerEmitter::play()
 {
+	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
+
 	if (m_effect.is_valid()) {
-		auto system = EffekseerSystem::get_instance();
-		auto handle = system->play(m_effect, this);
+		Transform transform = get_transform();
+		Effekseer::Handle handle = manager->Play(m_effect->get_native(), EffekseerGodot::ToEfkVector3(transform.origin));
 		if (handle >= 0) {
+			manager->SetBaseMatrix(handle, EffekseerGodot::ToEfkMatrix43(transform));
+			manager->SetUserData(handle, this);
+
 			if (m_paused) {
-				system->set_paused(handle, true);
+				manager->SetPaused(handle, true);
+			}
+			if (m_speed != 1.0f) {
+				manager->SetSpeed(handle, m_speed);
+			}
+			if (m_color != Effekseer::Color(255, 255, 255, 255)) {
+				manager->SetAllColor(handle, m_color);
 			}
 			m_handles.push_back(handle);
 		}
@@ -78,9 +99,10 @@ void EffekseerEmitter::play()
 void EffekseerEmitter::stop()
 {
 	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
 
 	for (int i = 0; i < m_handles.size(); i++) {
-		system->stop(m_handles[i]);
+		manager->StopEffect(m_handles[i]);
 	}
 	
 	m_handles.clear();
@@ -89,9 +111,10 @@ void EffekseerEmitter::stop()
 void EffekseerEmitter::stop_root()
 {
 	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
 
 	for (int i = 0; i < m_handles.size(); i++) {
-		system->stop_root(m_handles[i]);
+		manager->StopRoot(m_handles[i]);
 	}
 }
 
@@ -105,15 +128,56 @@ void EffekseerEmitter::set_paused(bool paused)
 	m_paused = paused;
 
 	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
 
 	for (int i = 0; i < m_handles.size(); i++) {
-		system->set_paused(m_handles[i], paused);
+		manager->SetPaused(m_handles[i], paused);
 	}
 }
 
 bool EffekseerEmitter::is_paused() const
 {
 	return m_paused;
+}
+
+void EffekseerEmitter::set_speed(float speed)
+{
+	m_speed = speed;
+
+	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
+
+	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SetSpeed(m_handles[i], speed);
+	}
+}
+
+float EffekseerEmitter::get_speed() const
+{
+	return m_speed;
+}
+
+void EffekseerEmitter::set_color(Color color)
+{
+	m_color = EffekseerGodot::ToEfkColor(color);
+
+	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
+
+	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SetAllColor(m_handles[i], m_color);
+	}
+}
+
+Color EffekseerEmitter::get_color() const
+{
+	return EffekseerGodot::ToGdColor(m_color);
+}
+
+void EffekseerEmitter::set_effect(Ref<EffekseerEffect> effect)
+{
+	m_effect = effect;
+	m_effect->setup();
 }
 
 }

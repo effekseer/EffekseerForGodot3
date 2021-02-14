@@ -69,6 +69,24 @@ inline Effekseer::Matrix44 ToEfkMatrix44(godot::Transform transform)
 	return matrix;
 }
 
+inline Effekseer::Matrix43 ToEfkMatrix43(godot::Transform transform)
+{
+	Effekseer::Matrix43 matrix;
+	matrix.Value[0][0] = transform.basis[0][0];
+	matrix.Value[0][1] = transform.basis[0][1];
+	matrix.Value[0][2] = transform.basis[0][2];
+	matrix.Value[1][0] = transform.basis[1][0];
+	matrix.Value[1][1] = transform.basis[1][1];
+	matrix.Value[1][2] = transform.basis[1][2];
+	matrix.Value[2][0] = transform.basis[2][0];
+	matrix.Value[2][1] = transform.basis[2][1];
+	matrix.Value[2][2] = transform.basis[2][2];
+	matrix.Value[3][0] = transform.origin.x;
+	matrix.Value[3][1] = transform.origin.y;
+	matrix.Value[3][2] = transform.origin.z;
+	return matrix;
+}
+
 inline godot::Transform ToGdMatrix(Effekseer::Matrix44 matrix)
 {
 	godot::Transform transform;
@@ -89,7 +107,12 @@ inline godot::Transform ToGdMatrix(Effekseer::Matrix44 matrix)
 
 inline Effekseer::Color ToEfkColor(godot::Color c)
 {
-	return { (uint8_t)(c.r * 255.0f), (uint8_t)(c.g * 255.0f), (uint8_t)(c.b * 255.0f), (uint8_t)(c.a * 255.0f) };
+	return {
+		(uint8_t)Effekseer::Clamp((int)(c.r * 255.0f), 255, 0),
+		(uint8_t)Effekseer::Clamp((int)(c.g * 255.0f), 255, 0),
+		(uint8_t)Effekseer::Clamp((int)(c.b * 255.0f), 255, 0),
+		(uint8_t)Effekseer::Clamp((int)(c.a * 255.0f), 255, 0),
+	};
 }
 
 inline godot::Color ToGdColor(Effekseer::Color c)

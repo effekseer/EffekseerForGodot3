@@ -49,3 +49,6 @@ enabled=PoolStringArray( "effekseer" )
 effekseer.effect={
 
 }
+effekseer.resource={
+
+}

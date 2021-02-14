@@ -35,7 +35,15 @@ public:
 
 	bool is_paused() const;
 
-	void set_effect(Ref<EffekseerEffect> effect) { m_effect = effect; }
+	void set_speed(float speed);
+
+	float get_speed() const;
+
+	void set_color(Color color);
+
+	Color get_color() const;
+
+	void set_effect(Ref<EffekseerEffect> effect);
 
 	Ref<EffekseerEffect> get_effect() const { return m_effect; }
 
@@ -48,6 +56,8 @@ private:
 	bool m_autoplay = true;
 	Array m_handles;
 	bool m_paused = false;
+	float m_speed = 1.0f;
+	Effekseer::Color m_color = {255, 255, 255, 255};
 };
 
 }

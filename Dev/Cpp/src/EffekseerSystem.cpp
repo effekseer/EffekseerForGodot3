@@ -24,9 +24,8 @@ void EffekseerSystem::_register_methods()
 {
 	register_method("_init", &EffekseerSystem::_init);
 	register_method("_process", &EffekseerSystem::_process);
-	register_method("play", &EffekseerSystem::play);
-	register_method("stop", &EffekseerSystem::stop);
-	register_method("exists", &EffekseerSystem::exists);
+	register_method("stop_all_effects", &EffekseerSystem::stop_all_effects);
+	register_method("set_paused_to_all_effects", &EffekseerSystem::set_paused_to_all_effects);
 	register_method("get_total_instance_count", &EffekseerSystem::get_total_instance_count);
 }
 
@@ -91,13 +90,7 @@ void EffekseerSystem::_init()
 void EffekseerSystem::_process(float delta)
 {
 	m_manager->Update(delta * 60.0f);
-
-	if (m_manager->GetTotalInstanceCount() == 0) {
-		m_renderer->ResetState();
-	} else {
-		m_shouldResetState = true;
-	}
-
+	m_shouldResetState = true;
 	m_renderer->SetTime(m_renderer->GetTime() + delta);
 }
 
@@ -105,6 +98,7 @@ void EffekseerSystem::draw(Camera* camera, Effekseer::Handle handle)
 {
 	if (m_shouldResetState) {
 		m_renderer->ResetState();
+		m_shouldResetState = false;
 	}
 
 	auto camera_transform = camera->get_camera_transform().inverse();
@@ -115,43 +109,14 @@ void EffekseerSystem::draw(Camera* camera, Effekseer::Handle handle)
 	m_renderer->EndRendering();
 }
 
-Effekseer::Handle EffekseerSystem::play(godot::Ref<EffekseerEffect> effect, Spatial* node)
+void EffekseerSystem::stop_all_effects()
 {
-	if (effect == nullptr) {
-		Godot::print_error("Effect is null", __FUNCTION__, __FILE__, __LINE__);
-		return -1;
-	}
-
-	Transform transform = node->get_transform();
-	Effekseer::Handle handle = m_manager->Play(effect->get_native(), EffekseerGodot::ToEfkVector3(transform.origin));
-	if (handle >= 0) {
-		auto rotation = transform.basis.get_euler_xyz();
-		auto scale = transform.basis.get_scale();
-		m_manager->SetRotation(handle, rotation.x, rotation.y, rotation.z);
-		m_manager->SetScale(handle, scale.x, scale.y, scale.z);
-		m_manager->SetUserData(handle, node);
-	}
-	return handle;
+	m_manager->StopAllEffects();
 }
 
-void EffekseerSystem::stop(Effekseer::Handle handle)
+void EffekseerSystem::set_paused_to_all_effects(bool paused)
 {
-	m_manager->StopEffect(handle);
-}
-
-void EffekseerSystem::stop_root(Effekseer::Handle handle)
-{
-	m_manager->StopRoot(handle);
-}
-
-void EffekseerSystem::set_paused(Effekseer::Handle handle, bool paused)
-{
-	m_manager->SetPaused(handle, paused);
-}
-
-bool EffekseerSystem::exists(Effekseer::Handle handle)
-{
-	return m_manager->Exists(handle);
+	m_manager->SetPausedToAllEffects(paused);
 }
 
 int EffekseerSystem::get_total_instance_count() const
