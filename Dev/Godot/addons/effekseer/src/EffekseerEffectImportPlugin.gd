@@ -15,12 +15,30 @@ func get_save_extension():
 func get_resource_type():
 	return "Resource";
 
+enum Presets { DEFAULT }
+
 func get_import_options(preset):
-	return []
+	match preset:
+		Presets.DEFAULT:
+			return [{
+					   "name": "scale",
+					   "default_value": 1.0
+					}]
+		_:
+			return []
+
+func get_preset_name(preset):
+	match preset:
+		Presets.DEFAULT:
+			return "Default"
+		_:
+			return "Unknown"
 
 func get_preset_count():
-	return 0
+	return 1
 
+func get_option_visibility(option, options):
+	return true
 
 func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	#print(source_file)
@@ -28,6 +46,8 @@ func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	var effect = preload("res://addons/effekseer/src/EffekseerEffect.gdns").new()
 	
 	effect.load(source_file)
+	effect.resolve_dependencies()
+	effect.scale = options.scale
 	
 	return ResourceSaver.save(
 		"%s.%s" % [save_path, get_save_extension()], effect)
