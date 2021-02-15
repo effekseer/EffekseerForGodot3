@@ -9,6 +9,9 @@ func get_visible_name():
 func get_recognized_extensions():
 	return ["efkefc"]
 
+func get_import_order():
+	return 5
+
 func get_save_extension():
 	return "res";
 

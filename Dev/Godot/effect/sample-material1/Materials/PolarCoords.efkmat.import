@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/PolarCoords.efkmat-b42b42b0bebee685c218862d3140bd40.tres"
+path="res://.import/PolarCoords.efkmat-b42b42b0bebee685c218862d3140bd40.res"
 
 [deps]
 
 source_file="res://effect/sample-material1/Materials/PolarCoords.efkmat"
-dest_files=[ "res://.import/PolarCoords.efkmat-b42b42b0bebee685c218862d3140bd40.tres" ]
+dest_files=[ "res://.import/PolarCoords.efkmat-b42b42b0bebee685c218862d3140bd40.res" ]
 
 [params]
 

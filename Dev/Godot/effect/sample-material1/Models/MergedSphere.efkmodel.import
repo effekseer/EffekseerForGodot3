@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/MergedSphere.efkmodel-a41684912ed70c2fd84b2339f6a604d0.tres"
+path="res://.import/MergedSphere.efkmodel-a41684912ed70c2fd84b2339f6a604d0.res"
 
 [deps]
 
 source_file="res://effect/sample-material1/Models/MergedSphere.efkmodel"
-dest_files=[ "res://.import/MergedSphere.efkmodel-a41684912ed70c2fd84b2339f6a604d0.tres" ]
+dest_files=[ "res://.import/MergedSphere.efkmodel-a41684912ed70c2fd84b2339f6a604d0.res" ]
 
 [params]
 

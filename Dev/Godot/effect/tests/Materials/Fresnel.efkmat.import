@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/Fresnel.efkmat-be49002dd1d7cb454b92f265950ab8a1.tres"
+path="res://.import/Fresnel.efkmat-be49002dd1d7cb454b92f265950ab8a1.res"
 
 [deps]
 
 source_file="res://effect/tests/Materials/Fresnel.efkmat"
-dest_files=[ "res://.import/Fresnel.efkmat-be49002dd1d7cb454b92f265950ab8a1.tres" ]
+dest_files=[ "res://.import/Fresnel.efkmat-be49002dd1d7cb454b92f265950ab8a1.res" ]
 
 [params]
 

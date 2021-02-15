@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/UV1.efkmat-71d593d4869588228d9624114446d460.tres"
+path="res://.import/UV1.efkmat-71d593d4869588228d9624114446d460.res"
 
 [deps]
 
 source_file="res://effect/tests/Materials/UV1.efkmat"
-dest_files=[ "res://.import/UV1.efkmat-71d593d4869588228d9624114446d460.tres" ]
+dest_files=[ "res://.import/UV1.efkmat-71d593d4869588228d9624114446d460.res" ]
 
 [params]
 

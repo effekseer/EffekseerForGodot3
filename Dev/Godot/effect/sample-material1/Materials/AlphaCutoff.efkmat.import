@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/AlphaCutoff.efkmat-433ab1f728e4197fc45acb22d10644a3.tres"
+path="res://.import/AlphaCutoff.efkmat-433ab1f728e4197fc45acb22d10644a3.res"
 
 [deps]
 
 source_file="res://effect/sample-material1/Materials/AlphaCutoff.efkmat"
-dest_files=[ "res://.import/AlphaCutoff.efkmat-433ab1f728e4197fc45acb22d10644a3.tres" ]
+dest_files=[ "res://.import/AlphaCutoff.efkmat-433ab1f728e4197fc45acb22d10644a3.res" ]
 
 [params]
 

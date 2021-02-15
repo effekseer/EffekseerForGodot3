@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/Sphare_Resized.efkmodel-8b757a3ed14b375ca8c140535c76fc0e.tres"
+path="res://.import/Sphare_Resized.efkmodel-8b757a3ed14b375ca8c140535c76fc0e.res"
 
 [deps]
 
 source_file="res://effect/tests/Models/Sphare_Resized.efkmodel"
-dest_files=[ "res://.import/Sphare_Resized.efkmodel-8b757a3ed14b375ca8c140535c76fc0e.tres" ]
+dest_files=[ "res://.import/Sphare_Resized.efkmodel-8b757a3ed14b375ca8c140535c76fc0e.res" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/AuraTube.efkmat-e72861e18d4219d0d85ade73d6326698.tres"
+path="res://.import/AuraTube.efkmat-e72861e18d4219d0d85ade73d6326698.res"
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/AuraTube.efkmat"
-dest_files=[ "res://.import/AuraTube.efkmat-e72861e18d4219d0d85ade73d6326698.tres" ]
+dest_files=[ "res://.import/AuraTube.efkmat-e72861e18d4219d0d85ade73d6326698.res" ]
 
 [params]
 

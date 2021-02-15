@@ -17,7 +17,7 @@ void EffekseerEffect::_register_methods()
 		&EffekseerEffect::set_data_path, &EffekseerEffect::get_data_path, "");
 	register_property<EffekseerEffect, PoolByteArray>("data_bytes", 
 		&EffekseerEffect::set_data_bytes, &EffekseerEffect::get_data_bytes, {});
-	register_property<EffekseerEffect, Array>("subresources", 
+	register_property<EffekseerEffect, Dictionary>("subresources", 
 		&EffekseerEffect::set_subresources, &EffekseerEffect::get_subresources, {});
 	register_property<EffekseerEffect, float>("scale", 
 		&EffekseerEffect::set_scale, &EffekseerEffect::get_scale, 1.0f);
@@ -65,7 +65,7 @@ void EffekseerEffect::resolve_dependencies()
 	
 	char16_t materialPath[1024];
 	get_material_path(materialPath, sizeof(materialPath) / sizeof(materialPath[0]));
-	godot::String materialPathStr = EffekseerGodot::ToGdString(materialPath) + "/";
+	godot::String materialDir = EffekseerGodot::ToGdString(materialPath) + "/";
 
 	auto loader = godot::ResourceLoader::get_singleton();
 	
@@ -73,8 +73,8 @@ void EffekseerEffect::resolve_dependencies()
 	{
 		for (int i = 0; i < count; i++)
 		{
-			godot::String path = materialPathStr + EffekseerGodot::ToGdString((nativeptr->*getter)(i));
-			m_subresources.append(loader->load(path));
+			godot::String path = EffekseerGodot::ToGdString((nativeptr->*getter)(i));
+			m_subresources[path] = loader->load(materialDir + path);
 		}
 	};
 

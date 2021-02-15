@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/VertexColor.efkmat-8880f061a69edc722cca0b20af09f05d.tres"
+path="res://.import/VertexColor.efkmat-8880f061a69edc722cca0b20af09f05d.res"
 
 [deps]
 
 source_file="res://effect/tests/Materials/VertexColor.efkmat"
-dest_files=[ "res://.import/VertexColor.efkmat-8880f061a69edc722cca0b20af09f05d.tres" ]
+dest_files=[ "res://.import/VertexColor.efkmat-8880f061a69edc722cca0b20af09f05d.res" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/Dissolve.efkmat-a80e32bd27929d9fe70ec733445ee448.tres"
+path="res://.import/Dissolve.efkmat-a80e32bd27929d9fe70ec733445ee448.res"
 
 [deps]
 
 source_file="res://effect/sample-material1/Materials/Dissolve.efkmat"
-dest_files=[ "res://.import/Dissolve.efkmat-a80e32bd27929d9fe70ec733445ee448.tres" ]
+dest_files=[ "res://.import/Dissolve.efkmat-a80e32bd27929d9fe70ec733445ee448.res" ]
 
 [params]
 

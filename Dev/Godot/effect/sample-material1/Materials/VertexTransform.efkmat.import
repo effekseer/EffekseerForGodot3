@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/VertexTransform.efkmat-62a7e90d0b9ef06ca4e88373abea2e64.tres"
+path="res://.import/VertexTransform.efkmat-62a7e90d0b9ef06ca4e88373abea2e64.res"
 
 [deps]
 
 source_file="res://effect/sample-material1/Materials/VertexTransform.efkmat"
-dest_files=[ "res://.import/VertexTransform.efkmat-62a7e90d0b9ef06ca4e88373abea2e64.tres" ]
+dest_files=[ "res://.import/VertexTransform.efkmat-62a7e90d0b9ef06ca4e88373abea2e64.res" ]
 
 [params]
 

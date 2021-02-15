@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/RadiarNoise.efkmat-86400587a0b05aee3cbd149c3817987d.tres"
+path="res://.import/RadiarNoise.efkmat-86400587a0b05aee3cbd149c3817987d.res"
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/RadiarNoise.efkmat"
-dest_files=[ "res://.import/RadiarNoise.efkmat-86400587a0b05aee3cbd149c3817987d.tres" ]
+dest_files=[ "res://.import/RadiarNoise.efkmat-86400587a0b05aee3cbd149c3817987d.res" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/DepthFade.efkmat-e63f71b0a3605948b2bce06688ed1926.tres"
+path="res://.import/DepthFade.efkmat-e63f71b0a3605948b2bce06688ed1926.res"
 
 [deps]
 
 source_file="res://effect/tests/Materials/DepthFade.efkmat"
-dest_files=[ "res://.import/DepthFade.efkmat-e63f71b0a3605948b2bce06688ed1926.tres" ]
+dest_files=[ "res://.import/DepthFade.efkmat-e63f71b0a3605948b2bce06688ed1926.res" ]
 
 [params]
 

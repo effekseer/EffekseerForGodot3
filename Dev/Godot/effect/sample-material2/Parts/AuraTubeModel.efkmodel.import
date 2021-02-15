@@ -2,12 +2,12 @@
 
 importer="effekseer.resource"
 type="Resource"
-path="res://.import/AuraTubeModel.efkmodel-565407529bc029b1b38a19a9ae71a881.tres"
+path="res://.import/AuraTubeModel.efkmodel-565407529bc029b1b38a19a9ae71a881.res"
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/AuraTubeModel.efkmodel"
-dest_files=[ "res://.import/AuraTubeModel.efkmodel-565407529bc029b1b38a19a9ae71a881.tres" ]
+dest_files=[ "res://.import/AuraTubeModel.efkmodel-565407529bc029b1b38a19a9ae71a881.res" ]
 
 [params]
 

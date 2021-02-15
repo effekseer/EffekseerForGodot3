@@ -30,9 +30,9 @@ public:
 
 	void set_data_path(String path) { m_data_path = path; }
 
-	Array get_subresources() const { return m_subresources; }
+	Dictionary get_subresources() const { return m_subresources; }
 
-	void set_subresources(Array resources) { m_subresources = resources; }
+	void set_subresources(Dictionary subresources) { m_subresources = subresources; }
 
 	PoolByteArray get_data_bytes() const { return m_data_bytes; }
 
@@ -49,7 +49,7 @@ private:
 
 	String m_data_path;
 	PoolByteArray m_data_bytes;
-	Array m_subresources;
+	Dictionary m_subresources;
 	float m_scale = 1.0f;
 	Effekseer::EffectRef m_native;
 };
