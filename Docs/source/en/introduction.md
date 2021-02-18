@@ -1,5 +1,7 @@
 ﻿# Introduction
 
+![](../img/Godot_effekseer.png)
+
 ## Welcome to EffekseerForGodot
 This is the EffekseerForGodot documentation.
 Learn about the Effekseer plugin for Godot Engine.
@@ -30,7 +32,24 @@ The support status for each target of EffekseerForGodot is as follows.
 
 
 ## Known issues
-- In Advanced Render of Effekseer 1.60 or later, Features other than soft particles do not work.
 
-## Todo
-- Advanced Rendering
+### Advanced rendering panel function does not work
+
+The following features do not work.
+
+- Alpha texture
+- UV distortion texture
+- Alpha cutoff
+- Falloff
+- Blend texture
+
+*Soft particles work.  
+*Godot3 cannot be supported due to technical limitation.  
+*Godot4 will be supported in the future version.  
+
+### 2D scene rendering does not work
+
+Cannot render in 2D scene.  
+It is possible to render and overlay in the viewport.  
+
+*It will be supported in a future version.
