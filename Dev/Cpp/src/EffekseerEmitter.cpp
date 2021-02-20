@@ -73,6 +73,7 @@ void EffekseerEmitter::_process(float delta)
 			m_handles.remove(i);
 			continue;
 		}
+		manager->SetBaseMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_transform()));
 		i++;
 	}
 }
@@ -96,10 +97,9 @@ void EffekseerEmitter::play()
 	auto manager = system->get_manager();
 
 	if (m_effect.is_valid()) {
-		Transform transform = get_transform();
 		Effekseer::Handle handle = manager->Play(m_effect->get_native(), Effekseer::Vector3D(0, 0, 0));
 		if (handle >= 0) {
-			manager->SetBaseMatrix(handle, EffekseerGodot::ToEfkMatrix43(transform));
+			manager->SetBaseMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_transform()));
 			manager->SetUserData(handle, this);
 
 			if (m_paused) {
