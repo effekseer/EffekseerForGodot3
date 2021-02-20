@@ -32,9 +32,15 @@ public:
 
 	void _init();
 
+	void _enter_tree();
+
+	void _exit_tree();
+
 	void _process(float delta);
 
-	void draw(Camera* camera, Effekseer::Handle handle);
+	void _update_draw();
+
+	void draw(Effekseer::Handle handle, Camera* camera);
 
 	void stop_all_effects();
 
@@ -49,7 +55,6 @@ private:
 
 	Effekseer::ManagerRef m_manager;
 	EffekseerGodot::RendererRef m_renderer;
-	bool m_shouldResetState = true;
 };
 
 }

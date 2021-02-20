@@ -4,6 +4,7 @@
 #include <Camera.hpp>
 #include <Transform.hpp>
 #include <GDScript.hpp>
+#include <VisualServer.hpp>
 
 #include "RendererGodot/EffekseerGodot.Renderer.h"
 #include "LoaderGodot/EffekseerGodot.TextureLoader.h"
@@ -23,7 +24,10 @@ EffekseerSystem* EffekseerSystem::s_instance = nullptr;
 void EffekseerSystem::_register_methods()
 {
 	register_method("_init", &EffekseerSystem::_init);
+	register_method("_enter_tree", &EffekseerSystem::_enter_tree);
+	register_method("_exit_tree", &EffekseerSystem::_exit_tree);
 	register_method("_process", &EffekseerSystem::_process);
+	register_method("_update_draw", &EffekseerSystem::_update_draw);
 	register_method("stop_all_effects", &EffekseerSystem::stop_all_effects);
 	register_method("set_paused_to_all_effects", &EffekseerSystem::set_paused_to_all_effects);
 	register_method("get_total_instance_count", &EffekseerSystem::get_total_instance_count);
@@ -84,23 +88,32 @@ EffekseerSystem::~EffekseerSystem()
 
 void EffekseerSystem::_init()
 {
+}
+
+void EffekseerSystem::_enter_tree()
+{
 	set_process_priority(100);
+	VisualServer::get_singleton()->connect("frame_pre_draw", this, "_update_draw");
+}
+
+void EffekseerSystem::_exit_tree()
+{
+	VisualServer::get_singleton()->disconnect("frame_pre_draw", this, "_update_draw");
 }
 
 void EffekseerSystem::_process(float delta)
 {
 	m_manager->Update(delta * 60.0f);
-	m_shouldResetState = true;
 	m_renderer->SetTime(m_renderer->GetTime() + delta);
 }
 
-void EffekseerSystem::draw(Camera* camera, Effekseer::Handle handle)
+void EffekseerSystem::_update_draw()
 {
-	if (m_shouldResetState) {
-		m_renderer->ResetState();
-		m_shouldResetState = false;
-	}
+	m_renderer->ResetState();
+}
 
+void EffekseerSystem::draw(Effekseer::Handle handle, Camera* camera)
+{
 	auto camera_transform = camera->get_camera_transform().inverse();
 	m_renderer->SetCameraMatrix(EffekseerGodot::ToEfkMatrix44(camera_transform));
 

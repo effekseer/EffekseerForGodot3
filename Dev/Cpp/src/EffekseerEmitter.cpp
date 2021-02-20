@@ -1,4 +1,5 @@
 #include <Viewport.hpp>
+#include <VisualServer.hpp>
 #include "GDLibrary.h"
 #include "EffekseerSystem.h"
 #include "EffekseerEmitter.h"
@@ -11,6 +12,9 @@ void EffekseerEmitter::_register_methods()
 	register_method("_init", &EffekseerEmitter::_init);
 	register_method("_ready", &EffekseerEmitter::_ready);
 	register_method("_process", &EffekseerEmitter::_process);
+	register_method("_enter_tree", &EffekseerEmitter::_enter_tree);
+	register_method("_exit_tree", &EffekseerEmitter::_exit_tree);
+	register_method("_update_draw", &EffekseerEmitter::_update_draw);
 	register_method("play", &EffekseerEmitter::play);
 	register_method("stop", &EffekseerEmitter::stop);
 	register_method("stop_root", &EffekseerEmitter::stop_root);
@@ -48,12 +52,18 @@ void EffekseerEmitter::_ready()
 	}
 }
 
+void EffekseerEmitter::_enter_tree()
+{
+	VisualServer::get_singleton()->connect("frame_pre_draw", this, "_update_draw");
+}
+
+void EffekseerEmitter::_exit_tree()
+{
+	VisualServer::get_singleton()->disconnect("frame_pre_draw", this, "_update_draw");
+}
+
 void EffekseerEmitter::_process(float delta)
 {
-	if (!is_visible()) {
-		return;
-	}
-
 	auto system = EffekseerSystem::get_instance();
 	auto manager = system->get_manager();
 
@@ -65,8 +75,20 @@ void EffekseerEmitter::_process(float delta)
 		}
 
 		manager->SetBaseMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_transform()));
-		system->draw(get_viewport()->get_camera(), handle);
 		i++;
+	}
+}
+
+void EffekseerEmitter::_update_draw()
+{
+	if (!is_visible()) {
+		return;
+	}
+
+	auto system = EffekseerSystem::get_instance();
+	
+	for (int i = 0; i < m_handles.size(); i++) {
+		system->draw(m_handles[i], get_viewport()->get_camera());
 	}
 }
 

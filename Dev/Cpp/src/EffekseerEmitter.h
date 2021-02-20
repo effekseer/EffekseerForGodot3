@@ -21,7 +21,13 @@ public:
 
 	void _ready();
 
+	void _enter_tree();
+
+	void _exit_tree();
+
 	void _process(float delta);
+
+	void _update_draw();
 
 	void play();
 
