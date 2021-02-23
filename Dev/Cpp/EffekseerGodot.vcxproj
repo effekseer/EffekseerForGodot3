@@ -30,6 +30,7 @@
     <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.cpp" />
     <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.cpp" />
     <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.cpp" />
+    <ClCompile Include="src\EffekseerEmitter2D.cpp" />
     <ClCompile Include="src\EffekseerResource.cpp" />
     <ClCompile Include="src\EffekseerSystem.cpp" />
     <ClCompile Include="src\EffekseerEffect.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="src\RendererGodot\EffekseerGodot.IndexBuffer.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.ModelRenderer.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.Renderer.cpp" />
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.RendererImplemented.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.RenderResources.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.RenderState.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.Shader.cpp" />
@@ -66,6 +68,7 @@
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.StandardRenderer.h" />
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.h" />
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.h" />
+    <ClInclude Include="src\EffekseerEmitter2D.h" />
     <ClInclude Include="src\EffekseerResource.h" />
     <ClInclude Include="src\EffekseerSystem.h" />
     <ClInclude Include="src\EffekseerEffect.h" />

@@ -87,7 +87,7 @@ void EffekseerEmitter::_update_draw()
 	auto system = EffekseerSystem::get_instance();
 	
 	for (int i = 0; i < m_handles.size(); i++) {
-		system->draw(m_handles[i], get_viewport()->get_camera());
+		system->draw3D(m_handles[i], get_viewport()->get_camera()->get_camera_transform());
 	}
 }
 

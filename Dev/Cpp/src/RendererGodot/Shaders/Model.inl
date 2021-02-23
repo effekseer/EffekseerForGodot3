@@ -37,7 +37,7 @@ uniform vec4 SoftParticleReco;
 )"
 #endif
 
-#include "CommonLibrary.inl"
+#include "Common3D.inl"
 
 R"(
 void vertex() {

@@ -2,9 +2,11 @@
 //----------------------------------------------------------------------------------
 // Include
 //----------------------------------------------------------------------------------
+#include <Godot.hpp>
 #include <VisualServer.hpp>
 #include <World.hpp>
-#include <Node.hpp>
+#include <Node2D.hpp>
+#include <Spatial.hpp>
 #include <Viewport.hpp>
 #include <Mesh.hpp>
 #include <Image.hpp>
@@ -51,6 +53,10 @@ namespace SoftParticle
 #include "Shaders/Particle.inl"
 #undef SOFT_PARTICLE
 }
+namespace CanvasItem
+{
+#include "Shaders/Particle2D.inl"
+}
 #undef LIGHTING
 #undef DISTORTION
 }
@@ -59,18 +65,22 @@ namespace Lighting
 {
 #define DISTORTION 0
 #define LIGHTING 1
-	namespace Lightweight
-	{
+namespace Lightweight
+{
 #define SOFT_PARTICLE 0
 #include "Shaders/Particle.inl"
 #undef SOFT_PARTICLE
-	}
-	namespace SoftParticle
-	{
+}
+namespace SoftParticle
+{
 #define SOFT_PARTICLE 1
 #include "Shaders/Particle.inl"
 #undef SOFT_PARTICLE
-	}
+}
+namespace CanvasItem
+{
+#include "Shaders/Particle2D.inl"
+}
 #undef LIGHTING
 #undef DISTORTION
 }
@@ -90,6 +100,10 @@ namespace SoftParticle
 #define SOFT_PARTICLE 1
 #include "Shaders/Particle.inl"
 #undef SOFT_PARTICLE
+}
+namespace CanvasItem
+{
+#include "Shaders/Particle2D.inl"
 }
 #undef LIGHTING
 #undef DISTORTION
@@ -115,7 +129,7 @@ void DynamicTexture::Init(int32_t width, int32_t height)
 	auto vs = godot::VisualServer::get_singleton();
 	godot::Ref<godot::Image> image;
 	image.instance();
-	image->create(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT, false, godot::Image::FORMAT_RGBAF);
+	image->create(width, height, false, godot::Image::FORMAT_RGBAF);
 	m_imageTexture = vs->texture_create_from_image(image, 0);
 }
 
@@ -153,30 +167,6 @@ void DynamicTexture::Unlock()
 	m_lockedRect = {};
 }
 
-RenderCommand::RenderCommand()
-{
-	auto vs = godot::VisualServer::get_singleton();
-	m_immediate = vs->immediate_create();
-	m_instance = vs->instance_create();
-	m_material = vs->material_create();
-	vs->instance_geometry_set_material_override(m_instance, m_material);
-}
-
-RenderCommand::~RenderCommand()
-{
-	auto vs = godot::VisualServer::get_singleton();
-	vs->free_rid(m_instance);
-	vs->free_rid(m_immediate);
-	vs->free_rid(m_material);
-}
-
-void RenderCommand::Reset()
-{
-	auto vs = godot::VisualServer::get_singleton();
-	vs->immediate_clear(m_immediate);
-	vs->instance_set_base(m_instance, godot::RID());
-}
-
 inline godot::Color ConvertColor(const EffekseerRenderer::VertexColor& color)
 {
 	return godot::Color(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
@@ -190,6 +180,11 @@ inline godot::Vector2 ConvertUV(const float uv[])
 inline godot::Vector3 ConvertVector3(const EffekseerRenderer::VertexFloat3& v)
 {
 	return godot::Vector3(v.X, v.Y, v.Z);
+}
+
+inline godot::Vector2 ConvertVector2(const EffekseerRenderer::VertexFloat3& v)
+{
+	return godot::Vector2(v.X, -v.Y); // invert Y
 }
 
 inline EffekseerRenderer::VertexFloat3 ConvertPackedVector3(const EffekseerRenderer::VertexColor& v)
@@ -230,6 +225,30 @@ inline godot::Plane ConvertTangent(const EffekseerRenderer::VertexFloat3& t)
 	return godot::Plane(t.X, t.Y, t.Z, 1.0f);
 }
 
+RenderCommand::RenderCommand()
+{
+	auto vs = godot::VisualServer::get_singleton();
+	m_immediate = vs->immediate_create();
+	m_instance = vs->instance_create();
+	m_material = vs->material_create();
+	vs->instance_geometry_set_material_override(m_instance, m_material);
+}
+
+RenderCommand::~RenderCommand()
+{
+	auto vs = godot::VisualServer::get_singleton();
+	vs->free_rid(m_instance);
+	vs->free_rid(m_immediate);
+	vs->free_rid(m_material);
+}
+
+void RenderCommand::Reset()
+{
+	auto vs = godot::VisualServer::get_singleton();
+	vs->immediate_clear(m_immediate);
+	vs->instance_set_base(m_instance, godot::RID());
+}
+
 void RenderCommand::DrawSprites(godot::World* world, int32_t priority)
 {
 	auto vs = godot::VisualServer::get_singleton();
@@ -245,6 +264,36 @@ void RenderCommand::DrawModel(godot::World* world, godot::RID mesh, int32_t prio
 
 	vs->instance_set_base(m_instance, mesh);
 	vs->instance_set_scenario(m_instance, world->get_scenario());
+	vs->material_set_render_priority(m_material, priority);
+}
+
+EffekseerGodot::RenderCommand2D::RenderCommand2D()
+{
+	auto vs = godot::VisualServer::get_singleton();
+	m_canvasItem = vs->canvas_item_create();
+	m_material = vs->material_create();
+}
+
+EffekseerGodot::RenderCommand2D::~RenderCommand2D()
+{
+	auto vs = godot::VisualServer::get_singleton();
+	vs->free_rid(m_canvasItem);
+	vs->free_rid(m_material);
+}
+
+void EffekseerGodot::RenderCommand2D::Reset()
+{
+	auto vs = godot::VisualServer::get_singleton();
+	vs->canvas_item_clear(m_canvasItem);
+	vs->canvas_item_set_parent(m_canvasItem, godot::RID());
+}
+
+void EffekseerGodot::RenderCommand2D::DrawSprites(godot::RID parentCanvasItem, int32_t priority)
+{
+	auto vs = godot::VisualServer::get_singleton();
+
+	vs->canvas_item_set_parent(m_canvasItem, parentCanvasItem);
+	vs->canvas_item_set_material(m_canvasItem, m_material);
 	vs->material_set_render_priority(m_material, priority);
 }
 
@@ -294,72 +343,64 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 		if (m_vertexBuffer == nullptr)
 			return false;
 	}
-
-	// generate an index buffer
-	{
-		m_indexBuffer = IndexBuffer::Create(this, m_squareMaxCount * 6, false);
-		if (m_indexBuffer == nullptr)
-			return false;
-
-		m_indexBuffer->Lock();
-
-		// ( 標準設定で　DirectX 時計周りが表, OpenGLは反時計回りが表 )
-		for (int i = 0; i < m_squareMaxCount; i++)
-		{
-			uint16_t* buf = (uint16_t*)m_indexBuffer->GetBufferDirect(6);
-			buf[0] = 3 + 4 * i;
-			buf[1] = 1 + 4 * i;
-			buf[2] = 0 + 4 * i;
-			buf[3] = 3 + 4 * i;
-			buf[4] = 0 + 4 * i;
-			buf[5] = 2 + 4 * i;
-		}
-
-		m_indexBuffer->Unlock();
-	}
-
 	{
 		using namespace EffekseerGodot::StandardShaders;
 		using namespace EffekseerRenderer;
 
 		m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_Lightweight", 
-			Unlit::Lightweight::code, RendererShaderType::Unlit, Unlit::Lightweight::decl);
+			Unlit::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::Unlit, Unlit::Lightweight::decl);
 		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
 		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
 		m_softparticleShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_SoftParticle", 
-			Unlit::SoftParticle::code, RendererShaderType::Unlit, Unlit::SoftParticle::decl);
+			Unlit::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::Unlit, Unlit::SoftParticle::decl);
 		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
 		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
+		m_canvasitemShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_CanvasItem", 
+			Unlit::CanvasItem::code, Shader::RenderType::CanvasItem, RendererShaderType::Unlit, Unlit::CanvasItem::decl);
+		m_canvasitemShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_canvasitemShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+
 		m_lightweightShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_Lightweight", 
-			Lighting::Lightweight::code, RendererShaderType::Lit, Lighting::Lightweight::decl);
+			Lighting::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::Lit, Lighting::Lightweight::decl);
 		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
 		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
 		m_softparticleShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_SoftParticle",
-			Lighting::SoftParticle::code, RendererShaderType::Lit, Lighting::SoftParticle::decl);
+			Lighting::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::Lit, Lighting::SoftParticle::decl);
 		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
 		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
 
+		m_canvasitemShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_CanvasItem", 
+			Lighting::CanvasItem::code, Shader::RenderType::CanvasItem, RendererShaderType::Lit, Lighting::CanvasItem::decl);
+		m_canvasitemShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_canvasitemShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+
 		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_Lightweight",
-			Distortion::Lightweight::code, RendererShaderType::BackDistortion, Distortion::Lightweight::decl);
+			Distortion::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::BackDistortion, Distortion::Lightweight::decl);
 		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
 		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
 
 		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_SoftParticle",
-			Distortion::SoftParticle::code, RendererShaderType::BackDistortion, Distortion::SoftParticle::decl);
+			Distortion::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::BackDistortion, Distortion::SoftParticle::decl);
 		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
 		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
 
+		m_canvasitemShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_CanvasItem", 
+			Distortion::CanvasItem::code, Shader::RenderType::CanvasItem, RendererShaderType::BackDistortion, Distortion::CanvasItem::decl);
+		m_canvasitemShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_canvasitemShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
 	}
 
 	m_renderCommands.resize((size_t)drawMaxCount);
+	m_renderCommand2Ds.resize((size_t)drawMaxCount);
 
 	m_standardRenderer.reset(new StandardRenderer(this));
 
 	m_customData1Texture.Init(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT);
 	m_customData2Texture.Init(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT);
+	m_uvTangentTexture.Init(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT);
 
 	return true;
 }
@@ -370,17 +411,24 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 void RendererImplemented::Destroy()
 {
 	m_renderCommands.clear();
+	m_renderCommand2Ds.clear();
 }
 
 void RendererImplemented::ResetState()
 {
+	for (size_t i = 0; i < m_renderCount; i++)
+	{
+		m_renderCommands[i].Reset();
+	}
 	m_renderCount = 0;
 	m_customDataCount = 0;
 
-	for (auto& batch : m_renderCommands)
+	for (size_t i = 0; i < m_renderCount2D; i++)
 	{
-		batch.Reset();
+		m_renderCommand2Ds[i].Reset();
 	}
+	m_renderCount2D = 0;
+	m_uvTangentCount = 0;
 }
 
 //----------------------------------------------------------------------------------
@@ -509,30 +557,208 @@ void RendererImplemented::SetLayout(Shader* shader)
 //----------------------------------------------------------------------------------
 void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 {
-	using namespace EffekseerRenderer;
-
 	assert(m_currentShader != nullptr);
+
+	auto vs = godot::VisualServer::get_singleton();
+
+	const auto& state = m_standardRenderer->GetState();
+	godot::Object* godotObj = reinterpret_cast<godot::Object*>(GetImpl()->CurrentHandleUserData);
+	
+	if (auto node3d = godot::Object::cast_to<godot::Spatial>(godotObj)) {
+		if (m_renderCount >= m_renderCommands.size()) return;
+
+		auto& command = m_renderCommands[m_renderCount];
+
+		// Transfer vertex data
+		TransferVertexToImmediate3D(command.GetImmediate(), GetVertexBuffer()->Refer(), spriteCount, state);
+
+		// Setup material
+		m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
+
+		if (state.CustomData1Count > 0)
+		{
+			vs->material_set_param(command.GetMaterial(), "CustomData1", m_customData1Texture.GetRID());
+		}
+		if (state.CustomData2Count > 0)
+		{
+			vs->material_set_param(command.GetMaterial(), "CustomData2", m_customData2Texture.GetRID());
+		}
+
+		command.DrawSprites(node3d->get_world().ptr(), (int32_t)m_renderCount);
+		m_renderCount++;
+
+	} else if (auto node2d = godot::Object::cast_to<godot::Node2D>(godotObj)) {
+		if (m_renderCount2D >= m_renderCommand2Ds.size()) return;
+
+		auto& command = m_renderCommand2Ds[m_renderCount2D];
+
+		// Transfer vertex data
+		TransferVertexToCanvasItem2D(command.GetCanvasItem(), GetVertexBuffer()->Refer(), spriteCount, state);
+
+		// Setup material
+		m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
+
+		if (m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::Lit || 
+			m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::BackDistortion)
+		{
+			vs->material_set_param(command.GetMaterial(), "UVTangentTexture", m_uvTangentTexture.GetRID());
+		}
+
+		command.DrawSprites(node2d->get_canvas_item(), (int32_t)m_renderCount);
+		m_renderCount2D++;
+	}
+
+	impl->drawcallCount++;
+	impl->drawvertexCount += spriteCount * 4;
+}
+
+//----------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------
+void RendererImplemented::SetModel(Effekseer::ModelRef model)
+{
+	m_currentModel = model;
+}
+
+//----------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------
+void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
+{
+	assert(m_currentShader != nullptr);
+	assert(m_currentModel != nullptr);
 
 	if (m_renderCount >= m_renderCommands.size())
 	{
 		return;
 	}
 
-	auto vs = godot::VisualServer::get_singleton();
 	godot::Node* node = reinterpret_cast<godot::Node*>(GetImpl()->CurrentHandleUserData);
 	godot::Viewport* viewport = node->get_viewport();
 	if (viewport == nullptr) return;
 	godot::World* world = viewport->get_world().ptr();
 	if (world == nullptr) return;
 
-	const auto& state = m_standardRenderer->GetState();
 	auto& command = m_renderCommands[m_renderCount];
 
-	// Transfer vertex data
-	const void* vertexData = GetVertexBuffer()->Refer();
-	const void* indexData = GetIndexBuffer()->Refer();
+	m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
 
-	godot::RID immediate = command.GetImmediate();
+	auto mesh = m_currentModel.DownCast<Model>()->GetRID();
+	command.DrawModel(world, mesh, (int32_t)m_renderCount);
+	m_renderCount++;
+
+	impl->drawcallCount++;
+	impl->drawvertexCount += vertexCount;
+}
+
+void RendererImplemented::DrawPolygonInstanced(int32_t vertexCount, int32_t indexCount, int32_t instanceCount)
+{
+	assert(m_currentModel != nullptr);
+	impl->drawcallCount++;
+	impl->drawvertexCount += vertexCount * instanceCount;
+}
+
+Shader* RendererImplemented::GetShader(::EffekseerRenderer::RendererShaderType type)
+{
+	const auto& state = m_standardRenderer->GetState();
+	
+	const bool canvasitemEnabled = 
+		reinterpret_cast<godot::Object*>(GetImpl()->CurrentHandleUserData)->is_class("Node2D");
+
+	const bool softparticleEnabled = !(
+		state.SoftParticleDistanceFar == 0.0f &&
+		state.SoftParticleDistanceNear == 0.0f &&
+		state.SoftParticleDistanceNearOffset == 0.0f);
+
+	if ((size_t)type >= (size_t)EffekseerRenderer::RendererShaderType::Unlit && 
+		(size_t)type <= (size_t)EffekseerRenderer::RendererShaderType::AdvancedBackDistortion)
+	{
+		if (canvasitemEnabled)
+		{
+			return m_canvasitemShaders[(size_t)type].get();
+		}
+		if (softparticleEnabled)
+		{
+			return m_softparticleShaders[(size_t)type].get();
+		}
+		else
+		{
+			return m_lightweightShaders[(size_t)type].get();
+		}
+	}
+
+	assert(0);
+	return nullptr;
+}
+
+void RendererImplemented::BeginShader(Shader* shader)
+{
+	m_currentShader = shader;
+}
+
+//----------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------
+void RendererImplemented::EndShader(Shader* shader)
+{
+	m_currentShader = nullptr;
+}
+
+void RendererImplemented::SetVertexBufferToShader(const void* data, int32_t size, int32_t dstOffset)
+{
+	assert(m_currentShader != nullptr);
+	assert(m_currentShader->GetVertexConstantBufferSize() >= size + dstOffset);
+
+	auto p = static_cast<uint8_t*>(m_currentShader->GetVertexConstantBuffer()) + dstOffset;
+	memcpy(p, data, size);
+}
+
+void RendererImplemented::SetPixelBufferToShader(const void* data, int32_t size, int32_t dstOffset)
+{
+	assert(m_currentShader != nullptr);
+	assert(m_currentShader->GetPixelConstantBufferSize() >= size + dstOffset);
+
+	auto p = static_cast<uint8_t*>(m_currentShader->GetPixelConstantBuffer()) + dstOffset;
+	memcpy(p, data, size);
+}
+
+//----------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------
+void RendererImplemented::SetTextures(Shader* shader, Effekseer::Backend::TextureRef* textures, int32_t count)
+{
+	auto& state = m_renderState->GetActiveState();
+	
+	state.TextureIDs.fill(0);
+	for (int32_t i = 0; i < count; i++)
+	{
+		state.TextureIDs[i] = (textures[i] != nullptr) ? 
+			RIDToInt64(textures[i].DownCast<Texture>()->GetRID()) : 0;
+	}
+}
+
+void RendererImplemented::ResetRenderState()
+{
+	m_renderState->GetActiveState().Reset();
+	m_renderState->Update(true);
+}
+
+Effekseer::Backend::TextureRef RendererImplemented::CreateProxyTexture(EffekseerRenderer::ProxyTextureType type)
+{
+	return nullptr;
+}
+
+void RendererImplemented::DeleteProxyTexture(Effekseer::Backend::TextureRef& texture)
+{
+	texture = nullptr;
+}
+
+void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate, 
+	const void* vertexData, int32_t spriteCount, const EffekseerRenderer::StandardRendererState& state)
+{
+	using namespace EffekseerRenderer;
+
+	auto vs = godot::VisualServer::get_singleton();
 
 	vs->immediate_begin(immediate, godot::Mesh::PRIMITIVE_TRIANGLE_STRIP);
 
@@ -590,7 +816,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 	}
 	else if (shaderType == RendererShaderType::Material)
 	{
-		const int32_t stride = m_standardRenderer->CalculateCurrentStride();
+		const int32_t stride = sizeof(DynamicVertex) + (state.CustomData1Count + state.CustomData2Count) * sizeof(float);
 		const int32_t customData1Count = state.CustomData1Count;
 		const int32_t customData2Count = state.CustomData2Count;
 
@@ -626,7 +852,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 					const godot::Vector2 uv2(
 						((float)(m_customDataCount % width) + 0.5f) / width, 
 						((float)(m_customDataCount / width) + 0.5f) / width);
-					
+
 					auto& v = *(const DynamicVertex*)vertexPtr;
 					vs->immediate_color(immediate, ConvertColor(v.Col));
 					vs->immediate_uv(immediate, ConvertUV(v.UV));
@@ -716,157 +942,102 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 	}
 
 	vs->immediate_end(immediate);
-
-	// Setup material
-	m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
-
-	if (state.CustomData1Count > 0)
-	{
-		vs->material_set_param(command.GetMaterial(), "CustomData1", m_customData1Texture.GetRID());
-	}
-	if (state.CustomData2Count > 0)
-	{
-		vs->material_set_param(command.GetMaterial(), "CustomData2", m_customData2Texture.GetRID());
-	}
-
-	command.DrawSprites(world, (int32_t)m_renderCount);
-	m_renderCount++;
-
-	impl->drawcallCount++;
-	impl->drawvertexCount += spriteCount * 4;
 }
 
-//----------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------
-void RendererImplemented::SetModel(Effekseer::ModelRef model)
+void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item, 
+	const void* vertexData, int32_t spriteCount, 
+	const EffekseerRenderer::StandardRendererState& state)
 {
-	m_currentModel = model;
-}
+	using namespace EffekseerRenderer;
 
-//----------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------
-void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
-{
-	assert(m_currentShader != nullptr);
-	assert(m_currentModel != nullptr);
+	auto vs = godot::VisualServer::get_singleton();
 
-	if (m_renderCount >= m_renderCommands.size())
+	godot::PoolIntArray indexArray;
+	godot::PoolVector2Array pointArray;
+	godot::PoolColorArray colorArray;
+	godot::PoolVector2Array uvArray;
+
+	indexArray.resize(spriteCount * 6);
+	pointArray.resize(spriteCount * 4);
+	colorArray.resize(spriteCount * 4);
+	uvArray.resize(spriteCount * 4);
+
 	{
-		return;
-	}
+		int* indices = indexArray.write().ptr();
 
-	godot::Node* node = reinterpret_cast<godot::Node*>(GetImpl()->CurrentHandleUserData);
-	godot::Viewport* viewport = node->get_viewport();
-	if (viewport == nullptr) return;
-	godot::World* world = viewport->get_world().ptr();
-	if (world == nullptr) return;
-
-	auto& command = m_renderCommands[m_renderCount];
-
-	m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
-
-	auto mesh = m_currentModel.DownCast<Model>()->GetRID();
-	command.DrawModel(world, mesh, (int32_t)m_renderCount);
-	m_renderCount++;
-
-	impl->drawcallCount++;
-	impl->drawvertexCount += vertexCount;
-}
-
-void RendererImplemented::DrawPolygonInstanced(int32_t vertexCount, int32_t indexCount, int32_t instanceCount)
-{
-	assert(m_currentModel != nullptr);
-	impl->drawcallCount++;
-	impl->drawvertexCount += vertexCount * instanceCount;
-}
-
-Shader* RendererImplemented::GetShader(::EffekseerRenderer::RendererShaderType type) const
-{
-	const auto& state = m_standardRenderer->GetState();
-	const bool softparticleEnabled = !(
-		state.SoftParticleDistanceFar == 0.0f &&
-		state.SoftParticleDistanceNear == 0.0f &&
-		state.SoftParticleDistanceNearOffset == 0.0f);
-
-	if ((size_t)type >= (size_t)EffekseerRenderer::RendererShaderType::Unlit && 
-		(size_t)type <= (size_t)EffekseerRenderer::RendererShaderType::AdvancedBackDistortion)
-	{
-		if (softparticleEnabled)
+		for (int32_t i = 0; i < spriteCount; i++)
 		{
-			return m_softparticleShaders[(size_t)type].get();
-		}
-		else
-		{
-			return m_lightweightShaders[(size_t)type].get();
+			indices[i * 6 + 0] = i * 4 + 0;
+			indices[i * 6 + 1] = i * 4 + 1;
+			indices[i * 6 + 2] = i * 4 + 2;
+			indices[i * 6 + 3] = i * 4 + 3;
+			indices[i * 6 + 4] = i * 4 + 2;
+			indices[i * 6 + 5] = i * 4 + 1;
 		}
 	}
 
-	assert(0);
-	return nullptr;
-}
+	RendererShaderType shaderType = m_currentShader->GetShaderType();
 
-void RendererImplemented::BeginShader(Shader* shader)
-{
-	m_currentShader = shader;
-}
-
-//----------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------
-void RendererImplemented::EndShader(Shader* shader)
-{
-	m_currentShader = nullptr;
-}
-
-void RendererImplemented::SetVertexBufferToShader(const void* data, int32_t size, int32_t dstOffset)
-{
-	assert(m_currentShader != nullptr);
-	assert(m_currentShader->GetVertexConstantBufferSize() >= size + dstOffset);
-
-	auto p = static_cast<uint8_t*>(m_currentShader->GetVertexConstantBuffer()) + dstOffset;
-	memcpy(p, data, size);
-}
-
-void RendererImplemented::SetPixelBufferToShader(const void* data, int32_t size, int32_t dstOffset)
-{
-	assert(m_currentShader != nullptr);
-	assert(m_currentShader->GetPixelConstantBufferSize() >= size + dstOffset);
-
-	auto p = static_cast<uint8_t*>(m_currentShader->GetPixelConstantBuffer()) + dstOffset;
-	memcpy(p, data, size);
-}
-
-//----------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------
-void RendererImplemented::SetTextures(Shader* shader, Effekseer::Backend::TextureRef* textures, int32_t count)
-{
-	auto& state = m_renderState->GetActiveState();
-	
-	state.TextureIDs.fill(0);
-	for (int32_t i = 0; i < count; i++)
+	if (shaderType == RendererShaderType::Unlit)
 	{
-		state.TextureIDs[i] = (textures[i] != nullptr) ? 
-			RIDToInt64(textures[i].DownCast<Texture>()->GetRID()) : 0;
+		godot::Vector2* points = pointArray.write().ptr();
+		godot::Color* colors = colorArray.write().ptr();
+		godot::Vector2* uvs = uvArray.write().ptr();
+
+		const SimpleVertex* vertices = (const SimpleVertex*)vertexData;
+		for (int32_t i = 0; i < spriteCount; i++)
+		{
+			for (int32_t j = 0; j < 4; j++)
+			{
+				auto& v = vertices[i * 4 + j];
+				points[i * 4 + j] = ConvertVector2(v.Pos);
+				colors[i * 4 + j] = ConvertColor(v.Col);
+				uvs[i * 4 + j] = ConvertUV(v.UV);
+			}
+		}
 	}
-}
+	else if (shaderType == RendererShaderType::BackDistortion || shaderType == RendererShaderType::Lit)
+	{
+		godot::Vector2* points = pointArray.write().ptr();
+		godot::Color* colors = colorArray.write().ptr();
+		godot::Vector2* uvs = uvArray.write().ptr();
 
-void RendererImplemented::ResetRenderState()
-{
-	m_renderState->GetActiveState().Reset();
-	m_renderState->Update(true);
-}
+		const int32_t width = CUSTOM_DATA_TEXTURE_WIDTH;
+		const int32_t height = (spriteCount * 4 + width - 1) / width;
+		float* uvtTexPtr = m_uvTangentTexture.Lock(0, m_uvTangentCount / width, width, height)->ptr;
 
-Effekseer::Backend::TextureRef RendererImplemented::CreateProxyTexture(EffekseerRenderer::ProxyTextureType type)
-{
-	return nullptr;
-}
+		const LightingVertex* vertices = (const LightingVertex*)vertexData;
+		for (int32_t i = 0; i < spriteCount; i++)
+		{
+			for (int32_t j = 0; j < 4; j++)
+			{
+				const godot::Vector2 uv2(
+					((float)(m_uvTangentCount % width) + 0.5f) / width, 
+					((float)(m_uvTangentCount / width) + 0.5f) / width);
 
-void RendererImplemented::DeleteProxyTexture(Effekseer::Backend::TextureRef& texture)
-{
-	texture = nullptr;
+				auto& v = vertices[i * 4 + j];
+				points[i * 4 + j] = ConvertVector2(v.Pos);
+				colors[i * 4 + j] = ConvertColor(v.Col);
+				uvs[i * 4 + j] = uv2;
+
+				auto tangent = UnpackVector3DF(v.Tangent);
+				uvtTexPtr[0] = v.UV[0];
+				uvtTexPtr[1] = v.UV[1];
+				uvtTexPtr[2] = tangent.X;
+				uvtTexPtr[3] = -tangent.Y;
+				uvtTexPtr += 4;
+				m_uvTangentCount++;
+			}
+		}
+
+		m_uvTangentTexture.Unlock();
+		m_uvTangentCount = (m_uvTangentCount + width - 1) / width * width;
+	}
+	else if (shaderType == RendererShaderType::Material)
+	{
+	}
+
+	vs->canvas_item_add_triangle_array(canvas_item, indexArray, pointArray, colorArray, uvArray);
 }
 
 } // namespace EffekseerGodot

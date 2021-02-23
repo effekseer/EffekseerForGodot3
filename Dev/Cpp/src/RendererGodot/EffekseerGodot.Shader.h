@@ -17,6 +17,12 @@ namespace EffekseerGodot
 class Shader : public ::EffekseerRenderer::ShaderBase
 {
 public:
+	enum class RenderType
+	{
+		Spatial,
+		CanvasItem
+	};
+
 	enum class ParamType : uint8_t
 	{
 		Int,
@@ -40,17 +46,17 @@ public:
 	virtual ~Shader();
 
 	static std::unique_ptr<Shader> Create(const char* name, const char* code, 
-		EffekseerRenderer::RendererShaderType shaderType,
+		RenderType renderType, EffekseerRenderer::RendererShaderType shaderType,
 		std::vector<ParamDecl>&& paramDecls);
 
 	template <size_t N>
 	static std::unique_ptr<Shader> Create(const char* name, const char* code, 
-		EffekseerRenderer::RendererShaderType shaderType,
+		RenderType renderType, EffekseerRenderer::RendererShaderType shaderType,
 		const ParamDecl (&paramDecls)[N])
 	{
 		std::vector<ParamDecl> v(N);
 		v.assign(paramDecls, paramDecls + N);
-		return Create(name, code, shaderType, std::move(v));
+		return Create(name, code, renderType, shaderType, std::move(v));
 	}
 
 	void SetVertexConstantBufferSize(int32_t size)
@@ -91,10 +97,11 @@ private:
 	std::string m_name;
 	std::vector<ParamDecl> m_paramDecls;
 	EffekseerRenderer::RendererShaderType m_shaderType = EffekseerRenderer::RendererShaderType::Unlit;
+	RenderType m_renderType = RenderType::Spatial;
 	godot::RID m_rid[2][2][3][5];;
 
 	Shader(const char* name, const char* code, 
-		EffekseerRenderer::RendererShaderType shaderType, 
+		RenderType renderType, EffekseerRenderer::RendererShaderType shaderType, 
 		std::vector<ParamDecl>&& paramDecls);
 
 };

@@ -38,6 +38,25 @@ private:
 	godot::RID m_material;
 };
 
+/**
+	@brief	2D描画コマンド
+*/
+class RenderCommand2D {
+public:
+	RenderCommand2D();
+	~RenderCommand2D();
+
+	void Reset();
+	void DrawSprites(godot::RID parentCanvasItem, int32_t priority);
+
+	godot::RID GetCanvasItem() { return m_canvasItem; }
+	godot::RID GetMaterial() { return m_material; }
+
+private:
+	godot::RID m_canvasItem;
+	godot::RID m_material;
+};
+
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
@@ -91,18 +110,24 @@ private:
 
 	std::array<std::unique_ptr<Shader>, 6> m_lightweightShaders;
 	std::array<std::unique_ptr<Shader>, 6> m_softparticleShaders;
+	std::array<std::unique_ptr<Shader>, 6> m_canvasitemShaders;
 
 	Shader* m_currentShader = nullptr;
 	godot::World* m_world = nullptr;
 
 	std::vector<RenderCommand> m_renderCommands;
 	size_t m_renderCount = 0;
+	std::vector<RenderCommand2D> m_renderCommand2Ds;
+	size_t m_renderCount2D = 0;
 
 	Effekseer::ModelRef m_currentModel = nullptr;
 	DynamicTexture m_customData1Texture;
 	DynamicTexture m_customData2Texture;
 	int32_t m_customDataCount = 0;
-	
+
+	DynamicTexture m_uvTangentTexture;
+	int32_t m_uvTangentCount = 0;
+
 	std::unique_ptr<StandardRenderer> m_standardRenderer;
 	std::unique_ptr<RenderState> m_renderState;
 
@@ -221,7 +246,7 @@ public:
 	void DrawPolygon(int32_t vertexCount, int32_t indexCount);
 	void DrawPolygonInstanced(int32_t vertexCount, int32_t indexCount, int32_t instanceCount);
 
-	Shader* GetShader(::EffekseerRenderer::RendererShaderType type) const;
+	Shader* GetShader(::EffekseerRenderer::RendererShaderType type);
 	void BeginShader(Shader* shader);
 	void EndShader(Shader* shader);
 
@@ -236,7 +261,16 @@ public:
 
 	virtual int GetRef() override { return Effekseer::ReferenceObject::GetRef(); }
 	virtual int AddRef() override { return Effekseer::ReferenceObject::AddRef(); }
-	virtual int Release() override { return Effekseer::ReferenceObject::Release();; }
+	virtual int Release() override { return Effekseer::ReferenceObject::Release(); }
+
+private:
+	void TransferVertexToImmediate3D(godot::RID immediate, 
+		const void* vertexData, int32_t spriteCount, 
+		const EffekseerRenderer::StandardRendererState& state);
+
+	void TransferVertexToCanvasItem2D(godot::RID canvas_item, 
+		const void* vertexData, int32_t spriteCount, 
+		const EffekseerRenderer::StandardRendererState& state);
 };
 
 //----------------------------------------------------------------------------------

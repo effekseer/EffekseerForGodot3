@@ -47,7 +47,7 @@ inline godot::Vector3 ToGdVector3(Effekseer::Vector3D v)
 	return { v.X, v.Y, v.Z };
 }
 
-inline Effekseer::Matrix44 ToEfkMatrix44(godot::Transform transform)
+inline Effekseer::Matrix44 ToEfkMatrix44(const godot::Transform& transform)
 {
 	Effekseer::Matrix44 matrix;
 	matrix.Values[0][0] = transform.basis[0][0];
@@ -69,7 +69,29 @@ inline Effekseer::Matrix44 ToEfkMatrix44(godot::Transform transform)
 	return matrix;
 }
 
-inline Effekseer::Matrix43 ToEfkMatrix43(godot::Transform transform)
+inline Effekseer::Matrix44 ToEfkMatrix44(const godot::Transform2D& transform)
+{
+	Effekseer::Matrix44 matrix;
+	matrix.Values[0][0] = transform.elements[0].x;
+	matrix.Values[0][1] = transform.elements[0].y;
+	matrix.Values[0][2] = 0.0f;
+	matrix.Values[0][3] = 0.0f;
+	matrix.Values[1][0] = transform.elements[1].x;
+	matrix.Values[1][1] = transform.elements[1].y;
+	matrix.Values[1][2] = 0.0f;
+	matrix.Values[1][3] = 0.0f;
+	matrix.Values[2][0] = 0.0f;
+	matrix.Values[2][1] = 0.0f;
+	matrix.Values[2][2] = 1.0f;
+	matrix.Values[2][3] = 0.0f;
+	matrix.Values[3][0] = transform.elements[2].x;
+	matrix.Values[3][1] = transform.elements[2].y;
+	matrix.Values[3][2] = 0.0f;
+	matrix.Values[3][3] = 1.0f;
+	return matrix;
+}
+
+inline Effekseer::Matrix43 ToEfkMatrix43(const godot::Transform& transform)
 {
 	Effekseer::Matrix43 matrix;
 	matrix.Value[0][0] = transform.basis[0][0];
@@ -84,6 +106,24 @@ inline Effekseer::Matrix43 ToEfkMatrix43(godot::Transform transform)
 	matrix.Value[3][0] = transform.origin.x;
 	matrix.Value[3][1] = transform.origin.y;
 	matrix.Value[3][2] = transform.origin.z;
+	return matrix;
+}
+
+inline Effekseer::Matrix43 ToEfkMatrix43(const godot::Transform2D& transform)
+{
+	Effekseer::Matrix43 matrix;
+	matrix.Value[0][0] = transform.elements[0].x;
+	matrix.Value[0][1] = transform.elements[0].y;
+	matrix.Value[0][2] = 0.0f;
+	matrix.Value[1][0] = transform.elements[1].x;
+	matrix.Value[1][1] = transform.elements[1].y;
+	matrix.Value[1][2] = 0.0f;
+	matrix.Value[2][0] = 0.0f;
+	matrix.Value[2][1] = 0.0f;
+	matrix.Value[2][2] = 1.0f;
+	matrix.Value[3][0] = transform.elements[2].x;
+	matrix.Value[3][1] = transform.elements[2].y;
+	matrix.Value[3][2] = 0.0f;
 	return matrix;
 }
 

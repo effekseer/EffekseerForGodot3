@@ -3,6 +3,7 @@
 #include <Godot.hpp>
 #include <World.hpp>
 #include <Camera.hpp>
+#include <Camera2D.hpp>
 #include <Node.hpp>
 #include <Effekseer.h>
 #include "RendererGodot/EffekseerGodot.Renderer.h"
@@ -40,7 +41,9 @@ public:
 
 	void _update_draw();
 
-	void draw(Effekseer::Handle handle, Camera* camera);
+	void draw3D(Effekseer::Handle handle, const Transform& camera_transform);
+
+	void draw2D(Effekseer::Handle handle, const Transform2D& camera_transform);
 
 	void stop_all_effects();
 

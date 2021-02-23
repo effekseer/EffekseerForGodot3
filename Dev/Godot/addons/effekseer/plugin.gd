@@ -14,8 +14,10 @@ func _enter_tree():
 	add_project_setting("effekseer/sound_script", load(plugin_source_path + "/EffekseerSound.gd"), TYPE_OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Script")
 	
 	add_autoload_singleton("EffekseerSystem", plugin_source_path + "/EffekseerSystem.gdns")
-	#add_custom_type("EffekseerEffect", "Resource", load(plugin_source_path + "/EffekseerEffect.gdns"), null)
-	add_custom_type("EffekseerEmitter", "Spatial", load(plugin_source_path + "/EffekseerEmitter.gdns"), null)
+	var icon = load(plugin_path + "/icon16.png") as Texture
+	#add_custom_type("EffekseerEffect", "Resource", load(plugin_source_path + "/EffekseerEffect.gdns"), icon)
+	add_custom_type("EffekseerEmitter", "Spatial", load(plugin_source_path + "/EffekseerEmitter.gdns"), icon)
+	add_custom_type("EffekseerEmitter2D", "Node2D", load(plugin_source_path + "/EffekseerEmitter2D.gdns"), icon)
 	
 	effect_import_plugin = load(plugin_source_path + "/EffekseerEffectImportPlugin.gd").new()
 	resource_import_plugin = load(plugin_source_path + "/EffekseerResourceImportPlugin.gd").new()
@@ -30,6 +32,7 @@ func _exit_tree():
 	remove_import_plugin(effect_import_plugin)
 	remove_spatial_gizmo_plugin(emitter_gizmo_plugin)
 	
+	remove_custom_type("EffekseerEmitter2D")
 	remove_custom_type("EffekseerEmitter")
 	#remove_custom_type("EffekseerEffect")
 	remove_autoload_singleton("EffekseerSystem")

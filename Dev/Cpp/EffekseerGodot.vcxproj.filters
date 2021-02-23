@@ -117,6 +117,10 @@
     <ClCompile Include="src\Utils\EffekseerGodot.Utils.cpp">
       <Filter>src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\EffekseerEmitter2D.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererGodot\EffekseerGodot.RendererImplemented.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GDLibrary.h">
@@ -229,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="src\Utils\EffekseerGodot.Utils.h">
       <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EffekseerEmitter2D.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

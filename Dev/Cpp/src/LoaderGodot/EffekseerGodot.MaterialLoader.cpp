@@ -38,14 +38,14 @@ namespace EffekseerGodot
 
 	{
 		auto shader = Shader::Create("CustomShader_Sprite", shaderDataList[0].Code.c_str(), 
-			RendererShaderType::Material, std::move(shaderDataList[0].ParamDecls));
+			Shader::RenderType::Spatial, RendererShaderType::Material, std::move(shaderDataList[0].ParamDecls));
 		shader->SetVertexConstantBufferSize(shaderDataList[0].VertexConstantBufferSize);
 		shader->SetPixelConstantBufferSize(shaderDataList[0].PixelConstantBufferSize);
 		material->UserPtr = shader.release();
 	}
 	{
 		auto shader = Shader::Create("CustomShader_Model", shaderDataList[1].Code.c_str(), 
-			RendererShaderType::Material, std::move(shaderDataList[1].ParamDecls));
+			Shader::RenderType::Spatial, RendererShaderType::Material, std::move(shaderDataList[1].ParamDecls));
 		shader->SetVertexConstantBufferSize(shaderDataList[1].VertexConstantBufferSize);
 		shader->SetPixelConstantBufferSize(shaderDataList[1].PixelConstantBufferSize);
 		material->ModelUserPtr = shader.release();

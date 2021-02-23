@@ -112,10 +112,21 @@ void EffekseerSystem::_update_draw()
 	m_renderer->ResetState();
 }
 
-void EffekseerSystem::draw(Effekseer::Handle handle, Camera* camera)
+void EffekseerSystem::draw3D(Effekseer::Handle handle, const Transform& camera_transform)
 {
-	auto camera_transform = camera->get_camera_transform().inverse();
-	m_renderer->SetCameraMatrix(EffekseerGodot::ToEfkMatrix44(camera_transform));
+	Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
+	m_renderer->SetCameraMatrix(matrix);
+
+	m_renderer->BeginRendering();
+	m_manager->DrawHandle(handle);
+	m_renderer->EndRendering();
+}
+
+void EffekseerSystem::draw2D(Effekseer::Handle handle, const Transform2D& camera_transform)
+{
+	Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
+	matrix.Values[3][2] = -1.0f; // Z offset
+	m_renderer->SetCameraMatrix(matrix);
 
 	m_renderer->BeginRendering();
 	m_manager->DrawHandle(handle);
