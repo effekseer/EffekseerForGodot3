@@ -47,7 +47,8 @@ public:
 	~RenderCommand2D();
 
 	void Reset();
-	void DrawSprites(godot::RID parentCanvasItem, int32_t priority);
+	void DrawSprites(godot::RID parentCanvasItem);
+	void DrawModel(godot::RID parentCanvasItem, godot::RID mesh);
 
 	godot::RID GetCanvasItem() { return m_canvasItem; }
 	godot::RID GetMaterial() { return m_material; }
@@ -108,9 +109,7 @@ private:
 	IndexBufferRef m_indexBufferForWireframe;
 	int32_t m_squareMaxCount = 0;
 
-	std::array<std::unique_ptr<Shader>, 6> m_lightweightShaders;
-	std::array<std::unique_ptr<Shader>, 6> m_softparticleShaders;
-	std::array<std::unique_ptr<Shader>, 6> m_canvasitemShaders;
+	std::array<std::unique_ptr<Shader>, 6> m_shaders;
 
 	Shader* m_currentShader = nullptr;
 	godot::World* m_world = nullptr;
@@ -271,6 +270,9 @@ private:
 	void TransferVertexToCanvasItem2D(godot::RID canvas_item, 
 		const void* vertexData, int32_t spriteCount, 
 		const EffekseerRenderer::StandardRendererState& state);
+
+	void TransferModelToCanvasItem2D(godot::RID canvas_item, 
+		Effekseer::Model* model, const EffekseerRenderer::StandardRendererState& state);
 };
 
 //----------------------------------------------------------------------------------

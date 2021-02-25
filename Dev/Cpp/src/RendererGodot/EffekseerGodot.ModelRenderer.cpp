@@ -32,6 +32,10 @@ namespace SoftParticle
 #include "Shaders/Model.inl"
 #undef SOFT_PARTICLE
 }
+namespace CanvasItem
+{
+#include "Shaders/Model2D.inl"
+}
 #undef LIGHTING
 #undef DISTORTION
 }
@@ -51,6 +55,10 @@ namespace SoftParticle
 #define SOFT_PARTICLE 1
 #include "Shaders/Model.inl"
 #undef SOFT_PARTICLE
+}
+namespace CanvasItem
+{
+#include "Shaders/Model2D.inl"
 }
 #undef LIGHTING
 #undef DISTORTION
@@ -72,6 +80,10 @@ namespace SoftParticle
 #include "Shaders/Model.inl"
 #undef SOFT_PARTICLE
 }
+namespace CanvasItem
+{
+#include "Shaders/Model2D.inl"
+}
 #undef LIGHTING
 #undef DISTORTION
 }
@@ -81,38 +93,29 @@ namespace SoftParticle
 ModelRenderer::ModelRenderer(RendererImplemented* renderer)
 	: m_renderer(renderer)
 {
-	using namespace EffekseerGodot::ModelShaders;
 	using namespace EffekseerRenderer;
+	using namespace EffekseerGodot::ModelShaders;
 
-	m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Model_Basic_Unlit_Lightweight",
-		Unlit::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::Unlit, Unlit::Lightweight::decl);
-	m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+	m_shaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Model_Basic_Unlit", RendererShaderType::Unlit);
+	m_shaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
+	m_shaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+	m_shaders[(size_t)RendererShaderType::Unlit]->Compile(Shader::RenderType::SpatialLightweight, Unlit::Lightweight::code, Unlit::Lightweight::decl);
+	m_shaders[(size_t)RendererShaderType::Unlit]->Compile(Shader::RenderType::SpatialDepthFade, Unlit::SoftParticle::code, Unlit::SoftParticle::decl);
+	m_shaders[(size_t)RendererShaderType::Unlit]->Compile(Shader::RenderType::CanvasItem, Unlit::CanvasItem::code, Unlit::CanvasItem::decl);
 
-	m_softparticleShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Model_Basic_Unlit_SoftParticle",
-		Unlit::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::Unlit, Unlit::SoftParticle::decl);
-	m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+	m_shaders[(size_t)RendererShaderType::Lit] = Shader::Create("Model_Basic_Lighting", RendererShaderType::Lit);
+	m_shaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
+	m_shaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+	m_shaders[(size_t)RendererShaderType::Lit]->Compile(Shader::RenderType::SpatialLightweight, Lighting::Lightweight::code, Lighting::Lightweight::decl);
+	m_shaders[(size_t)RendererShaderType::Lit]->Compile(Shader::RenderType::SpatialDepthFade, Lighting::SoftParticle::code, Lighting::SoftParticle::decl);
+	m_shaders[(size_t)RendererShaderType::Lit]->Compile(Shader::RenderType::CanvasItem, Lighting::CanvasItem::code, Lighting::CanvasItem::decl);
 
-	m_lightweightShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Model_Basic_Lighting_Lightweight",
-		Lighting::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::Lit, Lighting::Lightweight::decl);
-	m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
-
-	m_softparticleShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Model_Basic_Lighting_SoftParticle",
-		Lighting::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::Lit, Lighting::SoftParticle::decl);
-	m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
-
-	m_lightweightShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Model_Basic_Distortion_Lightweight",
-		Distortion::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::BackDistortion, Distortion::Lightweight::decl);
-	m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
-
-	m_softparticleShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Model_Basic_Distortion_SoftParticle",
-		Distortion::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::BackDistortion, Distortion::SoftParticle::decl);
-	m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
-	m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
+	m_shaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Model_Basic_Distortion", RendererShaderType::BackDistortion);
+	m_shaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(ModelRendererVertexConstantBuffer<40>));
+	m_shaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+	m_shaders[(size_t)RendererShaderType::BackDistortion]->Compile(Shader::RenderType::SpatialLightweight, Distortion::Lightweight::code, Distortion::Lightweight::decl);
+	m_shaders[(size_t)RendererShaderType::BackDistortion]->Compile(Shader::RenderType::SpatialDepthFade, Distortion::SoftParticle::code, Distortion::SoftParticle::decl);
+	m_shaders[(size_t)RendererShaderType::BackDistortion]->Compile(Shader::RenderType::CanvasItem, Distortion::CanvasItem::code, Distortion::CanvasItem::decl);
 }
 
 //----------------------------------------------------------------------------------
@@ -167,12 +170,6 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 
 	m_renderer->SetModel(model);
 
-	const bool softparticleEnabled = !(
-		parameter.BasicParameterPtr->SoftParticleDistanceFar == 0.0f &&
-		parameter.BasicParameterPtr->SoftParticleDistanceFar == 0.0f &&
-		parameter.BasicParameterPtr->SoftParticleDistanceFar == 0.0f);
-	auto& shaders = (softparticleEnabled) ? m_softparticleShaders : m_lightweightShaders;
-
 	using namespace EffekseerRenderer;
 
 	EndRendering_<
@@ -182,12 +179,12 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 		false,
 		1>(
 		m_renderer,
-		shaders[(size_t)RendererShaderType::AdvancedLit].get(),
-		shaders[(size_t)RendererShaderType::AdvancedUnlit].get(),
-		shaders[(size_t)RendererShaderType::AdvancedBackDistortion].get(),
-		shaders[(size_t)RendererShaderType::Lit].get(),
-		shaders[(size_t)RendererShaderType::Unlit].get(),
-		shaders[(size_t)RendererShaderType::BackDistortion].get(),
+		m_shaders[(size_t)RendererShaderType::AdvancedLit].get(),
+		m_shaders[(size_t)RendererShaderType::AdvancedUnlit].get(),
+		m_shaders[(size_t)RendererShaderType::AdvancedBackDistortion].get(),
+		m_shaders[(size_t)RendererShaderType::Lit].get(),
+		m_shaders[(size_t)RendererShaderType::Unlit].get(),
+		m_shaders[(size_t)RendererShaderType::BackDistortion].get(),
 		parameter, userData);
 
 	m_renderer->SetModel(nullptr);

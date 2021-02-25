@@ -17,10 +17,12 @@ namespace EffekseerGodot
 class Shader : public ::EffekseerRenderer::ShaderBase
 {
 public:
-	enum class RenderType
+	enum class RenderType : uint8_t
 	{
-		Spatial,
-		CanvasItem
+		SpatialLightweight,
+		SpatialDepthFade,
+		CanvasItem,
+		Max
 	};
 
 	enum class ParamType : uint8_t
@@ -45,19 +47,17 @@ public:
 
 	virtual ~Shader();
 
-	static std::unique_ptr<Shader> Create(const char* name, const char* code, 
-		RenderType renderType, EffekseerRenderer::RendererShaderType shaderType,
-		std::vector<ParamDecl>&& paramDecls);
+	static std::unique_ptr<Shader> Create(const char* name, EffekseerRenderer::RendererShaderType shaderType);
 
 	template <size_t N>
-	static std::unique_ptr<Shader> Create(const char* name, const char* code, 
-		RenderType renderType, EffekseerRenderer::RendererShaderType shaderType,
-		const ParamDecl (&paramDecls)[N])
+	bool Compile(RenderType renderType, const char* code, const ParamDecl (&paramDecls)[N])
 	{
 		std::vector<ParamDecl> v(N);
 		v.assign(paramDecls, paramDecls + N);
-		return Create(name, code, renderType, shaderType, std::move(v));
+		return Compile(renderType, code, std::move(v));
 	}
+
+	bool Compile(RenderType renderType, const char* code, std::vector<ParamDecl>&& paramDecls);
 
 	void SetVertexConstantBufferSize(int32_t size)
 	{
@@ -87,7 +87,7 @@ public:
 
 	void SetConstantBuffer() {}
 
-	void ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderStateBase::State& state);
+	void ApplyToMaterial(RenderType renderType, godot::RID material, EffekseerRenderer::RenderStateBase::State& state);
 
 	EffekseerRenderer::RendererShaderType GetShaderType() { return m_shaderType; }
 
@@ -95,16 +95,17 @@ private:
 	std::vector<uint8_t> m_constantBuffers[2];
 
 	std::string m_name;
-	std::vector<ParamDecl> m_paramDecls;
 	EffekseerRenderer::RendererShaderType m_shaderType = EffekseerRenderer::RendererShaderType::Unlit;
-	RenderType m_renderType = RenderType::Spatial;
-	godot::RID m_rid[2][2][3][5];;
 
-	Shader(const char* name, const char* code, 
-		RenderType renderType, EffekseerRenderer::RendererShaderType shaderType, 
-		std::vector<ParamDecl>&& paramDecls);
+	struct InternalShader {
+		godot::RID rid[2][2][3][5];
+		std::vector<ParamDecl> paramDecls;
+	};
+	InternalShader m_internals[(size_t)RenderType::Max];
 
+	Shader(const char* name, EffekseerRenderer::RendererShaderType shaderType);
 };
+
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------

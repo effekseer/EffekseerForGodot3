@@ -37,17 +37,18 @@ namespace EffekseerGodot
 	auto shaderDataList = shaderGenerator.Generate(materialFile);
 
 	{
-		auto shader = Shader::Create("CustomShader_Sprite", shaderDataList[0].Code.c_str(), 
-			Shader::RenderType::Spatial, RendererShaderType::Material, std::move(shaderDataList[0].ParamDecls));
+		auto shader = Shader::Create("Custom_Sprite", RendererShaderType::Material);
 		shader->SetVertexConstantBufferSize(shaderDataList[0].VertexConstantBufferSize);
 		shader->SetPixelConstantBufferSize(shaderDataList[0].PixelConstantBufferSize);
+		shader->Compile(Shader::RenderType::SpatialLightweight, shaderDataList[0].Code.c_str(), std::move(shaderDataList[0].ParamDecls));
+		shader->Compile(Shader::RenderType::CanvasItem, shaderDataList[0].Code.c_str(), std::move(shaderDataList[0].ParamDecls));
 		material->UserPtr = shader.release();
 	}
 	{
-		auto shader = Shader::Create("CustomShader_Model", shaderDataList[1].Code.c_str(), 
-			Shader::RenderType::Spatial, RendererShaderType::Material, std::move(shaderDataList[1].ParamDecls));
+		auto shader = Shader::Create("Model_Custom", RendererShaderType::Material);
 		shader->SetVertexConstantBufferSize(shaderDataList[1].VertexConstantBufferSize);
 		shader->SetPixelConstantBufferSize(shaderDataList[1].PixelConstantBufferSize);
+		shader->Compile(Shader::RenderType::SpatialLightweight, shaderDataList[1].Code.c_str(), std::move(shaderDataList[1].ParamDecls));
 		material->ModelUserPtr = shader.release();
 	}
 

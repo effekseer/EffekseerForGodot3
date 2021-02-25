@@ -177,6 +177,11 @@ inline godot::Vector2 ConvertUV(const float uv[])
 	return godot::Vector2(uv[0], uv[1]);
 }
 
+inline godot::Vector2 ConvertUV(const Effekseer::Vector2D& uv)
+{
+	return godot::Vector2(uv.X, uv.Y);
+}
+
 inline godot::Vector3 ConvertVector3(const EffekseerRenderer::VertexFloat3& v)
 {
 	return godot::Vector3(v.X, v.Y, v.Z);
@@ -288,13 +293,21 @@ void EffekseerGodot::RenderCommand2D::Reset()
 	vs->canvas_item_set_parent(m_canvasItem, godot::RID());
 }
 
-void EffekseerGodot::RenderCommand2D::DrawSprites(godot::RID parentCanvasItem, int32_t priority)
+void EffekseerGodot::RenderCommand2D::DrawSprites(godot::RID parentCanvasItem)
 {
 	auto vs = godot::VisualServer::get_singleton();
 
 	vs->canvas_item_set_parent(m_canvasItem, parentCanvasItem);
 	vs->canvas_item_set_material(m_canvasItem, m_material);
-	vs->material_set_render_priority(m_material, priority);
+}
+
+void RenderCommand2D::DrawModel(godot::RID parentCanvasItem, godot::RID mesh)
+{
+	auto vs = godot::VisualServer::get_singleton();
+
+	vs->canvas_item_set_parent(m_canvasItem, parentCanvasItem);
+	vs->canvas_item_add_mesh(m_canvasItem, mesh);
+	vs->canvas_item_set_material(m_canvasItem, m_material);
 }
 
 //----------------------------------------------------------------------------------
@@ -344,53 +357,29 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 			return false;
 	}
 	{
-		using namespace EffekseerGodot::StandardShaders;
 		using namespace EffekseerRenderer;
+		using namespace EffekseerGodot::StandardShaders;
 
-		m_lightweightShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_Lightweight", 
-			Unlit::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::Unlit, Unlit::Lightweight::decl);
-		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_lightweightShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+		m_shaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit", RendererShaderType::Unlit);
+		m_shaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_shaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+		m_shaders[(size_t)RendererShaderType::Unlit]->Compile(Shader::RenderType::SpatialLightweight, Unlit::Lightweight::code, Unlit::Lightweight::decl);
+		m_shaders[(size_t)RendererShaderType::Unlit]->Compile(Shader::RenderType::SpatialDepthFade, Unlit::SoftParticle::code, Unlit::SoftParticle::decl);
+		m_shaders[(size_t)RendererShaderType::Unlit]->Compile(Shader::RenderType::CanvasItem, Unlit::CanvasItem::code, Unlit::CanvasItem::decl);
 
-		m_softparticleShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_SoftParticle", 
-			Unlit::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::Unlit, Unlit::SoftParticle::decl);
-		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_softparticleShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+		m_shaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting", RendererShaderType::Lit);
+		m_shaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_shaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+		m_shaders[(size_t)RendererShaderType::Lit]->Compile(Shader::RenderType::SpatialLightweight, Lighting::Lightweight::code, Lighting::Lightweight::decl);
+		m_shaders[(size_t)RendererShaderType::Lit]->Compile(Shader::RenderType::SpatialDepthFade, Lighting::SoftParticle::code, Lighting::SoftParticle::decl);
+		m_shaders[(size_t)RendererShaderType::Lit]->Compile(Shader::RenderType::CanvasItem, Lighting::CanvasItem::code, Lighting::CanvasItem::decl);
 
-		m_canvasitemShaders[(size_t)RendererShaderType::Unlit] = Shader::Create("Sprite_Basic_Unlit_CanvasItem", 
-			Unlit::CanvasItem::code, Shader::RenderType::CanvasItem, RendererShaderType::Unlit, Unlit::CanvasItem::decl);
-		m_canvasitemShaders[(size_t)RendererShaderType::Unlit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_canvasitemShaders[(size_t)RendererShaderType::Unlit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
-
-		m_lightweightShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_Lightweight", 
-			Lighting::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::Lit, Lighting::Lightweight::decl);
-		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_lightweightShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
-
-		m_softparticleShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_SoftParticle",
-			Lighting::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::Lit, Lighting::SoftParticle::decl);
-		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_softparticleShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
-
-		m_canvasitemShaders[(size_t)RendererShaderType::Lit] = Shader::Create("Sprite_Basic_Lighting_CanvasItem", 
-			Lighting::CanvasItem::code, Shader::RenderType::CanvasItem, RendererShaderType::Lit, Lighting::CanvasItem::decl);
-		m_canvasitemShaders[(size_t)RendererShaderType::Lit]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_canvasitemShaders[(size_t)RendererShaderType::Lit]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
-
-		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_Lightweight",
-			Distortion::Lightweight::code, Shader::RenderType::Spatial, RendererShaderType::BackDistortion, Distortion::Lightweight::decl);
-		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_lightweightShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
-
-		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_SoftParticle",
-			Distortion::SoftParticle::code, Shader::RenderType::Spatial, RendererShaderType::BackDistortion, Distortion::SoftParticle::decl);
-		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_softparticleShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
-
-		m_canvasitemShaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion_CanvasItem", 
-			Distortion::CanvasItem::code, Shader::RenderType::CanvasItem, RendererShaderType::BackDistortion, Distortion::CanvasItem::decl);
-		m_canvasitemShaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
-		m_canvasitemShaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBufferDistortion));
+		m_shaders[(size_t)RendererShaderType::BackDistortion] = Shader::Create("Sprite_Basic_Distortion", RendererShaderType::BackDistortion);
+		m_shaders[(size_t)RendererShaderType::BackDistortion]->SetVertexConstantBufferSize(sizeof(StandardRendererVertexBuffer));
+		m_shaders[(size_t)RendererShaderType::BackDistortion]->SetPixelConstantBufferSize(sizeof(PixelConstantBuffer));
+		m_shaders[(size_t)RendererShaderType::BackDistortion]->Compile(Shader::RenderType::SpatialLightweight, Distortion::Lightweight::code, Distortion::Lightweight::decl);
+		m_shaders[(size_t)RendererShaderType::BackDistortion]->Compile(Shader::RenderType::SpatialDepthFade, Distortion::SoftParticle::code, Distortion::SoftParticle::decl);
+		m_shaders[(size_t)RendererShaderType::BackDistortion]->Compile(Shader::RenderType::CanvasItem, Distortion::CanvasItem::code, Distortion::CanvasItem::decl);
 	}
 
 	m_renderCommands.resize((size_t)drawMaxCount);
@@ -503,7 +492,9 @@ IndexBuffer* RendererImplemented::GetIndexBuffer()
 //----------------------------------------------------------------------------------
 ::Effekseer::RingRendererRef RendererImplemented::CreateRingRenderer()
 {
-	return ::Effekseer::RingRendererRef(new ::EffekseerRenderer::RingRendererBase<RendererImplemented, false>(this));
+	auto ringRenderer = Effekseer::MakeRefPtr<::EffekseerRenderer::RingRendererBase<RendererImplemented, false>>(this);
+	ringRenderer->SetFasterSngleRingModeEnabled(false);
+	return ringRenderer;
 }
 
 //----------------------------------------------------------------------------------
@@ -567,13 +558,20 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 	if (auto node3d = godot::Object::cast_to<godot::Spatial>(godotObj)) {
 		if (m_renderCount >= m_renderCommands.size()) return;
 
+		const bool softparticleEnabled = !(
+			state.SoftParticleDistanceFar == 0.0f &&
+			state.SoftParticleDistanceNear == 0.0f &&
+			state.SoftParticleDistanceNearOffset == 0.0f);
+		const Shader::RenderType renderType = (softparticleEnabled) ? 
+			Shader::RenderType::SpatialDepthFade : Shader::RenderType::SpatialLightweight;
+
 		auto& command = m_renderCommands[m_renderCount];
 
 		// Transfer vertex data
 		TransferVertexToImmediate3D(command.GetImmediate(), GetVertexBuffer()->Refer(), spriteCount, state);
 
 		// Setup material
-		m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
+		m_currentShader->ApplyToMaterial(renderType, command.GetMaterial(), m_renderState->GetActiveState());
 
 		if (state.CustomData1Count > 0)
 		{
@@ -596,7 +594,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 		TransferVertexToCanvasItem2D(command.GetCanvasItem(), GetVertexBuffer()->Refer(), spriteCount, state);
 
 		// Setup material
-		m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
+		m_currentShader->ApplyToMaterial(Shader::RenderType::CanvasItem, command.GetMaterial(), m_renderState->GetActiveState());
 
 		if (m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::Lit || 
 			m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::BackDistortion)
@@ -604,7 +602,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 			vs->material_set_param(command.GetMaterial(), "UVTangentTexture", m_uvTangentTexture.GetRID());
 		}
 
-		command.DrawSprites(node2d->get_canvas_item(), (int32_t)m_renderCount);
+		command.DrawSprites(node2d->get_canvas_item());
 		m_renderCount2D++;
 	}
 
@@ -628,24 +626,46 @@ void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
 	assert(m_currentShader != nullptr);
 	assert(m_currentModel != nullptr);
 
-	if (m_renderCount >= m_renderCommands.size())
-	{
-		return;
+	auto vs = godot::VisualServer::get_singleton();
+
+	const auto& state = m_standardRenderer->GetState();
+	godot::Object* godotObj = reinterpret_cast<godot::Object*>(GetImpl()->CurrentHandleUserData);
+
+	if (auto node3d = godot::Object::cast_to<godot::Spatial>(godotObj)) {
+		if (m_renderCount >= m_renderCommands.size()) return;
+
+		const bool softparticleEnabled = !(
+			state.SoftParticleDistanceFar == 0.0f &&
+			state.SoftParticleDistanceNear == 0.0f &&
+			state.SoftParticleDistanceNearOffset == 0.0f);
+		const Shader::RenderType renderType = (softparticleEnabled) ? 
+			Shader::RenderType::SpatialDepthFade : Shader::RenderType::SpatialLightweight;
+
+		auto& command = m_renderCommands[m_renderCount];
+
+		// Setup material
+		m_currentShader->ApplyToMaterial(renderType, command.GetMaterial(), m_renderState->GetActiveState());
+
+		auto mesh = m_currentModel.DownCast<Model>()->GetRID();
+		command.DrawModel(node3d->get_world().ptr(), mesh, (int32_t)m_renderCount);
+		m_renderCount++;
+
+	} else if (auto node2d = godot::Object::cast_to<godot::Node2D>(godotObj)) {
+		if (m_renderCount2D >= m_renderCommand2Ds.size()) return;
+
+		auto& command = m_renderCommand2Ds[m_renderCount2D];
+
+		// Transfer vertex data
+		TransferModelToCanvasItem2D(command.GetCanvasItem(), m_currentModel.Get(), state);
+		
+		// Setup material
+		m_currentShader->ApplyToMaterial(Shader::RenderType::CanvasItem, command.GetMaterial(), m_renderState->GetActiveState());
+
+		//auto mesh = m_currentModel.DownCast<Model>()->GetRID();
+		//command.DrawModel(node2d->get_canvas_item(), mesh);
+		command.DrawSprites(node2d->get_canvas_item());
+		m_renderCount2D++;
 	}
-
-	godot::Node* node = reinterpret_cast<godot::Node*>(GetImpl()->CurrentHandleUserData);
-	godot::Viewport* viewport = node->get_viewport();
-	if (viewport == nullptr) return;
-	godot::World* world = viewport->get_world().ptr();
-	if (world == nullptr) return;
-
-	auto& command = m_renderCommands[m_renderCount];
-
-	m_currentShader->ApplyToMaterial(command.GetMaterial(), m_renderState->GetActiveState());
-
-	auto mesh = m_currentModel.DownCast<Model>()->GetRID();
-	command.DrawModel(world, mesh, (int32_t)m_renderCount);
-	m_renderCount++;
 
 	impl->drawcallCount++;
 	impl->drawvertexCount += vertexCount;
@@ -660,31 +680,10 @@ void RendererImplemented::DrawPolygonInstanced(int32_t vertexCount, int32_t inde
 
 Shader* RendererImplemented::GetShader(::EffekseerRenderer::RendererShaderType type)
 {
-	const auto& state = m_standardRenderer->GetState();
-	
-	const bool canvasitemEnabled = 
-		reinterpret_cast<godot::Object*>(GetImpl()->CurrentHandleUserData)->is_class("Node2D");
-
-	const bool softparticleEnabled = !(
-		state.SoftParticleDistanceFar == 0.0f &&
-		state.SoftParticleDistanceNear == 0.0f &&
-		state.SoftParticleDistanceNearOffset == 0.0f);
-
 	if ((size_t)type >= (size_t)EffekseerRenderer::RendererShaderType::Unlit && 
 		(size_t)type <= (size_t)EffekseerRenderer::RendererShaderType::AdvancedBackDistortion)
 	{
-		if (canvasitemEnabled)
-		{
-			return m_canvasitemShaders[(size_t)type].get();
-		}
-		if (softparticleEnabled)
-		{
-			return m_softparticleShaders[(size_t)type].get();
-		}
-		else
-		{
-			return m_lightweightShaders[(size_t)type].get();
-		}
+		return m_shaders[(size_t)type].get();
 	}
 
 	assert(0);
@@ -1035,6 +1034,65 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 	}
 	else if (shaderType == RendererShaderType::Material)
 	{
+	}
+
+	vs->canvas_item_add_triangle_array(canvas_item, indexArray, pointArray, colorArray, uvArray);
+}
+
+void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item, 
+	Effekseer::Model* model, const EffekseerRenderer::StandardRendererState& state)
+{
+	using namespace EffekseerRenderer;
+
+	auto vs = godot::VisualServer::get_singleton();
+
+	const int32_t vertexCount = model->GetVertexCount();
+	const Effekseer::Model::Vertex* vertexData = model->GetVertexes();
+
+	const int32_t faceCount = model->GetFaceCount();
+	const Effekseer::Model::Face* faceData = model->GetFaces();
+
+	godot::PoolIntArray indexArray;
+	godot::PoolVector2Array pointArray;
+	godot::PoolColorArray colorArray;
+	godot::PoolVector2Array uvArray;
+
+	indexArray.resize(faceCount * 3);
+	pointArray.resize(vertexCount);
+	colorArray.resize(vertexCount);
+	uvArray.resize(vertexCount);
+
+	{
+		int* indices = indexArray.write().ptr();
+
+		for (int32_t i = 0; i < faceCount; i++)
+		{
+			indices[i * 3 + 0] = faceData[i].Indexes[0];
+			indices[i * 3 + 1] = faceData[i].Indexes[1];
+			indices[i * 3 + 2] = faceData[i].Indexes[2];
+		}
+	}
+
+	const uint8_t* constantBuffer = (const uint8_t*)m_currentShader->GetVertexConstantBuffer();
+	const Effekseer::Matrix44 worldMatrix = *(Effekseer::Matrix44*)(constantBuffer + 64);
+
+	//RendererShaderType shaderType = m_currentShader->GetShaderType();
+
+	//if (shaderType == RendererShaderType::Unlit)
+	{
+		godot::Vector2* points = pointArray.write().ptr();
+		godot::Color* colors = colorArray.write().ptr();
+		godot::Vector2* uvs = uvArray.write().ptr();
+
+		for (int32_t i = 0; i < vertexCount; i++)
+		{
+			auto& v = vertexData[i];
+			Effekseer::Vector3D pos;
+			Effekseer::Vector3D::Transform(pos, v.Position, worldMatrix);
+			points[i] = ConvertVector2(pos);
+			colors[i] = ConvertColor(v.VColor);
+			uvs[i] = ConvertUV(v.UV);
+		}
 	}
 
 	vs->canvas_item_add_triangle_array(canvas_item, indexArray, pointArray, colorArray, uvArray);

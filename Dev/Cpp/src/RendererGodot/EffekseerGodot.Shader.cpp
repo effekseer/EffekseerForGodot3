@@ -39,31 +39,81 @@ static const char* DepthWriteMode[] = {
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-std::unique_ptr<Shader> Shader::Create(const char* name, const char* code, 
-	RenderType renderType, EffekseerRenderer::RendererShaderType shaderType,
-	std::vector<ParamDecl>&& paramDecls)
+std::unique_ptr<Shader> Shader::Create(const char* name, EffekseerRenderer::RendererShaderType shaderType)
 {
-	return std::unique_ptr<Shader>(new Shader(name, code, renderType, shaderType, std::move(paramDecls)));
+	return std::unique_ptr<Shader>(new Shader(name, shaderType));
 }
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-Shader::Shader(const char* name, const char* code, 
-	RenderType renderType, EffekseerRenderer::RendererShaderType shaderType,
-	std::vector<ParamDecl>&& paramDecls)
+Shader::Shader(const char* name, EffekseerRenderer::RendererShaderType shaderType)
 {
 	m_name = name;
-	m_paramDecls = std::move(paramDecls);
 	m_shaderType = shaderType;
-	m_renderType = renderType;
+}
 
+//-----------------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------------
+Shader::~Shader()
+{
 	auto vs = godot::VisualServer::get_singleton();
+
+#define COUNT_OF(list) (sizeof(list) / sizeof(list[0]))
+	for (int i = 0; i < (int)RenderType::Max; i++)
+	{
+		if ((RenderType)i == RenderType::CanvasItem)
+		{
+			for (size_t bm = 0; bm < COUNT_OF(BlendMode); bm++)
+			{
+				vs->free_rid(m_internals[i].rid[0][0][0][bm]);
+			}
+		}
+		else
+		{
+			for (size_t dwm = 0; dwm < COUNT_OF(DepthWriteMode); dwm++)
+			{
+				for (size_t dtm = 0; dtm < COUNT_OF(DepthTestMode); dtm++)
+				{
+					for (size_t cm = 0; cm < COUNT_OF(CullMode); cm++)
+					{
+						for (size_t bm = 0; bm < COUNT_OF(BlendMode); bm++)
+						{
+							vs->free_rid(m_internals[i].rid[dwm][dtm][cm][bm]);
+						}
+					}
+				}
+			}
+		}
+	}
+#undef COUNT_OF
+}
+
+bool Shader::Compile(RenderType renderType, const char* code, std::vector<ParamDecl>&& paramDecls)
+{
+	auto vs = godot::VisualServer::get_singleton();
+
+	auto& shader = m_internals[(int)renderType];
+	shader.paramDecls = std::move(paramDecls);
 
 	godot::String baseCode = code;
 
 #define COUNT_OF(list) (sizeof(list) / sizeof(list[0]))
-	if (m_renderType == RenderType::Spatial)
+	if (renderType == RenderType::CanvasItem)
+	{
+		for (size_t bm = 0; bm < COUNT_OF(BlendMode); bm++)
+		{
+			godot::String fullCode;
+			fullCode += ShaderType2D;
+			fullCode += BlendMode[bm];
+			fullCode += baseCode;
+
+			shader.rid[0][0][0][bm] = vs->shader_create();
+			vs->shader_set_code(shader.rid[0][0][0][bm], fullCode);
+		}
+	}
+	else
 	{
 		for (size_t dwm = 0; dwm < COUNT_OF(DepthWriteMode); dwm++)
 		{
@@ -81,87 +131,42 @@ Shader::Shader(const char* name, const char* code,
 						fullCode += BlendMode[bm];
 						fullCode += baseCode;
 
-						m_rid[dwm][dtm][cm][bm] = vs->shader_create();
-						vs->shader_set_code(m_rid[dwm][dtm][cm][bm], fullCode);
+						shader.rid[dwm][dtm][cm][bm] = vs->shader_create();
+						vs->shader_set_code(shader.rid[dwm][dtm][cm][bm], fullCode);
 					}
 				}
 			}
 		}
 	}
-	else if (m_renderType == RenderType::CanvasItem)
-	{
-		for (size_t bm = 0; bm < COUNT_OF(BlendMode); bm++)
-		{
-			godot::String fullCode;
-			fullCode += ShaderType2D;
-			fullCode += BlendMode[bm];
-			fullCode += baseCode;
-
-			m_rid[0][0][0][bm] = vs->shader_create();
-			vs->shader_set_code(m_rid[0][0][0][bm], fullCode);
-		}
-	}
 #undef COUNT_OF
+	return true;
 }
 
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-Shader::~Shader()
+void Shader::ApplyToMaterial(RenderType renderType, godot::RID material, EffekseerRenderer::RenderStateBase::State& state)
 {
 	auto vs = godot::VisualServer::get_singleton();
 
-#define COUNT_OF(list) (sizeof(list) / sizeof(list[0]))
-	if (m_renderType == RenderType::Spatial)
-	{
-		for (size_t dwm = 0; dwm < COUNT_OF(DepthWriteMode); dwm++)
-		{
-			for (size_t dtm = 0; dtm < COUNT_OF(DepthTestMode); dtm++)
-			{
-				for (size_t cm = 0; cm < COUNT_OF(CullMode); cm++)
-				{
-					for (size_t bm = 0; bm < COUNT_OF(BlendMode); bm++)
-					{
-						vs->free_rid(m_rid[dwm][dtm][cm][bm]);
-					}
-				}
-			}
-		}
-	}
-	else if (m_renderType == RenderType::CanvasItem)
-	{
-		for (size_t bm = 0; bm < COUNT_OF(BlendMode); bm++)
-		{
-			vs->free_rid(m_rid[0][0][0][bm]);
-		}
-	}
-#undef COUNT_OF
-}
-
-//-----------------------------------------------------------------------------------
-//
-//-----------------------------------------------------------------------------------
-void Shader::ApplyToMaterial(godot::RID material, EffekseerRenderer::RenderStateBase::State& state)
-{
-	auto vs = godot::VisualServer::get_singleton();
-
+	auto& shader = m_internals[(int)renderType];
 	const size_t bm = (size_t)state.AlphaBlend;
-
-	if (m_renderType == RenderType::Spatial)
+	
+	if (renderType == RenderType::CanvasItem)
+	{
+		vs->material_set_shader(material, shader.rid[0][0][0][bm]);
+	}
+	else
 	{
 		const size_t cm = (size_t)state.CullingType;
 		const size_t dtm = (size_t)state.DepthTest;
 		const size_t dwm = (size_t)state.DepthWrite;
-		vs->material_set_shader(material, m_rid[dwm][dtm][cm][bm]);
-	}
-	else if (m_renderType == RenderType::CanvasItem)
-	{
-		vs->material_set_shader(material, m_rid[0][0][0][bm]);
+		vs->material_set_shader(material, shader.rid[dwm][dtm][cm][bm]);
 	}
 
-	for (size_t i = 0; i < m_paramDecls.size(); i++)
+	for (size_t i = 0; i < shader.paramDecls.size(); i++)
 	{
-		const auto& decl = m_paramDecls[i];
+		const auto& decl = shader.paramDecls[i];
 
 		if (decl.type == ParamType::Int)
 		{

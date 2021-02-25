@@ -6,14 +6,15 @@ render_mode unshaded;
 )"
 #endif
 
-#if DISTORTION || LIGHTING
 R"(
-varying vec4 v_UVTangent;
-uniform sampler2D UVTangentTexture : hint_normal;
+uniform mat4 ViewMatrix;
+uniform mat4 ModelMatrix;
+uniform vec4 ModelUV;
+uniform vec4 ModelColor : hint_color;
 )"
-#endif
 
 #if DISTORTION
+
 R"(
 uniform float DistortionIntensity;
 uniform sampler2D DistortionTexture : hint_normal;
@@ -33,13 +34,8 @@ uniform sampler2D ColorTexture : hint_albedo;
 
 R"(
 void vertex() {
-)"
-#if DISTORTION || LIGHTING
-R"(
-	v_UVTangent = texture(UVTangentTexture, UV);
-)"
-#endif
-R"(
+    UV = (UV.xy * ModelUV.zw) + ModelUV.xy;
+	COLOR = COLOR * ModelColor;
 }
 )"
 
@@ -48,13 +44,13 @@ void fragment() {
 )"
 #if DISTORTION
 R"(
-	vec2 distortionUV = DistortionMap(DistortionTexture, v_UVTangent.xy, DistortionIntensity, COLOR.xy, v_UVTangent.zw);
+	vec2 distortionUV = DistortionMap(DistortionTexture, UV, DistortionIntensity, COLOR.xy, vec2(1.0, 0.0));
 	COLOR = ColorMap(SCREEN_TEXTURE, SCREEN_UV + distortionUV, vec4(1.0, 1.0, 1.0, COLOR.a));
 )"
 #elif LIGHTING
 R"(
-	NORMAL = NormalMap(NormalTexture, v_UVTangent.xy, v_UVTangent.zw);
-	COLOR = ColorMap(ColorTexture, v_UVTangent.xy, COLOR);
+	NORMALMAP = NormalMap(NormalTexture, UV, vec2(1.0, 0.0));
+	COLOR = ColorMap(ColorTexture, UV, COLOR);
 )"
 #else
 R"(
@@ -66,10 +62,14 @@ R"(
 )";
 
 const Shader::ParamDecl decl[] = {
+	//{ "ViewMatrix",  Shader::ParamType::Matrix44, 0,   0 },
+	//{ "ModelMatrix", Shader::ParamType::Matrix44, 0,  64 },
+	{ "ModelUV",     Shader::ParamType::Vector4,  0, 128 },
+	{ "ModelColor",  Shader::ParamType::Vector4,  0, 144 },
+
 #if DISTORTION
 	{ "DistortionIntensity", Shader::ParamType::Float, 1, 48 },
 	{ "DistortionTexture", Shader::ParamType::Texture, 0, 0 },
-	{ "UVTangentTexture", Shader::ParamType::Texture, 1, 0 },
 #elif LIGHTING
 	{ "ColorTexture",  Shader::ParamType::Texture, 0, 0 },
 	{ "NormalTexture", Shader::ParamType::Texture, 1, 0 },
