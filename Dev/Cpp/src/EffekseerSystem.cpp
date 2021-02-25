@@ -103,7 +103,13 @@ void EffekseerSystem::_exit_tree()
 
 void EffekseerSystem::_process(float delta)
 {
-	m_manager->Update(delta * 60.0f);
+	// Stabilize in a variable frame environment
+	float deltaFrames = delta * 60.0f;
+	int iterations = (int)roundf(deltaFrames);
+	float advance = deltaFrames / iterations;
+	for (int i = 0; i < iterations; i++) {
+		m_manager->Update(advance);
+	}
 	m_renderer->SetTime(m_renderer->GetTime() + delta);
 }
 
