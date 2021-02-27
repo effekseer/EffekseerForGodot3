@@ -192,13 +192,15 @@ if env["platform"] == "linux":
     target_path = "libeffekseer.linux-" + env["bits"] + ".so"
 
 elif env["platform"] == "osx":
-    # Use Clang on macOS by default
-    env["CXX"] = "clang++"
-
     if env["bits"] == "32":
         raise ValueError(
             "Only 64-bit builds are supported for the macOS target."
         )
+
+    try:
+        sdk_path = decode_utf8(subprocess.check_output(["xcrun", "--sdk", "macosx", "--show-sdk-path"]).strip())
+    except (subprocess.CalledProcessError, OSError):
+        raise ValueError("Failed to find SDK path while running xcrun --sdk {} --show-sdk-path.".format(sdk_name))
 
     compiler_path = env["XCODEPATH"] + "/usr/bin/"
     env["ENV"]["PATH"] = env["XCODEPATH"] + "/Developer/usr/bin/:" + env["ENV"]["PATH"]
@@ -208,15 +210,16 @@ elif env["platform"] == "osx":
     env["AR"] = compiler_path + "ar"
     env["RANLIB"] = compiler_path + "ranlib"
 
-    env.Append(CCFLAGS=["-g", "-std=c++14", "-arch", "x86_64", "-arch", "arm64"])
+    env.Append(CCFLAGS=[
+        "-g", "-std=c++14", "-arch", "x86_64", "-arch", "arm64",
+        "-mmacosx-version-min=10.10",
+        "-isysroot", sdk_path
+    ])
     env.Append(LINKFLAGS=[
-        "-arch",
-        "x86_64",
-        "-arch",
-        "arm64",
-        "-framework",
-        "Cocoa",
+        "-arch", "x86_64", "-arch", "arm64",
+        "-framework", "Cocoa",
         "-Wl,-undefined,dynamic_lookup",
+        "-isysroot", sdk_path
     ])
 
     if env["target"] == "debug":
