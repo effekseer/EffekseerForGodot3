@@ -123,8 +123,8 @@ opts.Add(EnumVariable(
     ["armv7", "arm64", "x86_64"]
 ))
 opts.Add(
-    "IPHONEPATH",
-    "Path to iPhone toolchain",
+    "XCODEPATH",
+    "Path to Xcode toolchain",
     "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain",
 )
 opts.Add(
@@ -200,12 +200,20 @@ elif env["platform"] == "osx":
             "Only 64-bit builds are supported for the macOS target."
         )
 
-    env.Append(CCFLAGS=["-g", "-std=c++14", "-arch", "x86_64", "-arch", "arm64e"])
+    compiler_path = env["XCODEPATH"] + "/usr/bin/"
+    env["ENV"]["PATH"] = env["XCODEPATH"] + "/Developer/usr/bin/:" + env["ENV"]["PATH"]
+
+    env["CC"] = compiler_path + "clang"
+    env["CXX"] = compiler_path + "clang++"
+    env["AR"] = compiler_path + "ar"
+    env["RANLIB"] = compiler_path + "ranlib"
+
+    env.Append(CCFLAGS=["-g", "-std=c++14", "-arch", "x86_64", "-arch", "arm64"])
     env.Append(LINKFLAGS=[
         "-arch",
         "x86_64",
         "-arch",
-        "arm64e",
+        "arm64",
         "-framework",
         "Cocoa",
         "-Wl,-undefined,dynamic_lookup",
@@ -231,8 +239,8 @@ elif env["platform"] == "ios":
     except (subprocess.CalledProcessError, OSError):
         raise ValueError("Failed to find SDK path while running xcrun --sdk {} --show-sdk-path.".format(sdk_name))
 
-    compiler_path = env["IPHONEPATH"] + "/usr/bin/"
-    env["ENV"]["PATH"] = env["IPHONEPATH"] + "/Developer/usr/bin/:" + env["ENV"]["PATH"]
+    compiler_path = env["XCODEPATH"] + "/usr/bin/"
+    env["ENV"]["PATH"] = env["XCODEPATH"] + "/Developer/usr/bin/:" + env["ENV"]["PATH"]
 
     env["CC"] = compiler_path + "clang"
     env["CXX"] = compiler_path + "clang++"
