@@ -200,12 +200,12 @@ elif env["platform"] == "osx":
             "Only 64-bit builds are supported for the macOS target."
         )
 
-    env.Append(CCFLAGS=["-g", "-std=c++14", "-arch", "x86_64", "-arch", "arm64"])
+    env.Append(CCFLAGS=["-g", "-std=c++14", "-arch", "x86_64", "-arch", "arm64e"])
     env.Append(LINKFLAGS=[
         "-arch",
         "x86_64",
         "-arch",
-        "arm64",
+        "arm64e",
         "-framework",
         "Cocoa",
         "-Wl,-undefined,dynamic_lookup",
