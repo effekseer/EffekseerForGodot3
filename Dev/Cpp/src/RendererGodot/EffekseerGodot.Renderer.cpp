@@ -182,6 +182,13 @@ inline godot::Vector2 ConvertUV(const Effekseer::Vector2D& uv)
 	return godot::Vector2(uv.X, uv.Y);
 }
 
+inline godot::Vector2 ConvertVertexTextureUV(int32_t offset, int32_t pitch)
+{
+	return godot::Vector2(
+		((float)(offset % pitch) + 0.5f) / pitch, 
+		((float)(offset / pitch) + 0.5f) / pitch);
+}
+
 inline godot::Vector3 ConvertVector3(const EffekseerRenderer::VertexFloat3& v)
 {
 	return godot::Vector3(v.X, v.Y, v.Z);
@@ -228,6 +235,30 @@ inline EffekseerRenderer::VertexFloat3 Cross(const EffekseerRenderer::VertexFloa
 inline godot::Plane ConvertTangent(const EffekseerRenderer::VertexFloat3& t)
 {
 	return godot::Plane(t.X, t.Y, t.Z, 1.0f);
+}
+
+inline void CopyVertexTexture(float*& dst, float x, float y, float z, float w)
+{
+	dst[0] = x;
+	dst[1] = y;
+	dst[2] = z;
+	dst[3] = w;
+	dst += 4;
+}
+
+inline void CopyCustomData(float*& dst, const uint8_t*& src, int32_t count)
+{
+	const float* fsrc = (const float*)src;
+	for (int32_t i = 0; i < count; i++)
+	{
+		dst[i] = fsrc[i];
+	}
+	for (int32_t i = count; i < 4; i++)
+	{
+		dst[i] = 0.0f;
+	}
+	dst += 4;
+	src += count * sizeof(float);
 }
 
 RenderCommand::RenderCommand()
@@ -410,14 +441,14 @@ void RendererImplemented::ResetState()
 		m_renderCommands[i].Reset();
 	}
 	m_renderCount = 0;
-	m_customDataCount = 0;
 
 	for (size_t i = 0; i < m_renderCount2D; i++)
 	{
 		m_renderCommand2Ds[i].Reset();
 	}
 	m_renderCount2D = 0;
-	m_uvTangentCount = 0;
+
+	m_vertexTextureOffset = 0;
 }
 
 //----------------------------------------------------------------------------------
@@ -597,9 +628,18 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 		m_currentShader->ApplyToMaterial(Shader::RenderType::CanvasItem, command.GetMaterial(), m_renderState->GetActiveState());
 
 		if (m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::Lit || 
-			m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::BackDistortion)
+			m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::BackDistortion ||
+			m_currentShader->GetShaderType() == EffekseerRenderer::RendererShaderType::Material)
 		{
 			vs->material_set_param(command.GetMaterial(), "UVTangentTexture", m_uvTangentTexture.GetRID());
+		}
+		if (state.CustomData1Count > 0)
+		{
+			vs->material_set_param(command.GetMaterial(), "CustomData1", m_customData1Texture.GetRID());
+		}
+		if (state.CustomData2Count > 0)
+		{
+			vs->material_set_param(command.GetMaterial(), "CustomData2", m_customData2Texture.GetRID());
 		}
 
 		command.DrawSprites(node2d->get_canvas_item());
@@ -768,6 +808,7 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 		const SimpleVertex* vertices = (const SimpleVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
+			// Generate degenerate triangles
 			vs->immediate_color(immediate, godot::Color());
 			vs->immediate_uv(immediate, godot::Vector2());
 			vs->immediate_vertex(immediate, ConvertVector3(vertices[i * 4 + 0].Pos));
@@ -790,6 +831,7 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 		const LightingVertex* vertices = (const LightingVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
+			// Generate degenerate triangles
 			vs->immediate_color(immediate, godot::Color());
 			vs->immediate_uv(immediate, godot::Vector2());
 			vs->immediate_normal(immediate, godot::Vector3());
@@ -823,22 +865,13 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 		{
 			const int32_t width = CUSTOM_DATA_TEXTURE_WIDTH;
 			const int32_t height = (spriteCount * 4 + width - 1) / width;
-			float* customData1TexPtr = nullptr;
-			float* customData2TexPtr = nullptr;
-
-			if (customData1Count > 0)
-			{
-				customData1TexPtr = m_customData1Texture.Lock(0, m_customDataCount / width, width, height)->ptr;
-			}
-			if (customData2Count > 0)
-			{
-				customData2TexPtr = m_customData2Texture.Lock(0, m_customDataCount / width, width, height)->ptr;
-			}
-
+			const uint8_t* vertexPtr = (const uint8_t*)vertexData;
+			float* customData1TexPtr = (customData1Count > 0) ? m_customData1Texture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr : nullptr;
+			float* customData2TexPtr = (customData2Count > 0) ? m_customData2Texture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr : nullptr;
+			
 			for (int32_t i = 0; i < spriteCount; i++)
 			{
-				const uint8_t* vertexPtr = (const uint8_t*)vertexData + i * 4 * stride;
-
+				// Generate degenerate triangles
 				vs->immediate_color(immediate, godot::Color());
 				vs->immediate_uv(immediate, godot::Vector2());
 				vs->immediate_uv2(immediate, godot::Vector2());
@@ -848,47 +881,17 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 
 				for (int32_t j = 0; j < 4; j++)
 				{
-					const godot::Vector2 uv2(
-						((float)(m_customDataCount % width) + 0.5f) / width, 
-						((float)(m_customDataCount / width) + 0.5f) / width);
-
 					auto& v = *(const DynamicVertex*)vertexPtr;
 					vs->immediate_color(immediate, ConvertColor(v.Col));
 					vs->immediate_uv(immediate, ConvertUV(v.UV));
-					vs->immediate_uv2(immediate, uv2);
+					vs->immediate_uv2(immediate, ConvertVertexTextureUV(m_vertexTextureOffset++, width));
 					vs->immediate_normal(immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
 					vs->immediate_tangent(immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
 					vs->immediate_vertex(immediate, ConvertVector3(v.Pos));
+					vertexPtr += sizeof(DynamicVertex);
 
-					if (customData1Count)
-					{
-						const float* customData1VertexPtr = (const float*)(vertexPtr + sizeof(DynamicVertex));
-						for (int32_t i = 0; i < customData1Count; i++)
-						{
-							customData1TexPtr[i] = customData1VertexPtr[i];
-						}
-						for (int32_t i = customData1Count; i < 4; i++)
-						{
-							customData1TexPtr[i] = 0.0f;
-						}
-						customData1TexPtr += 4;
-					}
-					if (customData2Count > 0)
-					{
-						const float* customData2VertexPtr = (const float*)(vertexPtr + sizeof(DynamicVertex)) + customData1Count;
-						for (int32_t i = 0; i < customData2Count; i++)
-						{
-							customData2TexPtr[i] = customData2VertexPtr[i];
-						}
-						for (int32_t i = customData2Count; i < 4; i++)
-						{
-							customData2TexPtr[i] = 0.0f;
-						}
-						customData2TexPtr += 4;
-					}
-
-					vertexPtr += stride;
-					m_customDataCount++;
+					if (customData1TexPtr) CopyCustomData(customData1TexPtr, vertexPtr, customData1Count);
+					if (customData2TexPtr) CopyCustomData(customData2TexPtr, vertexPtr, customData2Count);
 				}
 
 				vs->immediate_color(immediate, godot::Color());
@@ -899,43 +902,38 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertexPtr - stride)).Pos));
 			}
 
-			if (customData1Count > 0)
-			{
-				m_customData1Texture.Unlock();
-			}
-			if (customData2Count > 0)
-			{
-				m_customData2Texture.Unlock();
-			}
-			m_customDataCount = (m_customDataCount + width - 1) / width * width;
+			if (customData1TexPtr) m_customData1Texture.Unlock();
+			if (customData2TexPtr) m_customData2Texture.Unlock();
+			m_vertexTextureOffset = (m_vertexTextureOffset + width - 1) / width * width;
 		}
 		else
 		{
+			const uint8_t* vertexPtr = (const uint8_t*)vertexData;
 			for (int32_t i = 0; i < spriteCount; i++)
 			{
-				const uint8_t* vertices = (const uint8_t*)vertexData + i * 4 * stride;
-
+				// Generate degenerate triangles
 				vs->immediate_color(immediate, godot::Color());
 				vs->immediate_uv(immediate, godot::Vector2());
 				vs->immediate_normal(immediate, godot::Vector3());
 				vs->immediate_tangent(immediate, godot::Plane());
-				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertices + 0 * stride)).Pos));
+				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertexPtr)).Pos));
 
 				for (int32_t j = 0; j < 4; j++)
 				{
-					auto& v = *(const DynamicVertex*)(vertices + j * stride);
+					auto& v = *(const DynamicVertex*)vertexPtr;
 					vs->immediate_color(immediate, ConvertColor(v.Col));
 					vs->immediate_uv(immediate, ConvertUV(v.UV));
 					vs->immediate_normal(immediate, ConvertVector3(Normalize(UnpackVector3DF(v.Normal))));
 					vs->immediate_tangent(immediate, ConvertTangent(Normalize(UnpackVector3DF(v.Tangent))));
 					vs->immediate_vertex(immediate, ConvertVector3(v.Pos));
+					vertexPtr += sizeof(DynamicVertex);
 				}
 
 				vs->immediate_color(immediate, godot::Color());
 				vs->immediate_uv(immediate, godot::Vector2());
 				vs->immediate_normal(immediate, godot::Vector3());
 				vs->immediate_tangent(immediate, godot::Plane());
-				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertices + 3 * stride)).Pos));
+				vs->immediate_vertex(immediate, ConvertVector3((*(const DynamicVertex*)(vertexPtr - stride)).Pos));
 			}
 		}
 	}
@@ -961,6 +959,7 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 	colorArray.resize(spriteCount * 4);
 	uvArray.resize(spriteCount * 4);
 
+	// Generate index data
 	{
 		int* indices = indexArray.write().ptr();
 
@@ -977,6 +976,7 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 
 	RendererShaderType shaderType = m_currentShader->GetShaderType();
 
+	// Copy vertex data
 	if (shaderType == RendererShaderType::Unlit)
 	{
 		godot::Vector2* points = pointArray.write().ptr();
@@ -1003,37 +1003,65 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 
 		const int32_t width = CUSTOM_DATA_TEXTURE_WIDTH;
 		const int32_t height = (spriteCount * 4 + width - 1) / width;
-		float* uvtTexPtr = m_uvTangentTexture.Lock(0, m_uvTangentCount / width, width, height)->ptr;
+		float* uvtTexPtr = m_uvTangentTexture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr;
 
 		const LightingVertex* vertices = (const LightingVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
 			for (int32_t j = 0; j < 4; j++)
 			{
-				const godot::Vector2 uv2(
-					((float)(m_uvTangentCount % width) + 0.5f) / width, 
-					((float)(m_uvTangentCount / width) + 0.5f) / width);
-
 				auto& v = vertices[i * 4 + j];
 				points[i * 4 + j] = ConvertVector2(v.Pos);
 				colors[i * 4 + j] = ConvertColor(v.Col);
-				uvs[i * 4 + j] = uv2;
+				uvs[i * 4 + j] = ConvertVertexTextureUV(m_vertexTextureOffset++, width);
 
 				auto tangent = UnpackVector3DF(v.Tangent);
-				uvtTexPtr[0] = v.UV[0];
-				uvtTexPtr[1] = v.UV[1];
-				uvtTexPtr[2] = tangent.X;
-				uvtTexPtr[3] = -tangent.Y;
-				uvtTexPtr += 4;
-				m_uvTangentCount++;
+				CopyVertexTexture(uvtTexPtr, v.UV[0], v.UV[1], tangent.X, -tangent.Y);
 			}
 		}
 
 		m_uvTangentTexture.Unlock();
-		m_uvTangentCount = (m_uvTangentCount + width - 1) / width * width;
+		m_vertexTextureOffset = (m_vertexTextureOffset + width - 1) / width * width;
 	}
 	else if (shaderType == RendererShaderType::Material)
 	{
+		const int32_t stride = sizeof(DynamicVertex) + (state.CustomData1Count + state.CustomData2Count) * sizeof(float);
+		const int32_t customData1Count = state.CustomData1Count;
+		const int32_t customData2Count = state.CustomData2Count;
+
+		godot::Vector2* points = pointArray.write().ptr();
+		godot::Color* colors = colorArray.write().ptr();
+		godot::Vector2* uvs = uvArray.write().ptr();
+
+		const int32_t width = CUSTOM_DATA_TEXTURE_WIDTH;
+		const int32_t height = (spriteCount * 4 + width - 1) / width;
+		const uint8_t* vertexPtr = (const uint8_t*)vertexData;
+		float* uvtTexPtr = m_uvTangentTexture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr;
+		float* customData1TexPtr = (customData1Count > 0) ? m_customData1Texture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr : nullptr;
+		float* customData2TexPtr = (customData2Count > 0) ? m_customData2Texture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr : nullptr;
+
+		for (int32_t i = 0; i < spriteCount; i++)
+		{
+			for (int32_t j = 0; j < 4; j++)
+			{
+				auto& v = *(const DynamicVertex*)vertexPtr;
+				points[i * 4 + j] = ConvertVector2(v.Pos);
+				colors[i * 4 + j] = ConvertColor(v.Col);
+				uvs[i * 4 + j] = ConvertVertexTextureUV(m_vertexTextureOffset++, width);
+				
+				auto tangent = UnpackVector3DF(v.Tangent);
+				CopyVertexTexture(uvtTexPtr, v.UV[0], v.UV[1], tangent.X, -tangent.Y);
+				vertexPtr += sizeof(DynamicVertex);
+
+				if (customData1TexPtr) CopyCustomData(customData1TexPtr, vertexPtr, customData1Count);
+				if (customData2TexPtr) CopyCustomData(customData2TexPtr, vertexPtr, customData2Count);
+			}
+		}
+
+		m_uvTangentTexture.Unlock();
+		if (customData1TexPtr) m_customData1Texture.Unlock();
+		if (customData2TexPtr) m_customData2Texture.Unlock();
+		m_vertexTextureOffset = (m_vertexTextureOffset + width - 1) / width * width;
 	}
 
 	vs->canvas_item_add_triangle_array(canvas_item, indexArray, pointArray, colorArray, uvArray);
@@ -1062,24 +1090,12 @@ void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item,
 	colorArray.resize(vertexCount);
 	uvArray.resize(vertexCount);
 
-	{
-		int* indices = indexArray.write().ptr();
-
-		for (int32_t i = 0; i < faceCount; i++)
-		{
-			indices[i * 3 + 0] = faceData[i].Indexes[0];
-			indices[i * 3 + 1] = faceData[i].Indexes[1];
-			indices[i * 3 + 2] = faceData[i].Indexes[2];
-		}
-	}
-
 	const uint8_t* constantBuffer = (const uint8_t*)m_currentShader->GetVertexConstantBuffer();
 	const Effekseer::Matrix44 worldMatrix = *(Effekseer::Matrix44*)(constantBuffer + 64);
 
-	//RendererShaderType shaderType = m_currentShader->GetShaderType();
-
-	//if (shaderType == RendererShaderType::Unlit)
+	if (state.CullingType == Effekseer::CullingType::Double)
 	{
+		// Copy transfromed vertices
 		godot::Vector2* points = pointArray.write().ptr();
 		godot::Color* colors = colorArray.write().ptr();
 		godot::Vector2* uvs = uvArray.write().ptr();
@@ -1092,6 +1108,68 @@ void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item,
 			points[i] = ConvertVector2(pos);
 			colors[i] = ConvertColor(v.VColor);
 			uvs[i] = ConvertUV(v.UV);
+		}
+
+		// Copy indeces without culling
+		int* indices = indexArray.write().ptr();
+
+		for (int32_t i = 0; i < faceCount; i++)
+		{
+			auto face = faceData[i];
+			indices[i * 3 + 0] = face.Indexes[0];
+			indices[i * 3 + 1] = face.Indexes[1];
+			indices[i * 3 + 2] = face.Indexes[2];
+		}
+	}
+	else
+	{
+		godot::PoolVector3Array positionArray;
+		positionArray.resize(vertexCount);
+
+		// Copy transfromed vertices
+		godot::Vector3* positions = positionArray.write().ptr();
+		godot::Vector2* points = pointArray.write().ptr();
+		godot::Color* colors = colorArray.write().ptr();
+		godot::Vector2* uvs = uvArray.write().ptr();
+
+		for (int32_t i = 0; i < vertexCount; i++)
+		{
+			auto& v = vertexData[i];
+			Effekseer::Vector3D pos;
+			Effekseer::Vector3D::Transform(pos, v.Position, worldMatrix);
+			positions[i] = ConvertVector3(pos);
+			points[i] = ConvertVector2(pos);
+			colors[i] = ConvertColor(v.VColor);
+			uvs[i] = ConvertUV(v.UV);
+		}
+
+		// Copy indeces with culling
+		int* indices = indexArray.write().ptr();
+		godot::Vector3 direction = (state.CullingType == Effekseer::CullingType::Back) ? 
+			godot::Vector3(0.0f, 0.0f, 1.0f) : godot::Vector3(0.0f, 0.0f, -1.0f);
+
+		for (int32_t i = 0; i < faceCount; i++)
+		{
+			auto face = faceData[i];
+			auto& v0 = positions[face.Indexes[0]];
+			auto& v1 = positions[face.Indexes[1]];
+			auto& v2 = positions[face.Indexes[2]];
+			
+			auto normal = (v1 - v0).cross(v2 - v0);
+
+			if (normal.dot(direction) > 0.0f)
+			{
+				indices[i * 3 + 0] = face.Indexes[0];
+				indices[i * 3 + 1] = face.Indexes[1];
+				indices[i * 3 + 2] = face.Indexes[2];
+			}
+			else
+			{
+				// Cutoff
+				indices[i * 3 + 0] = 0;
+				indices[i * 3 + 1] = 0;
+				indices[i * 3 + 2] = 0;
+			}
 		}
 	}
 

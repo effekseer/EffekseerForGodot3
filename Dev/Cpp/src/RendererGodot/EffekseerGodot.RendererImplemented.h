@@ -122,10 +122,8 @@ private:
 	Effekseer::ModelRef m_currentModel = nullptr;
 	DynamicTexture m_customData1Texture;
 	DynamicTexture m_customData2Texture;
-	int32_t m_customDataCount = 0;
-
 	DynamicTexture m_uvTangentTexture;
-	int32_t m_uvTangentCount = 0;
+	int32_t m_vertexTextureOffset = 0;
 
 	std::unique_ptr<StandardRenderer> m_standardRenderer;
 	std::unique_ptr<RenderState> m_renderState;

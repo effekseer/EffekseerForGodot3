@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://grid.png" type="Texture" id=1]
 [ext_resource path="res://addons/effekseer/src/EffekseerEmitter.gdns" type="Script" id=2]
+[ext_resource path="res://effect/sample-material2/ToonWater.efkefc" type="Resource" id=3]
 [ext_resource path="res://Test.gd" type="Script" id=4]
 [ext_resource path="res://Camera.gd" type="Script" id=5]
 
@@ -30,8 +31,9 @@ script = ExtResource( 5 )
 transform = Transform( 1, 0, 0, 0, 0.200531, 0.979687, 0, -0.979687, 0.200531, 0, 6.95046, -4.86754e-07 )
 
 [node name="Effect" type="Spatial" parent="."]
-transform = Transform( -0.0235947, 0, 0.999722, 0, 1, 0, -0.999722, 0, -0.0235947, 0.124666, 2.55228, 5.23287 )
+transform = Transform( -0.0235947, 0, 0.999722, 0, 1, 0, -0.999722, 0, -0.0235947, 0, 1, 0 )
 script = ExtResource( 2 )
+effect = ExtResource( 3 )
 
 [node name="Effect5" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22584, 0.284854, -5.92645 )

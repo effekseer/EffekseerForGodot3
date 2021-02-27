@@ -10,7 +10,7 @@ float atan2(float y, float x) {
 }
 )";
 
-static const char g_material_src_vertex_sprite_pre[] =  R"(
+static const char g_material_src_spatial_vertex_sprite_pre[] =  R"(
 void vertex()
 {
 	vec3 worldNormal = NORMAL;
@@ -19,7 +19,7 @@ void vertex()
 	vec3 worldPos = VERTEX;
 )";
 
-static const char g_material_src_vertex_model_pre[] =  R"(
+static const char g_material_src_spatial_vertex_model_pre[] =  R"(
 void vertex()
 {
 	UV = (UV.xy * ModelUV.zw) + ModelUV.xy;
@@ -32,7 +32,7 @@ void vertex()
 	vec3 worldPos = (ModelMatrix * vec4(VERTEX, 1.0)).xyz;
 )";
 
-static const char g_material_src_vertex_common[] =  R"(
+static const char g_material_src_spatial_vertex_common[] =  R"(
 	vec2 uv1 = UV;
 	vec2 uv2 = UV2;
 	vec4 vcolor = COLOR;
@@ -47,7 +47,7 @@ static const char g_material_src_vertex_common[] =  R"(
 	float meshZ = 0.0;
 )";
 
-static const char g_material_src_vertex_sprite_post[] = R"(
+static const char g_material_src_spatial_vertex_sprite_post[] = R"(
 	worldPos += worldPositionOffset;
 	v_WorldN_PX.w = worldPos.x;
 	v_WorldB_PY.w = worldPos.y;
@@ -56,7 +56,7 @@ static const char g_material_src_vertex_sprite_post[] = R"(
 }
 )";
 
-static const char g_material_src_vertex_model_post[] = R"(
+static const char g_material_src_spatial_vertex_model_post[] = R"(
 	worldPos += worldPositionOffset;
 	v_WorldN_PX.w = worldPos.x;
 	v_WorldB_PY.w = worldPos.y;
@@ -65,7 +65,65 @@ static const char g_material_src_vertex_model_post[] = R"(
 }
 )";
 
-static const char g_material_src_fragment_pre[] = R"(
+static const char g_material_src_canvasitem_vertex_sprite_pre[] =  R"(
+void vertex()
+{
+	vec4 uvTangent = texture(UVTangentTexture, UV);
+	vec3 worldNormal = vec3(0.0, 0.0, 1.0);
+	vec3 worldTangent = vec3(uvTangent.zw, 0.0);
+	vec3 worldBinormal = cross(worldNormal, worldTangent);
+	vec3 worldPos = vec3(VERTEX, 0.0);
+	vec2 uv1 = uvTangent.xy;
+	vec2 uv2 = vec2(0.0);
+	vec4 vcolor = COLOR;
+)";
+
+static const char g_material_src_canvasitem_vertex_model_pre[] =  R"(
+void vertex()
+{
+	UV = (UV * ModelUV.zw) + ModelUV.xy;
+	COLOR = COLOR * ModelColor;
+
+	vec3 worldNormal = vec3(0.0, 0.0, 1.0);
+	vec3 worldTangent = vec3(1.0, 0.0, 0.0);
+	vec3 worldBinormal = vec3(0.0, 1.0, 0.0);
+	vec3 worldPos = vec3(VERTEX, 0.0);
+	vec2 uv1 = UV;
+	vec2 uv2 = vec2(0.0);
+	vec4 vcolor = COLOR;
+)";
+
+static const char g_material_src_canvasitem_vertex_common[] =  R"(
+	v_WorldN_PX.xyz = worldNormal;
+	v_WorldB_PY.xyz = worldBinormal;
+	v_WorldT_PZ.xyz = worldTangent;
+	vec3 pixelNormalDir = worldNormal;
+	vec3 objectScale = vec3(1.0, 1.0, 1.0);
+
+	vec2 screenUV = vec2(0.0);
+	float meshZ = 0.0;
+)";
+
+static const char g_material_src_canvasitem_vertex_sprite_post[] = R"(
+	worldPos += worldPositionOffset;
+	v_WorldN_PX.w = worldPos.x;
+	v_WorldB_PY.w = worldPos.y;
+	v_WorldT_PZ.w = worldPos.z;
+	VERTEX = worldPos.xy;
+	UV = uvTangent.xy;
+}
+)";
+
+static const char g_material_src_canvasitem_vertex_model_post[] = R"(
+	worldPos += worldPositionOffset;
+	v_WorldN_PX.w = worldPos.x;
+	v_WorldB_PY.w = worldPos.y;
+	v_WorldT_PZ.w = worldPos.z;
+	VERTEX = worldPos.xy;
+}
+)";
+
+static const char g_material_src_spatial_fragment_pre[] = R"(
 void fragment()
 {
 	vec2 uv1 = UV;
@@ -83,7 +141,7 @@ void fragment()
 	float meshZ = FRAGCOORD.z;
 )";
 
-static const char g_material_src_fragment_lit_post[] = R"(
+static const char g_material_src_spatial_fragment_lit_post[] = R"(
 	ALBEDO = baseColor;
 	EMISSION = emissive;
 	METALLIC = metallic;
@@ -96,12 +154,44 @@ static const char g_material_src_fragment_lit_post[] = R"(
 }
 )";
 
-static const char g_material_src_fragment_unlit_post[] = R"(
+static const char g_material_src_spatial_fragment_unlit_post[] = R"(
 	ALBEDO = emissive;
 	ALPHA = clamp(opacity, 0.0, 1.0);
 	
 	if (opacityMask <= 0.0) discard;
 	if (opacity <= 0.0) discard;
+}
+)";
+
+static const char g_material_src_canvasitem_fragment_pre[] = R"(
+void fragment()
+{
+	vec2 uv1 = UV;
+	vec2 uv2 = vec2(0.0);
+	vec4 vcolor = COLOR;
+
+	vec3 worldPos = vec3(v_WorldN_PX.w, v_WorldB_PY.w, v_WorldT_PZ.w);
+	vec3 worldNormal = v_WorldN_PX.xyz;
+	vec3 worldTangent = v_WorldT_PZ.xyz;
+	vec3 worldBinormal = v_WorldB_PY.xyz;
+	vec3 pixelNormalDir = worldNormal;
+	vec3 objectScale = vec3(1.0, 1.0, 1.0);
+
+	vec2 screenUV = SCREEN_UV;
+	float meshZ = FRAGCOORD.z;
+)";
+
+static const char g_material_src_canvasitem_fragment_lit_post[] = R"(
+	COLOR = vec4(baseColor + emissive, clamp(opacity, 0.0, 1.0));
+
+	if (opacityMask <= 0.0) discard;
+}
+)";
+
+static const char g_material_src_canvasitem_fragment_unlit_post[] = R"(
+	COLOR = vec4(emissive, clamp(opacity, 0.0, 1.0));
+	
+	if (opacityMask <= 0.0) discard;
 }
 )";
 
@@ -164,7 +254,7 @@ static const char* GetElement(int32_t i)
 	return "";
 }
 
-void ShaderGenerator::GenerateShaderCode(ShaderData& shaderData, const Effekseer::MaterialFile& materialFile, bool isSprite, bool isRefrection)
+std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& materialFile, bool isSprite, bool isRefrection, bool isSpatial)
 {
 	const int32_t actualTextureCount = std::min(Effekseer::UserTextureSlotMax, materialFile.GetTextureCount());
 	const int32_t customData1Count = materialFile.GetCustomData1Count();
@@ -217,6 +307,10 @@ void ShaderGenerator::GenerateShaderCode(ShaderData& shaderData, const Effekseer
 				maincode << "uniform " << GetType(materialFile.GetCustomData2Count()) << " CustomData2;\n";
 			}
 			maincode << g_material_uniforms_model;
+		}
+		if (!isSpatial)
+		{
+			maincode << "uniform sampler2D UVTangentTexture;\n";
 		}
 	}
 
@@ -277,18 +371,19 @@ void ShaderGenerator::GenerateShaderCode(ShaderData& shaderData, const Effekseer
 		baseCode = Replace(baseCode, keyS, ",0.0,1.0)");
 	}
 
+	if (isSpatial)
 	{
-		// Vertex shader
+		// Vertex shader (Spatial)
 		if (isSprite)
 		{
-			maincode << g_material_src_vertex_sprite_pre;
+			maincode << g_material_src_spatial_vertex_sprite_pre;
 		}
 		else
 		{
-			maincode << g_material_src_vertex_model_pre;
+			maincode << g_material_src_spatial_vertex_model_pre;
 		}
-
-		maincode << g_material_src_vertex_common;
+		
+		maincode << g_material_src_spatial_vertex_common;
 
 		if (isSprite)
 		{
@@ -303,28 +398,62 @@ void ShaderGenerator::GenerateShaderCode(ShaderData& shaderData, const Effekseer
 
 		maincode << baseCode;
 
-		if (customData1Count > 0)
-		{
-			maincode << "\t" << "v_CustomData1 = customData1;\n";
-		}
-
-		if (customData2Count > 0)
-		{
-			maincode << "\t" << "v_CustomData2 = customData2;\n";
-		}
+		if (customData1Count > 0) maincode << "\t" << "v_CustomData1 = customData1;\n";
+		if (customData2Count > 0) maincode << "\t" << "v_CustomData2 = customData2;\n";
 
 		if (isSprite)
 		{
-			maincode << g_material_src_vertex_sprite_post;
+			maincode << g_material_src_spatial_vertex_sprite_post;
 		}
 		else
 		{
-			maincode << g_material_src_vertex_model_post;
+			maincode << g_material_src_spatial_vertex_model_post;
 		}
 	}
+	else
 	{
-		// Fragment shader
-		maincode << g_material_src_fragment_pre;
+		// Vertex shader (CanvasItem)
+		if (isSprite)
+		{
+			maincode << g_material_src_canvasitem_vertex_sprite_pre;
+		}
+		else
+		{
+			maincode << g_material_src_canvasitem_vertex_model_pre;
+		}
+
+		maincode << g_material_src_canvasitem_vertex_common;
+
+		if (isSprite)
+		{
+			if (customData1Count > 0) maincode << "\t" << GetType(customData1Count) << " customData1 = texture(CustomData1, UV)" << GetElement(customData1Count) << ";\n";
+			if (customData2Count > 0) maincode << "\t" << GetType(customData2Count) << " customData2 = texture(CustomData2, UV)" << GetElement(customData2Count) << ";\n";
+		}
+		else
+		{
+			if (customData1Count > 0) maincode << "\t" << GetType(customData1Count) << " customData1 = CustomData1" << GetElement(customData1Count) << ";\n";
+			if (customData2Count > 0) maincode << "\t" << GetType(customData2Count) << " customData2 = CustomData2" << GetElement(customData2Count) << ";\n";
+		}
+
+		maincode << baseCode;
+
+		if (customData1Count > 0) maincode << "\t" << "v_CustomData1 = customData1;\n";
+		if (customData2Count > 0) maincode << "\t" << "v_CustomData2 = customData2;\n";
+
+		if (isSprite)
+		{
+			maincode << g_material_src_canvasitem_vertex_sprite_post;
+		}
+		else
+		{
+			maincode << g_material_src_canvasitem_vertex_model_post;
+		}
+	}
+
+	if (isSpatial)
+	{
+		// Fragment shader (Spatial)
+		maincode << g_material_src_spatial_fragment_pre;
 
 		if (customData1Count > 0)
 		{
@@ -340,16 +469,42 @@ void ShaderGenerator::GenerateShaderCode(ShaderData& shaderData, const Effekseer
 
 		if (materialFile.GetShadingModel() == Effekseer::ShadingModelType::Lit)
 		{
-			maincode << g_material_src_fragment_lit_post;
+			maincode << g_material_src_spatial_fragment_lit_post;
 		}
 		else
 		{
-			maincode << g_material_src_fragment_unlit_post;
+			maincode << g_material_src_spatial_fragment_unlit_post;
+		}
+	}
+	else
+	{
+		// Fragment shader (CanvasItem)
+		maincode << g_material_src_canvasitem_fragment_pre;
+
+		if (customData1Count > 0)
+		{
+			maincode << "\t" << GetType(customData1Count) << " customData1 = v_CustomData1;\n";
+		}
+
+		if (customData2Count > 0)
+		{
+			maincode << "\t" << GetType(customData2Count) << " customData2 = v_CustomData2;\n";
+		}
+
+		maincode << baseCode;
+
+		if (materialFile.GetShadingModel() == Effekseer::ShadingModelType::Lit)
+		{
+			maincode << g_material_src_canvasitem_fragment_lit_post;
+		}
+		else
+		{
+			maincode << g_material_src_canvasitem_fragment_unlit_post;
 		}
 	}
 
-	shaderData.Code = maincode.str();
 	//puts(shaderData.Code.c_str());
+	return maincode.str();
 }
 
 void ShaderGenerator::GenerateParamDecls(ShaderData& shaderData, const Effekseer::MaterialFile& materialFile, bool isSprite, bool isRefrection)
@@ -443,7 +598,8 @@ ShaderData ShaderGenerator::GenerateShaderData(
 		(shaderType == Effekseer::MaterialShaderType::Refraction || shaderType == Effekseer::MaterialShaderType::RefractionModel);
 	
 	ShaderData shaderData;
-	GenerateShaderCode(shaderData, materialFile, isSprite, isRefrection);
+	shaderData.CodeSpatial = GenerateShaderCode(materialFile, isSprite, isRefrection, true);
+	shaderData.CodeCanvasItem = GenerateShaderCode(materialFile, isSprite, isRefrection, false);
 	GenerateParamDecls(shaderData, materialFile, isSprite, isRefrection);
 	return shaderData;
 }

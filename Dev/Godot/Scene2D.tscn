@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/effekseer/src/EffekseerEmitter2D.gdns" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://effect/sample-material2/ToonWater.efkefc" type="Resource" id=3]
 [ext_resource path="res://Test.gd" type="Script" id=4]
-[ext_resource path="res://effect/samples/Simple_Distortion.efkefc" type="Resource" id=5]
+[ext_resource path="res://effect/tests/Textures/Particle02.png" type="Texture" id=5]
 
 [node name="Scene2D" type="Node2D"]
 script = ExtResource( 4 )
@@ -23,12 +24,18 @@ __meta__ = {
 }
 
 [node name="Effect" type="Node2D" parent="."]
-position = Vector2( 223.826, 199.724 )
-scale = Vector2( 3, 3 )
+position = Vector2( 225.086, 269.02 )
+scale = Vector2( 30, 30 )
 script = ExtResource( 1 )
-effect = ExtResource( 5 )
+effect = ExtResource( 3 )
 orientation = Vector3( 30, 0, 0 )
 
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 275.172, 107.026 )
 texture = ExtResource( 2 )
+
+[node name="Light2D" type="Light2D" parent="."]
+visible = false
+position = Vector2( 131.032, 186.468 )
+scale = Vector2( 2.51584, 2.59459 )
+texture = ExtResource( 5 )

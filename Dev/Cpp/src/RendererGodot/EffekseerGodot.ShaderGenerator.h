@@ -8,7 +8,8 @@ namespace EffekseerGodot
 
 struct ShaderData
 {
-	std::string Code;
+	std::string CodeSpatial;
+	std::string CodeCanvasItem;
 	std::vector<Shader::ParamDecl> ParamDecls;
 	int32_t VertexConstantBufferSize;
 	int32_t PixelConstantBufferSize;
@@ -22,7 +23,7 @@ public:
 
 private:
 	ShaderData GenerateShaderData(const Effekseer::MaterialFile& materialFile, Effekseer::MaterialShaderType shaderType);
-	void GenerateShaderCode(ShaderData& shaderData, const Effekseer::MaterialFile& materialFile, bool isSprite, bool isRefrection);
+	std::string GenerateShaderCode(const Effekseer::MaterialFile& materialFile, bool isSprite, bool isRefrection, bool isSpatial);
 	void GenerateParamDecls(ShaderData& shaderData, const Effekseer::MaterialFile& materialFile, bool isSprite, bool isRefrection);
 };
 

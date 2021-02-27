@@ -104,7 +104,6 @@ void EffekseerEmitter2D::play()
 		if (handle >= 0) {
 			Vector3 rotation = m_orientation * (3.141592f / 180.0f);
 			manager->SetRotation(handle, rotation.x, rotation.y, rotation.z);
-			manager->SetScale(handle, 10.0f, 10.0f, 10.0f);
 			manager->SetUserData(handle, this);
 
 			if (m_paused) {

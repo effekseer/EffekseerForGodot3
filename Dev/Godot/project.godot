@@ -58,3 +58,8 @@ effekseer.effect={
 effekseer.resource={
 
 }
+
+[rendering]
+
+limits/buffers/canvas_polygon_buffer_size_kb=2048
+limits/buffers/canvas_polygon_index_buffer_size_kb=2048
