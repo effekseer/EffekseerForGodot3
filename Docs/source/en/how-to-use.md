@@ -36,10 +36,16 @@ Sometimes the size of the loaded effect is small and you want to adjust the size
 
 You can change the size of the effect by changing the Scale of `EffekseerEmitter`, but this method may not be magnified depending on the effect settings.
 
-## Emitter
-Emitters are the source of effects and are used by placing them in a 3D scene.
+## How to use in 3D scenes
+Use an emitter (`EffekseerEmitter`) to emit the imported effect in a 3D scene. Emitters are the source of effects and are used by placing them in a 3D scene.
 
-To play the imported effect file, add `Node` with` Effekseer Emitter` attached to the node tree.
+To play the imported effect file, add `Node` with` EffekseerEmitter` attached to the node tree.
+
+First, add a `Node` with the` EffekseerEmitter` attached to the node tree. (Since it is 3D, it is `EffekseerEmitter` under `Spatial`)
+
+![](../img/Godot_add_node_3d.png)
+
+`EffekseerEmitter` has been added.
 
 ![](../img/Godot_emitter_nodetree.png)
 
@@ -62,6 +68,52 @@ Since `Autoplay` is checked, the effect will be displayed when you run the scene
 | Paused   | Set the pause state during playback |
 | Speed    | Set the playback speed of the effect |
 | Color    | Set the color of the effect |
+
+## How to use in 2D scenes
+Use an emitter (`EffekseerEmitter2D`) to emit the imported effect in a 2D scene. Emitters are the source of effects and are used by placing them in a 2D scene.
+
+To play the imported effect file, add `Node` with` EffekseerEmitter2D` attached to the node tree.
+
+First, add a `Node` with the` EffekseerEmitter2D` attached to the node tree. (Since it is 3D, it is `EffekseerEmitter2D` under `Node2D`)
+
+![](../img/Godot_add_node_2d.png)
+
+`EffekseerEmitter2D` has been added.
+
+![](../img/Godot_emitter2d_nodetree.png)
+
+Then drag and drop the imported effect into the `Effect` property to specify it.
+
+![](../img/Godot_emitter2d_scene.png)
+
+Since the coordinate base of the 2D scene is pixels, specify the scale of `Transform2D`.
+
+![](../img/Godot_emitter2d_scale.png)
+
+Since `Autoplay` is checked, the effect will be displayed when you run the scene.
+
+![](../img/Godot_emitter2d_play1.png)
+
+If the effect looks different than you expected, adjust `orientation`.
+For `orientation`, you can specify the angle of rotation for each XYZ axes.
+
+![](../img/Godot_emitter2d_orientation.png)
+
+The effect was displayed in the correct orientation.
+
+![](../img/Godot_emitter2d_play2.png)
+
+### Emitter2D's inspector
+
+| 項目     | 説明                                         |
+|----------|---------------------------------------------|
+| Effect   | Sets the effect resource to play on the emitter |
+| Autoplay | If checked, the effect will be played automatically at the start of the scene (`_ready ()` timing) |
+| Paused   | Set the pause state during playback |
+| Speed    | Set the playback speed of the effect |
+| Color    | Set the color of the effect |
+| Orientation | Set the 3D orientation of the effect |
+
 
 ## Project settings
 

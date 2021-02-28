@@ -104,6 +104,121 @@ Get the playback status.
 
 ----
 
+## EffekseerEmitter
+
+**Extends**: Node2D < CanvasItem < Node < Object
+
+Source of Effekseer effect in 2D scene.
+
+### Descriptions
+
+A 2D object for playing and rendering Effekseer effects.
+You can play it by setting `effect` and `play()`.
+In addition, the set transforms (position, rotation, scaling) are reflected in the rendering of the effect.
+
+
+### Properties
+
+#### EffekseerEffect effect
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_effect(value) |
+| *Getter*	| get_effect()      |
+
+The effect set on the emitter.
+
+----
+
+#### bool autoplay
+
+|           |                     |
+|-----------|---------------------|
+| *Setter*	| set_autoplay(value) |
+| *Getter*	| is_autoplay()       |
+
+Autoplay settings.
+
+- true: play automatically
+- false: Do not play automatically
+
+----
+
+#### bool paused
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_paused(value) |
+| *Getter*	| is_paused()       |
+
+Pause settings.
+
+- true: Pause
+- false: Do not pause
+
+----
+
+#### bool speed
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_speed(value)  |
+| *Getter*	| get_speed()       |
+
+Playback speed setting. Range: 0.0 to 10.0
+
+- 0.5: Half speed playback
+- 2.0: Double speed playback
+
+----
+
+#### Color color
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_color(value)  |
+| *Getter*	| get_color()       |
+
+Rendering color setting. It is multiplied by the color of the effect.
+
+----
+
+#### Vector3 orientation
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_orientation(value)  |
+| *Getter*	| get_orientation()       |
+
+3D orientation settings for effects. It is applied before the rotation of Transform2D.
+
+----
+
+### Methods
+
+#### void play()
+Playback will start.
+
+----
+
+#### void stop()
+Playback will stop.
+
+----
+
+#### void stop_root()
+Stop the root node.
+
+----
+
+#### bool is_playing()
+Get the playback status.
+
+- true: Playing
+- false: Not played or finished playing
+
+----
+
 ## EffekseerEffect
 
 **Extends**: Resource < Reference < Object
