@@ -36,14 +36,18 @@ efkefcファイルはGodotのリソースとしてインポートされます。
 
 `EffekseerEmitter`のScaleを変更することでエフェクトの大きさを変更することもできますが、この方法だとエフェクトの設定によっては拡大されないことがあります。
 
-## エミッタ
-エミッタはエフェクトの発生源で、3Dシーン中に配置して使用します。
+## 3Dシーンでの使用方法
+3Dシーン中でインポートしたエフェクトを発生させるには、エミッタ(`EffekseerEmitter`)を使用します。エミッタはエフェクトの発生源で、3Dシーン中に配置して使用します。
 
-インポートしたエフェクトファイルを再生するには、ノードツリーに`EffekseerEmitter`がアタッチされた`Node`を追加します。
+まず、ノードツリーに`EffekseerEmitter`がアタッチされた`Node`を追加します。(3Dなので`Spatial`の下の`EffekseerEmitter`です)
+
+![](../img/Godot_add_node_3d.png)
+
+`EffekseerEmitter`が追加されました。
 
 ![](../img/Godot_emitter_nodetree.png)
 
-次に`Effect`プロパティにインポートしたエフェクトをドラッグ&ドロップして指定します。
+次に`EffekseerEmitter`を選択し、インスペクタの`Effect`プロパティにインポートしたエフェクトをドラッグ&ドロップして指定します。
 
 ![](../img/Godot_emitter_scene.png)
 
@@ -62,6 +66,49 @@ efkefcファイルはGodotのリソースとしてインポートされます。
 | Paused   | 再生中のポーズ状態を設定します |
 | Speed    | エフェクトの再生速度を設定します |
 | Color    | エフェクトの色を設定します |
+
+## 2Dシーンでの使用方法
+2Dシーン中でインポートしたエフェクトを発生させるには、エミッタ2D(`EffekseerEmitter2D`)を使用します。エミッタ2Dはエフェクトの発生源で、2Dシーン中に配置して使用します。
+
+まず、ノードツリーに`EffekseerEmitter2D`がアタッチされた`Node`を追加します。(2Dなので`Node2D`の下の`EffekseerEmitter2D`です)
+
+![](../img/Godot_add_node_2d.png)
+
+`EffekseerEmitter2D`が追加されました。
+
+![](../img/Godot_emitter2d_nodetree.png)
+
+次に`EffekseerEmitter2D`を選択し、インスペクタの`Effect`プロパティにインポートしたエフェクトをドラッグ&ドロップして指定します。
+
+![](../img/Godot_emitter2d_scene.png)
+
+2Dシーンは座標基準がピクセルのため、`Transform2D`のスケールを指定します。
+
+![](../img/Godot_emitter2d_scale.png)
+
+`Autoplay`がチェックされているので、シーンを実行するとエフェクトが表示されます。
+
+![](../img/Godot_emitter2d_play1.png)
+
+想定していたエフェクトの見た目と違う場合は`orientation`を調整します。  
+`orientation`にはXYZ軸ごとに回転角を指定できます。
+
+![](../img/Godot_emitter2d_orientation.png)
+
+正しい向きでエフェクトが表示されました。
+
+![](../img/Godot_emitter2d_play2.png)
+
+### エミッタ2Dのインスペクタ
+
+| 項目     | 説明                                         |
+|----------|---------------------------------------------|
+| Effect   | エミッタで再生するエフェクトリソースを設定します |
+| Autoplay | チェックを入れると、シーン開始時(`_ready()`のタイミング)に自動的にエフェクトを再生します |
+| Paused   | 再生中のポーズ状態を設定します |
+| Speed    | エフェクトの再生速度を設定します |
+| Color    | エフェクトの色を設定します |
+| Orientation | エフェクトの向きを設定します |
 
 ## プロジェクト設定
 
