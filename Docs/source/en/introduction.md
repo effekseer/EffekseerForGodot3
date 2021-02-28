@@ -46,10 +46,3 @@ The following features do not work.
 *Soft particles work.  
 *Godot3 cannot be supported due to technical limitation.  
 *Godot4 will be supported in the future version.  
-
-### 2D scene rendering does not work
-
-Cannot render in 2D scene.  
-It is possible to render and overlay in the viewport.  
-
-*It will be supported in a future version.

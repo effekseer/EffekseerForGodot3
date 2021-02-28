@@ -105,7 +105,7 @@ The effect was displayed in the correct orientation.
 
 ### Emitter2D's inspector
 
-| 項目     | 説明                                         |
+| Property  | Description                                         |
 |----------|---------------------------------------------|
 | Effect   | Sets the effect resource to play on the emitter |
 | Autoplay | If checked, the effect will be played automatically at the start of the scene (`_ready ()` timing) |
