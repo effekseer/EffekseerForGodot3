@@ -46,3 +46,22 @@ The following features do not work.
 *Soft particles work.  
 *Godot3 cannot be supported due to technical limitation.  
 *Godot4 will be supported in the future version.  
+
+### [2D] Depth parameters in the render common panel do not work
+
+The following features do not work in 2D.
+
+- Depth Set
+- Depth Test
+- Soft particle
+
+May not display correctly depending on the model used because depth tests do not work.
+
+### [2D] Some nodes in the material do not work
+
+The following features do not work in 2D.
+
+- VertexNormal
+- PixelNormal
+- VertexTangent
+- PixelTangent
