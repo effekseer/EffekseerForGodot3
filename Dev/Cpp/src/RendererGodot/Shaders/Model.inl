@@ -60,12 +60,12 @@ R"(
 R"(
 	NORMAL = NormalMap(NormalTexture, UV, NORMAL, TANGENT, BINORMAL);
 	vec4 color = ColorMap(ColorTexture, UV, COLOR);
-	ALBEDO = color.rgb; ALPHA = color.a;
+	ALBEDO = color.rgb * EmissiveScale; ALPHA = color.a;
 )"
 #else
 R"(
 	vec4 color = ColorMap(ColorTexture, UV, COLOR);
-	ALBEDO = color.rgb; ALPHA = color.a;
+	ALBEDO = color.rgb * EmissiveScale; ALPHA = color.a;
 )"
 #endif
 
@@ -102,6 +102,7 @@ const Shader::ParamDecl decl[] = {
 		{ "SoftParticleReco",   Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBufferDistortion, SoftParticleParam) + 16 },
 	#endif
 #else
+	{ "EmissiveScale", Shader::ParamType::Float, 1, offsetof(EffekseerRenderer::PixelConstantBuffer, EmmisiveParam) },
 	#if SOFT_PARTICLE
 		{ "SoftParticleParams", Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBuffer, SoftParticleParam) + 0 },
 		{ "SoftParticleReco",   Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBuffer, SoftParticleParam) + 16 },

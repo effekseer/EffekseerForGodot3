@@ -51,10 +51,12 @@ R"(
 R"(
 	NORMALMAP = NormalMap(NormalTexture, UV, vec2(1.0, 0.0));
 	COLOR = ColorMap(ColorTexture, UV, COLOR);
+	COLOR.rgb *= EmissiveScale;
 )"
 #else
 R"(
 	COLOR = ColorMap(ColorTexture, UV, COLOR);
+	COLOR.rgb *= EmissiveScale;
 )"
 #endif
 R"(
@@ -71,9 +73,11 @@ const Shader::ParamDecl decl[] = {
 	{ "DistortionIntensity", Shader::ParamType::Float, 1, 48 },
 	{ "DistortionTexture", Shader::ParamType::Texture, 0, 0 },
 #elif LIGHTING
+	{ "EmissiveScale", Shader::ParamType::Float, 1, offsetof(EffekseerRenderer::PixelConstantBuffer, EmmisiveParam) },
 	{ "ColorTexture",  Shader::ParamType::Texture, 0, 0 },
 	{ "NormalTexture", Shader::ParamType::Texture, 1, 0 },
 #else
+	{ "EmissiveScale", Shader::ParamType::Float, 1, offsetof(EffekseerRenderer::PixelConstantBuffer, EmmisiveParam) },
 	{ "ColorTexture",  Shader::ParamType::Texture, 0, 0 },
 #endif
 };

@@ -11,18 +11,19 @@ uniform mat4 ModelViewMatrix;
 )"
 
 #if DISTORTION
-
 R"(
 uniform float DistortionIntensity;
 uniform sampler2D DistortionTexture : hint_normal;
 )"
 #elif LIGHTING
 R"(
+uniform float EmissiveScale;
 uniform sampler2D ColorTexture : hint_albedo;
 uniform sampler2D NormalTexture : hint_normal;
 )"
 #else
 R"(
+uniform float EmissiveScale;
 uniform sampler2D ColorTexture : hint_albedo;
 )"
 #endif
@@ -55,12 +56,12 @@ R"(
 R"(
 	NORMAL = NormalMap(NormalTexture, UV, NORMAL, TANGENT, BINORMAL);
 	vec4 color = ColorMap(ColorTexture, UV, COLOR);
-	ALBEDO = color.rgb; ALPHA = color.a;
+	ALBEDO = color.rgb * EmissiveScale; ALPHA = color.a;
 )"
 #else
 R"(
 	vec4 color = ColorMap(ColorTexture, UV, COLOR);
-	ALBEDO = color.rgb; ALPHA = color.a;
+	ALBEDO = color.rgb * EmissiveScale; ALPHA = color.a;
 )"
 #endif
 
@@ -87,12 +88,13 @@ const Shader::ParamDecl decl[] = {
 	{ "ColorTexture",  Shader::ParamType::Texture, 0, 0 },
 #endif
 #if DISTORTION
-	#if SOFT_PARTICLE
+#if SOFT_PARTICLE
 		{ "SoftParticleParams", Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBufferDistortion, SoftParticleParam) + 0 },
 		{ "SoftParticleReco",   Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBufferDistortion, SoftParticleParam) + 16 },
 	#endif
 #else
-	#if SOFT_PARTICLE
+	{ "EmissiveScale", Shader::ParamType::Float, 1, offsetof(EffekseerRenderer::PixelConstantBuffer, EmmisiveParam) },
+#if SOFT_PARTICLE
 		{ "SoftParticleParams", Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBuffer, SoftParticleParam) + 0 },
 		{ "SoftParticleReco",   Shader::ParamType::Vector4, 1, offsetof(EffekseerRenderer::PixelConstantBuffer, SoftParticleParam) + 16 },
 	#endif
