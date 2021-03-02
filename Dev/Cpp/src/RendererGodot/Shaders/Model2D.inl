@@ -21,11 +21,13 @@ uniform sampler2D DistortionTexture : hint_normal;
 )"
 #elif LIGHTING
 R"(
+uniform float EmissiveScale;
 uniform sampler2D ColorTexture : hint_albedo;
 uniform sampler2D NormalTexture : hint_normal;
 )"
 #else
 R"(
+uniform float EmissiveScale;
 uniform sampler2D ColorTexture : hint_albedo;
 )"
 #endif
