@@ -85,12 +85,15 @@ void EffekseerEmitter2D::_update_draw()
 		return;
 	}
 
+	auto viewport = get_viewport();
+	if (viewport == nullptr) return;
+
 	auto system = EffekseerSystem::get_instance();
 
 	VisualServer::get_singleton()->canvas_item_clear(get_canvas_item());
 
 	for (int i = 0; i < m_handles.size(); i++) {
-		system->draw2D(m_handles[i], get_viewport()->get_canvas_transform());
+		system->draw2D(m_handles[i], viewport->get_canvas_transform());
 	}
 }
 

@@ -84,10 +84,16 @@ void EffekseerEmitter::_update_draw()
 		return;
 	}
 
+	auto viewport = get_viewport();
+	if (viewport == nullptr) return;
+
+	auto camera = viewport->get_camera();
+	if (camera == nullptr) return;
+
 	auto system = EffekseerSystem::get_instance();
 	
 	for (int i = 0; i < m_handles.size(); i++) {
-		system->draw3D(m_handles[i], get_viewport()->get_camera()->get_camera_transform());
+		system->draw3D(m_handles[i], camera->get_camera_transform());
 	}
 }
 
