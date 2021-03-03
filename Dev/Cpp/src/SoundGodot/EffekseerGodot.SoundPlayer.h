@@ -35,6 +35,7 @@ public:
 
 private:
 	godot::Ref<godot::Reference> soundContext_;
+	int64_t playbackCount_ = 0;
 };
 
 }
