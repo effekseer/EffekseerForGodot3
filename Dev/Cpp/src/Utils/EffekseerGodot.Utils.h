@@ -109,21 +109,19 @@ inline Effekseer::Matrix43 ToEfkMatrix43(const godot::Transform& transform)
 	return matrix;
 }
 
-inline Effekseer::Matrix43 ToEfkMatrix43(const godot::Transform2D& transform)
+inline Effekseer::Matrix43 ToEfkMatrix43(const godot::Transform2D& transform, const godot::Vector3& orientation)
 {
+	auto scale = transform.get_scale();
+	auto rotation = transform.get_rotation();
+	auto origin = transform.get_origin();
+
 	Effekseer::Matrix43 matrix;
-	matrix.Value[0][0] = transform.elements[0].x;
-	matrix.Value[0][1] = transform.elements[0].y;
-	matrix.Value[0][2] = 0.0f;
-	matrix.Value[1][0] = transform.elements[1].x;
-	matrix.Value[1][1] = transform.elements[1].y;
-	matrix.Value[1][2] = 0.0f;
-	matrix.Value[2][0] = 0.0f;
-	matrix.Value[2][1] = 0.0f;
-	matrix.Value[2][2] = 1.0f;
-	matrix.Value[3][0] = transform.elements[2].x;
-	matrix.Value[3][1] = transform.elements[2].y;
-	matrix.Value[3][2] = 0.0f;
+	matrix.RotationXYZ(orientation.x, orientation.y, orientation.z + rotation);
+	matrix.Value[3][0] = origin.x / scale.x;   // Scaling X
+	matrix.Value[3][1] = origin.y / scale.y;   // Scaling Y
+	matrix.Value[1][0] = -matrix.Value[1][0];  // Inverse Y
+	matrix.Value[1][1] = -matrix.Value[1][1];  // Inverse Y
+	matrix.Value[1][2] = -matrix.Value[1][2];  // Inverse Y
 	return matrix;
 }
 

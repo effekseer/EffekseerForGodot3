@@ -75,6 +75,7 @@ void EffekseerEmitter2D::_process(float delta)
 			m_handles.remove(i);
 			continue;
 		}
+		manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform(), m_orientation * (3.141592f / 180.0f)));
 		i++;
 	}
 }
@@ -105,8 +106,7 @@ void EffekseerEmitter2D::play()
 	if (m_effect.is_valid()) {
 		Effekseer::Handle handle = manager->Play(m_effect->get_native(), Effekseer::Vector3D(0, 0, 0));
 		if (handle >= 0) {
-			Vector3 rotation = m_orientation * (3.141592f / 180.0f);
-			manager->SetRotation(handle, rotation.x, rotation.y, rotation.z);
+			manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform(), m_orientation * (3.141592f / 180.0f)));
 			manager->SetUserData(handle, this);
 
 			if (m_paused) {

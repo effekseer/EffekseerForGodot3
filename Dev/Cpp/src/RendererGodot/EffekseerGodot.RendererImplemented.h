@@ -11,6 +11,11 @@
 #include "EffekseerGodot.VertexBuffer.h"
 #include "EffekseerGodot.IndexBuffer.h"
 
+namespace godot
+{
+class Node2D;
+}
+
 namespace EffekseerGodot
 {
 
@@ -47,8 +52,8 @@ public:
 	~RenderCommand2D();
 
 	void Reset();
-	void DrawSprites(godot::RID parentCanvasItem);
-	void DrawModel(godot::RID parentCanvasItem, godot::RID mesh);
+	void DrawSprites(godot::Node2D* parent);
+	void DrawModel(godot::Node2D* parent, godot::RID mesh);
 
 	godot::RID GetCanvasItem() { return m_canvasItem; }
 	godot::RID GetMaterial() { return m_material; }
@@ -266,11 +271,11 @@ private:
 		const EffekseerRenderer::StandardRendererState& state);
 
 	void TransferVertexToCanvasItem2D(godot::RID canvas_item, 
-		const void* vertexData, int32_t spriteCount, 
+		const void* vertexData, int32_t spriteCount, godot::Vector2 baseScale, 
 		const EffekseerRenderer::StandardRendererState& state);
 
-	void TransferModelToCanvasItem2D(godot::RID canvas_item, 
-		Effekseer::Model* model, const EffekseerRenderer::StandardRendererState& state);
+	void TransferModelToCanvasItem2D(godot::RID canvas_item, Effekseer::Model* model, 
+		godot::Vector2 baseScale, const EffekseerRenderer::StandardRendererState& state);
 };
 
 //----------------------------------------------------------------------------------

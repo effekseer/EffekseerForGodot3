@@ -1,0 +1,14 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Particles.efkefc-cc0364beb0c8cff99a86bbc0d64fbcd5.res"
+
+[deps]
+
+source_file="res://effect/samples/Particles.efkefc"
+dest_files=[ "res://.import/Particles.efkefc-cc0364beb0c8cff99a86bbc0d64fbcd5.res" ]
+
+[params]
+
+scale=1.0

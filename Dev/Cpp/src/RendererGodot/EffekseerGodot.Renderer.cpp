@@ -194,9 +194,10 @@ inline godot::Vector3 ConvertVector3(const EffekseerRenderer::VertexFloat3& v)
 	return godot::Vector3(v.X, v.Y, v.Z);
 }
 
-inline godot::Vector2 ConvertVector2(const EffekseerRenderer::VertexFloat3& v)
+inline godot::Vector2 ConvertVector2(const EffekseerRenderer::VertexFloat3& v,
+	const godot::Vector2& baseScale)
 {
-	return godot::Vector2(v.X, -v.Y); // invert Y
+	return godot::Vector2(v.X, v.Y) * baseScale;
 }
 
 inline EffekseerRenderer::VertexFloat3 ConvertPackedVector3(const EffekseerRenderer::VertexColor& v)
@@ -324,19 +325,21 @@ void EffekseerGodot::RenderCommand2D::Reset()
 	vs->canvas_item_set_parent(m_canvasItem, godot::RID());
 }
 
-void EffekseerGodot::RenderCommand2D::DrawSprites(godot::RID parentCanvasItem)
+void EffekseerGodot::RenderCommand2D::DrawSprites(godot::Node2D* parent)
 {
 	auto vs = godot::VisualServer::get_singleton();
 
-	vs->canvas_item_set_parent(m_canvasItem, parentCanvasItem);
+	vs->canvas_item_set_parent(m_canvasItem, parent->get_canvas_item());
+	vs->canvas_item_set_transform(m_canvasItem, parent->get_global_transform().affine_inverse());
 	vs->canvas_item_set_material(m_canvasItem, m_material);
 }
 
-void RenderCommand2D::DrawModel(godot::RID parentCanvasItem, godot::RID mesh)
+void RenderCommand2D::DrawModel(godot::Node2D* parent, godot::RID mesh)
 {
 	auto vs = godot::VisualServer::get_singleton();
 
-	vs->canvas_item_set_parent(m_canvasItem, parentCanvasItem);
+	vs->canvas_item_set_parent(m_canvasItem, parent->get_canvas_item());
+	vs->canvas_item_set_transform(m_canvasItem, parent->get_global_transform().affine_inverse());
 	vs->canvas_item_add_mesh(m_canvasItem, mesh);
 	vs->canvas_item_set_material(m_canvasItem, m_material);
 }
@@ -622,7 +625,8 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 		auto& command = m_renderCommand2Ds[m_renderCount2D];
 
 		// Transfer vertex data
-		TransferVertexToCanvasItem2D(command.GetCanvasItem(), GetVertexBuffer()->Refer(), spriteCount, state);
+		TransferVertexToCanvasItem2D(command.GetCanvasItem(), GetVertexBuffer()->Refer(), 
+			spriteCount, node2d->get_global_scale(), state);
 
 		// Setup material
 		m_currentShader->ApplyToMaterial(Shader::RenderType::CanvasItem, command.GetMaterial(), m_renderState->GetActiveState());
@@ -642,7 +646,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 			vs->material_set_param(command.GetMaterial(), "CustomData2", m_customData2Texture.GetRID());
 		}
 
-		command.DrawSprites(node2d->get_canvas_item());
+		command.DrawSprites(node2d);
 		m_renderCount2D++;
 	}
 
@@ -696,14 +700,15 @@ void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
 		auto& command = m_renderCommand2Ds[m_renderCount2D];
 
 		// Transfer vertex data
-		TransferModelToCanvasItem2D(command.GetCanvasItem(), m_currentModel.Get(), state);
+		TransferModelToCanvasItem2D(command.GetCanvasItem(), 
+			m_currentModel.Get(), node2d->get_global_scale(), state);
 		
 		// Setup material
 		m_currentShader->ApplyToMaterial(Shader::RenderType::CanvasItem, command.GetMaterial(), m_renderState->GetActiveState());
 
 		//auto mesh = m_currentModel.DownCast<Model>()->GetRID();
-		//command.DrawModel(node2d->get_canvas_item(), mesh);
-		command.DrawSprites(node2d->get_canvas_item());
+		//command.DrawModel(node2d, mesh);
+		command.DrawSprites(node2d);
 		m_renderCount2D++;
 	}
 
@@ -942,7 +947,7 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 }
 
 void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item, 
-	const void* vertexData, int32_t spriteCount, 
+	const void* vertexData, int32_t spriteCount, godot::Vector2 baseScale, 
 	const EffekseerRenderer::StandardRendererState& state)
 {
 	using namespace EffekseerRenderer;
@@ -989,7 +994,7 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 			for (int32_t j = 0; j < 4; j++)
 			{
 				auto& v = vertices[i * 4 + j];
-				points[i * 4 + j] = ConvertVector2(v.Pos);
+				points[i * 4 + j] = ConvertVector2(v.Pos, baseScale);
 				colors[i * 4 + j] = ConvertColor(v.Col);
 				uvs[i * 4 + j] = ConvertUV(v.UV);
 			}
@@ -1011,7 +1016,7 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 			for (int32_t j = 0; j < 4; j++)
 			{
 				auto& v = vertices[i * 4 + j];
-				points[i * 4 + j] = ConvertVector2(v.Pos);
+				points[i * 4 + j] = ConvertVector2(v.Pos, baseScale);
 				colors[i * 4 + j] = ConvertColor(v.Col);
 				uvs[i * 4 + j] = ConvertVertexTextureUV(m_vertexTextureOffset++, width);
 
@@ -1045,7 +1050,7 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 			for (int32_t j = 0; j < 4; j++)
 			{
 				auto& v = *(const DynamicVertex*)vertexPtr;
-				points[i * 4 + j] = ConvertVector2(v.Pos);
+				points[i * 4 + j] = ConvertVector2(v.Pos, baseScale);
 				colors[i * 4 + j] = ConvertColor(v.Col);
 				uvs[i * 4 + j] = ConvertVertexTextureUV(m_vertexTextureOffset++, width);
 				
@@ -1067,8 +1072,8 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 	vs->canvas_item_add_triangle_array(canvas_item, indexArray, pointArray, colorArray, uvArray);
 }
 
-void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item, 
-	Effekseer::Model* model, const EffekseerRenderer::StandardRendererState& state)
+void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item, Effekseer::Model* model, 
+	godot::Vector2 baseScale, const EffekseerRenderer::StandardRendererState& state)
 {
 	using namespace EffekseerRenderer;
 
@@ -1105,7 +1110,7 @@ void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item,
 			auto& v = vertexData[i];
 			Effekseer::Vector3D pos;
 			Effekseer::Vector3D::Transform(pos, v.Position, worldMatrix);
-			points[i] = ConvertVector2(pos);
+			points[i] = ConvertVector2(pos, baseScale);
 			colors[i] = ConvertColor(v.VColor);
 			uvs[i] = ConvertUV(v.UV);
 		}
@@ -1138,7 +1143,7 @@ void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item,
 			Effekseer::Vector3D pos;
 			Effekseer::Vector3D::Transform(pos, v.Position, worldMatrix);
 			positions[i] = ConvertVector3(pos);
-			points[i] = ConvertVector2(pos);
+			points[i] = ConvertVector2(pos, baseScale);
 			colors[i] = ConvertColor(v.VColor);
 			uvs[i] = ConvertUV(v.UV);
 		}
