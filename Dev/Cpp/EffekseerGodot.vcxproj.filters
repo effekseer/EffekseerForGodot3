@@ -120,7 +120,6 @@
     <ClCompile Include="src\EffekseerEmitter2D.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\RendererGodot\EffekseerGodot.RendererImplemented.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GDLibrary.h">

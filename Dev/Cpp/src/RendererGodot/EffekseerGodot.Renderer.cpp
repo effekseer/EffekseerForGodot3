@@ -5,11 +5,11 @@
 #include <Godot.hpp>
 #include <VisualServer.hpp>
 #include <World.hpp>
-#include <Node2D.hpp>
-#include <Spatial.hpp>
 #include <Viewport.hpp>
 #include <Mesh.hpp>
 #include <Image.hpp>
+#include "../EffekseerEmitter.h"
+#include "../EffekseerEmitter2D.h"
 #include "../Utils/EffekseerGodot.Utils.h"
 
 #include "EffekseerGodot.Renderer.h"
@@ -197,7 +197,7 @@ inline godot::Vector3 ConvertVector3(const EffekseerRenderer::VertexFloat3& v)
 inline godot::Vector2 ConvertVector2(const EffekseerRenderer::VertexFloat3& v,
 	const godot::Vector2& baseScale)
 {
-	return godot::Vector2(v.X, v.Y) * baseScale;
+	return godot::Vector2(v.X * baseScale.x, v.Y * baseScale.y);
 }
 
 inline EffekseerRenderer::VertexFloat3 ConvertPackedVector3(const EffekseerRenderer::VertexColor& v)
@@ -589,7 +589,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 	const auto& state = m_standardRenderer->GetState();
 	godot::Object* godotObj = reinterpret_cast<godot::Object*>(GetImpl()->CurrentHandleUserData);
 	
-	if (auto node3d = godot::Object::cast_to<godot::Spatial>(godotObj)) {
+	if (auto emitter = godot::Object::cast_to<godot::EffekseerEmitter>(godotObj)) {
 		if (m_renderCount >= m_renderCommands.size()) return;
 
 		const bool softparticleEnabled = !(
@@ -616,17 +616,18 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 			vs->material_set_param(command.GetMaterial(), "CustomData2", m_customData2Texture.GetRID());
 		}
 
-		command.DrawSprites(node3d->get_world().ptr(), (int32_t)m_renderCount);
+		command.DrawSprites(emitter->get_world().ptr(), (int32_t)m_renderCount);
 		m_renderCount++;
 
-	} else if (auto node2d = godot::Object::cast_to<godot::Node2D>(godotObj)) {
+	} else if (auto emitter = godot::Object::cast_to<godot::EffekseerEmitter2D>(godotObj)) {
 		if (m_renderCount2D >= m_renderCommand2Ds.size()) return;
 
 		auto& command = m_renderCommand2Ds[m_renderCount2D];
 
 		// Transfer vertex data
+		auto srt = EffekseerGodot::ToSRT(emitter->get_global_transform());
 		TransferVertexToCanvasItem2D(command.GetCanvasItem(), GetVertexBuffer()->Refer(), 
-			spriteCount, node2d->get_global_scale(), state);
+			spriteCount, srt.scale.abs(), state);
 
 		// Setup material
 		m_currentShader->ApplyToMaterial(Shader::RenderType::CanvasItem, command.GetMaterial(), m_renderState->GetActiveState());
@@ -646,7 +647,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 			vs->material_set_param(command.GetMaterial(), "CustomData2", m_customData2Texture.GetRID());
 		}
 
-		command.DrawSprites(node2d);
+		command.DrawSprites(emitter);
 		m_renderCount2D++;
 	}
 
@@ -675,7 +676,7 @@ void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
 	const auto& state = m_standardRenderer->GetState();
 	godot::Object* godotObj = reinterpret_cast<godot::Object*>(GetImpl()->CurrentHandleUserData);
 
-	if (auto node3d = godot::Object::cast_to<godot::Spatial>(godotObj)) {
+	if (auto emitter = godot::Object::cast_to<godot::EffekseerEmitter>(godotObj)) {
 		if (m_renderCount >= m_renderCommands.size()) return;
 
 		const bool softparticleEnabled = !(
@@ -691,24 +692,25 @@ void RendererImplemented::DrawPolygon(int32_t vertexCount, int32_t indexCount)
 		m_currentShader->ApplyToMaterial(renderType, command.GetMaterial(), m_renderState->GetActiveState());
 
 		auto mesh = m_currentModel.DownCast<Model>()->GetRID();
-		command.DrawModel(node3d->get_world().ptr(), mesh, (int32_t)m_renderCount);
+		command.DrawModel(emitter->get_world().ptr(), mesh, (int32_t)m_renderCount);
 		m_renderCount++;
 
-	} else if (auto node2d = godot::Object::cast_to<godot::Node2D>(godotObj)) {
+	} else if (auto emitter = godot::Object::cast_to<godot::EffekseerEmitter2D>(godotObj)) {
 		if (m_renderCount2D >= m_renderCommand2Ds.size()) return;
 
 		auto& command = m_renderCommand2Ds[m_renderCount2D];
 
 		// Transfer vertex data
-		TransferModelToCanvasItem2D(command.GetCanvasItem(), 
-			m_currentModel.Get(), node2d->get_global_scale(), state);
+		auto srt = EffekseerGodot::ToSRT(emitter->get_global_transform());
+		bool flip = (srt.scale.x < 0.0f) ^ (srt.scale.y < 0.0f) ^ emitter->get_flip_h() ^ emitter->get_flip_v();
+		TransferModelToCanvasItem2D(command.GetCanvasItem(), m_currentModel.Get(), srt.scale.abs(), flip, state);
 		
 		// Setup material
 		m_currentShader->ApplyToMaterial(Shader::RenderType::CanvasItem, command.GetMaterial(), m_renderState->GetActiveState());
 
 		//auto mesh = m_currentModel.DownCast<Model>()->GetRID();
 		//command.DrawModel(node2d, mesh);
-		command.DrawSprites(node2d);
+		command.DrawSprites(emitter);
 		m_renderCount2D++;
 	}
 
@@ -1072,8 +1074,9 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 	vs->canvas_item_add_triangle_array(canvas_item, indexArray, pointArray, colorArray, uvArray);
 }
 
-void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item, Effekseer::Model* model, 
-	godot::Vector2 baseScale, const EffekseerRenderer::StandardRendererState& state)
+void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item, 
+	Effekseer::Model* model, godot::Vector2 baseScale, bool flipPolygon,
+	const EffekseerRenderer::StandardRendererState& state)
 {
 	using namespace EffekseerRenderer;
 
@@ -1137,6 +1140,9 @@ void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item, Ef
 		godot::Color* colors = colorArray.write().ptr();
 		godot::Vector2* uvs = uvArray.write().ptr();
 
+		const godot::Vector3 frontVec = (flipPolygon) ? godot::Vector3(0.0f, 0.0f, -1.0f) : godot::Vector3(0.0f, 0.0f, 1.0f);
+		const godot::Vector3 backVec = (flipPolygon) ? godot::Vector3(0.0f, 0.0f, 1.0f) : godot::Vector3(0.0f, 0.0f, -1.0f);
+
 		for (int32_t i = 0; i < vertexCount; i++)
 		{
 			auto& v = vertexData[i];
@@ -1150,8 +1156,7 @@ void RendererImplemented::TransferModelToCanvasItem2D(godot::RID canvas_item, Ef
 
 		// Copy indeces with culling
 		int* indices = indexArray.write().ptr();
-		godot::Vector3 direction = (state.CullingType == Effekseer::CullingType::Back) ? 
-			godot::Vector3(0.0f, 0.0f, 1.0f) : godot::Vector3(0.0f, 0.0f, -1.0f);
+		godot::Vector3 direction = (state.CullingType == Effekseer::CullingType::Back) ? frontVec : backVec;
 
 		for (int32_t i = 0; i < faceCount; i++)
 		{

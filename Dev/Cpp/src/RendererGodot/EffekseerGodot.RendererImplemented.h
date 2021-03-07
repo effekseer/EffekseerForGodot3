@@ -275,7 +275,8 @@ private:
 		const EffekseerRenderer::StandardRendererState& state);
 
 	void TransferModelToCanvasItem2D(godot::RID canvas_item, Effekseer::Model* model, 
-		godot::Vector2 baseScale, const EffekseerRenderer::StandardRendererState& state);
+		godot::Vector2 baseScale, bool flipPolygon,
+		const EffekseerRenderer::StandardRendererState& state);
 };
 
 //----------------------------------------------------------------------------------

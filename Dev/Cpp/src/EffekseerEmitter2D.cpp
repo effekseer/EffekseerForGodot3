@@ -33,6 +33,10 @@ void EffekseerEmitter2D::_register_methods()
 		&EffekseerEmitter2D::set_color, &EffekseerEmitter2D::get_color, Color(1.0f, 1.0f, 1.0f, 1.0f));
 	register_property<EffekseerEmitter2D, Vector3>("orientation", 
 		&EffekseerEmitter2D::set_orientation, &EffekseerEmitter2D::get_orientation, {});
+	register_property<EffekseerEmitter2D, bool>("flip_h", 
+		&EffekseerEmitter2D::set_flip_h, &EffekseerEmitter2D::get_flip_h, false);
+	register_property<EffekseerEmitter2D, bool>("flip_v", 
+		&EffekseerEmitter2D::set_flip_v, &EffekseerEmitter2D::get_flip_v, true);
 }
 
 EffekseerEmitter2D::EffekseerEmitter2D()
@@ -75,7 +79,8 @@ void EffekseerEmitter2D::_process(float delta)
 			m_handles.remove(i);
 			continue;
 		}
-		manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform(), m_orientation * (3.141592f / 180.0f)));
+		manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform(), 
+			m_orientation * (3.141592f / 180.0f), m_flip_h, m_flip_v));
 		i++;
 	}
 }
@@ -106,7 +111,8 @@ void EffekseerEmitter2D::play()
 	if (m_effect.is_valid()) {
 		Effekseer::Handle handle = manager->Play(m_effect->get_native(), Effekseer::Vector3D(0, 0, 0));
 		if (handle >= 0) {
-			manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform(), m_orientation * (3.141592f / 180.0f)));
+			manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform(), 
+				m_orientation * (3.141592f / 180.0f), m_flip_h, m_flip_v));
 			manager->SetUserData(handle, this);
 
 			if (m_paused) {
@@ -199,24 +205,6 @@ void EffekseerEmitter2D::set_color(Color color)
 Color EffekseerEmitter2D::get_color() const
 {
 	return EffekseerGodot::ToGdColor(m_color);
-}
-
-void EffekseerEmitter2D::set_orientation(Vector3 orientation)
-{
-	m_orientation = orientation;
-
-	auto system = EffekseerSystem::get_instance();
-	auto manager = system->get_manager();
-
-	Vector3 rotation = m_orientation * (3.141592f * 2.0f);
-	for (int i = 0; i < m_handles.size(); i++) {
-		manager->SetRotation(m_handles[i], rotation.x, rotation.y, rotation.z);
-	}
-}
-
-Vector3 EffekseerEmitter2D::get_orientation() const
-{
-	return m_orientation;
 }
 
 void EffekseerEmitter2D::set_effect(Ref<EffekseerEffect> effect)

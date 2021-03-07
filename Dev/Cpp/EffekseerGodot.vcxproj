@@ -44,7 +44,6 @@
     <ClCompile Include="src\RendererGodot\EffekseerGodot.IndexBuffer.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.ModelRenderer.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.Renderer.cpp" />
-    <ClCompile Include="src\RendererGodot\EffekseerGodot.RendererImplemented.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.RenderResources.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.RenderState.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.Shader.cpp" />

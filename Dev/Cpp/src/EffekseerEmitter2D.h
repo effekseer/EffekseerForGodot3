@@ -49,9 +49,17 @@ public:
 
 	Color get_color() const;
 
-	void set_orientation(Vector3 orientation);
+	void set_orientation(Vector3 orientation) { m_orientation = orientation; }
 
-	Vector3 get_orientation() const;
+	Vector3 get_orientation() const { return m_orientation; }
+
+	void set_flip_h(bool flip_h) { m_flip_h = flip_h; }
+
+	bool get_flip_h() const { return m_flip_h; }
+
+	void set_flip_v(bool flip_v) { m_flip_v = flip_v; }
+
+	bool get_flip_v() const { return m_flip_v; }
 
 	void set_effect(Ref<EffekseerEffect> effect);
 
@@ -69,6 +77,8 @@ private:
 	float m_speed = 1.0f;
 	Effekseer::Color m_color = {255, 255, 255, 255};
 	Vector3 m_orientation;
+	bool m_flip_h = false;
+	bool m_flip_v = true;
 };
 
 }

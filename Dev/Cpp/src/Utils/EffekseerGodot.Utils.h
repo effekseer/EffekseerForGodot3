@@ -47,6 +47,28 @@ inline godot::Vector3 ToGdVector3(Effekseer::Vector3D v)
 	return { v.X, v.Y, v.Z };
 }
 
+struct SRT2D {
+	godot::Vector2 scale;
+	real_t rotation;
+	godot::Vector2 translation;
+};
+inline SRT2D ToSRT(const godot::Transform2D& transform)
+{
+	SRT2D srt;
+
+	srt.rotation = atan2(transform.elements[0].y, transform.elements[0].x);
+
+	real_t cr = cos(-srt.rotation);
+	real_t sr = sin(-srt.rotation);
+	srt.scale.x = cr * transform.elements[0].x - sr * transform.elements[0].y;
+	srt.scale.y = sr * transform.elements[1].x + cr * transform.elements[1].y;
+
+	srt.translation.x = transform.elements[2].x;
+	srt.translation.y = transform.elements[2].y;
+
+	return srt;
+}
+
 inline Effekseer::Matrix44 ToEfkMatrix44(const godot::Transform& transform)
 {
 	Effekseer::Matrix44 matrix;
@@ -109,20 +131,29 @@ inline Effekseer::Matrix43 ToEfkMatrix43(const godot::Transform& transform)
 	return matrix;
 }
 
-inline Effekseer::Matrix43 ToEfkMatrix43(const godot::Transform2D& transform, const godot::Vector3& orientation)
+inline Effekseer::Matrix43 ToEfkMatrix43(const godot::Transform2D& transform, 
+	const godot::Vector3& orientation, bool flipH, bool flipV)
 {
-	auto scale = transform.get_scale();
-	auto rotation = transform.get_rotation();
-	auto origin = transform.get_origin();
+	using namespace Effekseer::SIMD;
 
-	Effekseer::Matrix43 matrix;
-	matrix.RotationXYZ(orientation.x, orientation.y, orientation.z + rotation);
-	matrix.Value[3][0] = origin.x / scale.x;   // Scaling X
-	matrix.Value[3][1] = origin.y / scale.y;   // Scaling Y
-	matrix.Value[1][0] = -matrix.Value[1][0];  // Inverse Y
-	matrix.Value[1][1] = -matrix.Value[1][1];  // Inverse Y
-	matrix.Value[1][2] = -matrix.Value[1][2];  // Inverse Y
-	return matrix;
+	auto srt = ToSRT(transform);
+
+	// Invert XY by flip or negative scale
+	float scaleX = (flipH ^ (srt.scale.x < 0.0f)) ? -1.0f : 1.0f;
+	float scaleY = (flipV ^ (srt.scale.y < 0.0f)) ? -1.0f : 1.0f;
+	
+	// Invalidate scale (Apply scale at rendering)
+	float translationX = srt.translation.x / abs(srt.scale.x);
+	float translationY = srt.translation.y / abs(srt.scale.y);
+
+	Mat43f transformMatrix = Mat43f::SRT({scaleX, scaleY, 1.0f},
+		Mat43f::RotationZ(srt.rotation), 
+		{translationX, translationY, 0.0f});
+
+	Mat43f orientationMatrix = Mat43f::RotationZXY(orientation.z, orientation.x, orientation.y);
+	
+	// Multiply and Convert
+	return ToStruct(orientationMatrix * transformMatrix);
 }
 
 inline godot::Transform ToGdMatrix(Effekseer::Matrix44 matrix)
