@@ -120,6 +120,12 @@
     <ClCompile Include="src\EffekseerEmitter2D.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.cpp">
+      <Filter>src\RendererGodot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GDLibrary.h">
@@ -235,6 +241,12 @@
     </ClInclude>
     <ClInclude Include="src\EffekseerEmitter2D.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.h">
+      <Filter>src\RendererGodot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.h">
+      <Filter>src\RendererGodot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

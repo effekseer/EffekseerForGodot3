@@ -30,6 +30,8 @@
     <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.cpp" />
     <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.cpp" />
     <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.cpp" />
+    <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.cpp" />
+    <ClCompile Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.cpp" />
     <ClCompile Include="src\EffekseerEmitter2D.cpp" />
     <ClCompile Include="src\EffekseerResource.cpp" />
     <ClCompile Include="src\EffekseerSystem.cpp" />
@@ -67,6 +69,8 @@
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.StandardRenderer.h" />
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.h" />
     <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.h" />
+    <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.h" />
+    <ClInclude Include="..\..\..\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.h" />
     <ClInclude Include="src\EffekseerEmitter2D.h" />
     <ClInclude Include="src\EffekseerResource.h" />
     <ClInclude Include="src\EffekseerSystem.h" />
