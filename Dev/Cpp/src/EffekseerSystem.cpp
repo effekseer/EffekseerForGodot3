@@ -105,7 +105,7 @@ void EffekseerSystem::_process(float delta)
 {
 	// Stabilize in a variable frame environment
 	float deltaFrames = delta * 60.0f;
-	int iterations = (int)roundf(deltaFrames);
+	int iterations = std::max(1, (int)roundf(deltaFrames));
 	float advance = deltaFrames / iterations;
 	for (int i = 0; i < iterations; i++) {
 		m_manager->Update(advance);
