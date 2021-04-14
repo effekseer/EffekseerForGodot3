@@ -1,5 +1,8 @@
 ﻿# Release notes
 
+## 1.60 Beta3
+- Update to latest of Effekseer 1.60 branch.
+
 ## 1.60 Beta2
 - Bugfixes
   - Not good 2D transform calculation.
