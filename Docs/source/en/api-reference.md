@@ -104,7 +104,7 @@ Get the playback status.
 
 ----
 
-## EffekseerEmitter
+## EffekseerEmitter2D
 
 **Extends**: Node2D < CanvasItem < Node < Object
 
