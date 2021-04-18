@@ -1,6 +1,7 @@
 [gd_resource type="GDNativeLibrary" format=2]
 
 [resource]
+reloadable = false
 entry/Android.armeabi-v7a = "res://addons/effekseer/bin/android/libeffekseer.android-armv7.so"
 entry/Android.arm64-v8a = "res://addons/effekseer/bin/android/libeffekseer.android-arm64v8.so"
 entry/Android.x86 = "res://addons/effekseer/bin/android/libeffekseer.android-x86.so"
