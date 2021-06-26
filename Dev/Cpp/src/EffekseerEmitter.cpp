@@ -31,6 +31,7 @@ void EffekseerEmitter::_register_methods()
 		GODOT_PROPERTY_HINT_RANGE, "0.0,10.0,0.01");
 	register_property<EffekseerEmitter, Color>("color", 
 		&EffekseerEmitter::set_color, &EffekseerEmitter::get_color, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	register_signal<EffekseerEmitter>("finished", {});
 }
 
 EffekseerEmitter::EffekseerEmitter()
@@ -71,6 +72,7 @@ void EffekseerEmitter::_process(float delta)
 		auto handle = m_handles[i];
 		if (!manager->Exists(handle)) {
 			m_handles.remove(i);
+			emit_signal("finished");
 			continue;
 		}
 		manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform()));

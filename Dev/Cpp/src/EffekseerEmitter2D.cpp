@@ -37,6 +37,7 @@ void EffekseerEmitter2D::_register_methods()
 		&EffekseerEmitter2D::set_flip_h, &EffekseerEmitter2D::get_flip_h, false);
 	register_property<EffekseerEmitter2D, bool>("flip_v", 
 		&EffekseerEmitter2D::set_flip_v, &EffekseerEmitter2D::get_flip_v, true);
+	register_signal<EffekseerEmitter2D>("finished", {});
 }
 
 EffekseerEmitter2D::EffekseerEmitter2D()
@@ -77,6 +78,7 @@ void EffekseerEmitter2D::_process(float delta)
 		auto handle = m_handles[i];
 		if (!manager->Exists(handle)) {
 			m_handles.remove(i);
+			emit_signal("finished");
 			continue;
 		}
 		manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform(), 
