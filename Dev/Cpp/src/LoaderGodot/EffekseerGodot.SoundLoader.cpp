@@ -1,3 +1,4 @@
+#include <Godot.hpp>
 #include <AudioStream.hpp>
 #include "EffekseerGodot.SoundLoader.h"
 #include "../Utils/EffekseerGodot.Utils.h"

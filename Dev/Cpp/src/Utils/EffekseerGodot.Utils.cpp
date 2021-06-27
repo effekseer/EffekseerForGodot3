@@ -1,4 +1,5 @@
-﻿#include <GDScript.hpp>
+﻿#include <Godot.hpp>
+#include <GDScript.hpp>
 #include <NativeScript.hpp>
 #include <VisualScript.hpp>
 #include "EffekseerGodot.Utils.h"

@@ -19,7 +19,7 @@ namespace EffekseerGodot
 		return nullptr;
 	}
 
-	auto efkres = godot::as<godot::EffekseerResource>(resource.ptr());
+	auto efkres = godot::detail::get_custom_class_instance<godot::EffekseerResource>(resource.ptr());
 	auto& data = efkres->get_data_ref();
 
 	return Load(data.read().ptr(), data.size(), Effekseer::MaterialFileType::Code);

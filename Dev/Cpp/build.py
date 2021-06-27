@@ -18,7 +18,7 @@ def import_generate_bindings():
     binding_generator = __import__("godot-cpp.binding_generator").binding_generator
     cwd = os.getcwd()
     os.chdir(os.path.join(cwd, "godot-cpp"))
-    binding_generator.generate_bindings("godot_headers/api.json")
+    binding_generator.generate_bindings("godot-headers/api.json", False)
     os.chdir(cwd)
 
 import_generate_bindings()
