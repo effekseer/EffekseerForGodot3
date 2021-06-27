@@ -104,6 +104,13 @@ Get the playback status.
 
 ----
 
+### Signals
+
+#### finished()
+Emitted when the effect finishes playing.
+
+----
+
 ## EffekseerEmitter2D
 
 **Extends**: Node2D < CanvasItem < Node < Object
@@ -216,6 +223,13 @@ Get the playback status.
 
 - true: Playing
 - false: Not played or finished playing
+
+----
+
+### Signals
+
+#### finished()
+Emitted when the effect finishes playing.
 
 ----
 
