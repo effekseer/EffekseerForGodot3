@@ -526,9 +526,7 @@ IndexBuffer* RendererImplemented::GetIndexBuffer()
 //----------------------------------------------------------------------------------
 ::Effekseer::RingRendererRef RendererImplemented::CreateRingRenderer()
 {
-	auto ringRenderer = Effekseer::MakeRefPtr<::EffekseerRenderer::RingRendererBase<RendererImplemented, false>>(this);
-	ringRenderer->SetFasterSngleRingModeEnabled(false);
-	return ringRenderer;
+	return ::Effekseer::RingRendererRef(new ::EffekseerRenderer::RingRendererBase<RendererImplemented, false>(this));
 }
 
 //----------------------------------------------------------------------------------
