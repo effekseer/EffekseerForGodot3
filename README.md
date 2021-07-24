@@ -19,12 +19,13 @@ Effekseerで作成したエフェクトをGodot Engineで表示することが�
 
 ### Clone the repository
 
-Needs to clone main repository in the same place of this repository, to develop this plugin.
+~~Needs to clone main repository in the same place of this repository, to develop this plugin.~~  
+The above operation is no longer necessary
 
-このプラグインを開発するには、このリポジトリと同じ場所に本体リポジトリをクローンする必要があります。
+~~このプラグインを開発するには、このリポジトリと同じ場所に本体リポジトリをクローンする必要があります。~~  
+上記の操作は不要になりました
 
 ```
-git clone https://github.com/effekseer/Effekseer --recursive
 git clone https://github.com/effekseer/EffekseerForGodot3 --recursive
 ```
 
@@ -64,6 +65,14 @@ Execute `python3 Dev/Cpp/build.py platform=linux`
 ### Edit native codes
 
 #### Windows
+
+Create an effekseer build environment.
+
+```
+mkdir Dev/Effekseer/build
+cd Dev/Effekseer/build
+cmake -DBUILD_VIEWER=ON -DBUILD_EDITOR=ON .. 
+```
 
 Uses Visual Studio 2017 or later, to open and build the following solution file.
 
