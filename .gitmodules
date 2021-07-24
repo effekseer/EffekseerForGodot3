@@ -2,3 +2,7 @@
 	path = Dev/Cpp/godot-cpp
 	url = https://github.com/godotengine/godot-cpp.git
 	branch = 3.3
+[submodule "Dev/Effekseer"]
+	path = Dev/Effekseer
+	url = https://github.com/effekseer/Effekseer.git
+	branch = 16x

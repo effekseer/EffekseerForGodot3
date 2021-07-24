@@ -394,7 +394,7 @@ add_sources(sources, 'godot-cpp/src/core', 'cpp')
 add_sources(sources, 'godot-cpp/src/gen', 'cpp')
 
 ## Effekseer
-effekseer_source_root = "../../../Effekseer/Dev/Cpp"
+effekseer_source_root = "../Effekseer/Dev/Cpp"
 add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer", "cpp")
 add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer/Culling", "cpp")
 add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer/ForceField", "cpp")
@@ -431,8 +431,8 @@ env.Append(CPPPATH=[".",
     godot_cpp_path + "include/", 
     godot_cpp_path + "include/core/", 
     godot_cpp_path + "include/gen/",
-    "../../../Effekseer/Dev/Cpp/Effekseer",
-    "../../../Effekseer/Dev/Cpp/EffekseerRendererCommon"
+    "../Effekseer/Dev/Cpp/Effekseer",
+    "../Effekseer/Dev/Cpp/EffekseerRendererCommon"
 ])
 
 #env.Append(LIBPATH=[
