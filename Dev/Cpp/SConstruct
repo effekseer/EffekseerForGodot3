@@ -224,7 +224,7 @@ elif env["platform"] == "osx":
     env.Append(LINKFLAGS=[
         "-arch", "x86_64", "-arch", "arm64",
         "-framework", "Cocoa",
-        "-Wl,-undefined,dynamic_lookup,--gc-sections",
+        "-Wl,-undefined,dynamic_lookup,-dead_strip",
         "-isysroot", sdk_path
     ])
 
@@ -263,7 +263,7 @@ elif env["platform"] == "ios":
         "-isysroot", sdk_path])
     env.Append(LINKFLAGS=[
         "-arch", env["ios_arch"],
-        "-Wl,-undefined,dynamic_lookup,--gc-sections",
+        "-Wl,-undefined,dynamic_lookup,-dead_strip",
         "-isysroot", sdk_path,
         "-F" + sdk_path
     ])
