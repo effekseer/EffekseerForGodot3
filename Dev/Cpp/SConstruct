@@ -174,8 +174,12 @@ if env["platform"] == "linux":
     if env["use_llvm"]:
         env["CXX"] = "clang++"
 
-    env.Append(CCFLAGS=["-fPIC", "-std=c++14", "-Wwrite-strings", "-fvisibility=hidden"])
-    env.Append(LINKFLAGS=["-Wl,-R,'$$ORIGIN'"])
+    env.Append(CCFLAGS=[
+        "-fPIC", "-std=c++14", "-Wwrite-strings", 
+        "-fvisibility=hidden",
+        "-ffunction-sections", "-fdata-sections"
+    ])
+    env.Append(LINKFLAGS=["-Wl,--gc-sections,-R,'$$ORIGIN'"])
 
     if env["target"] == "debug":
         env.Append(CCFLAGS=["-Og", "-g"])
@@ -213,13 +217,14 @@ elif env["platform"] == "osx":
     env.Append(CCFLAGS=[
         "-std=c++14", "-arch", "x86_64", "-arch", "arm64",
         "-fvisibility=hidden",
+        "-ffunction-sections", "-fdata-sections",
         "-mmacosx-version-min=10.10",
         "-isysroot", sdk_path
     ])
     env.Append(LINKFLAGS=[
         "-arch", "x86_64", "-arch", "arm64",
         "-framework", "Cocoa",
-        "-Wl,-undefined,dynamic_lookup",
+        "-Wl,-undefined,dynamic_lookup,--gc-sections",
         "-isysroot", sdk_path
     ])
 
@@ -253,11 +258,12 @@ elif env["platform"] == "ios":
 
     env.Append(CCFLAGS=[
         "-std=c++14", "-fvisibility=hidden",
+        "-ffunction-sections", "-fdata-sections",
         "-arch", env["ios_arch"],
         "-isysroot", sdk_path])
     env.Append(LINKFLAGS=[
         "-arch", env["ios_arch"],
-        "-Wl,-undefined,dynamic_lookup",
+        "-Wl,-undefined,dynamic_lookup,--gc-sections",
         "-isysroot", sdk_path,
         "-F" + sdk_path
     ])
@@ -340,9 +346,12 @@ elif env["platform"] == "android":
     env.Append(CCFLAGS=[
         "--target=" + arch_info["target"] + env["android_api_level"],
         "-march=" + arch_info["march"],
-        "-fPIC", "-fvisibility=hidden"])#, "-fPIE", "-fno-addrsig", "-Oz"])
+        "-fPIC", "-fvisibility=hidden",
+        "-ffunction-sections", "-fdata-sections"
+    ])#, "-fPIE", "-fno-addrsig", "-Oz"])
     env.Append(CCFLAGS=arch_info["ccflags"])
     env.Append(LINKFLAGS=[
+        "-Wl,--gc-sections",
         "--target=" + arch_info["target"] + env["android_api_level"],
         "-march=" + arch_info["march"],
     ])
