@@ -174,13 +174,13 @@ if env["platform"] == "linux":
     if env["use_llvm"]:
         env["CXX"] = "clang++"
 
-    env.Append(CCFLAGS=["-fPIC", "-g", "-std=c++14", "-Wwrite-strings"])
+    env.Append(CCFLAGS=["-fPIC", "-std=c++14", "-Wwrite-strings", "-fvisibility=hidden"])
     env.Append(LINKFLAGS=["-Wl,-R,'$$ORIGIN'"])
 
     if env["target"] == "debug":
-        env.Append(CCFLAGS=["-Og"])
+        env.Append(CCFLAGS=["-Og", "-g"])
     elif env["target"] == "release":
-        env.Append(CCFLAGS=["-O3"])
+        env.Append(CCFLAGS=["-Ofast"])
 
     if env["bits"] == "64":
         env.Append(CCFLAGS=["-m64"])
@@ -200,7 +200,7 @@ elif env["platform"] == "osx":
     try:
         sdk_path = decode_utf8(subprocess.check_output(["xcrun", "--sdk", "macosx", "--show-sdk-path"]).strip())
     except (subprocess.CalledProcessError, OSError):
-        raise ValueError("Failed to find SDK path while running xcrun --sdk {} --show-sdk-path.".format(sdk_name))
+        raise ValueError("Failed to find SDK path while running xcrun --sdk ? --show-sdk-path.".format())
 
     compiler_path = env["XCODEPATH"] + "/usr/bin/"
     env["ENV"]["PATH"] = env["XCODEPATH"] + "/Developer/usr/bin/:" + env["ENV"]["PATH"]
@@ -211,7 +211,8 @@ elif env["platform"] == "osx":
     env["RANLIB"] = compiler_path + "ranlib"
 
     env.Append(CCFLAGS=[
-        "-g", "-std=c++14", "-arch", "x86_64", "-arch", "arm64",
+        "-std=c++14", "-arch", "x86_64", "-arch", "arm64",
+        "-fvisibility=hidden",
         "-mmacosx-version-min=10.10",
         "-isysroot", sdk_path
     ])
@@ -223,9 +224,9 @@ elif env["platform"] == "osx":
     ])
 
     if env["target"] == "debug":
-        env.Append(CCFLAGS=["-Og"])
+        env.Append(CCFLAGS=["-Og", "-g"])
     elif env["target"] == "release":
-        env.Append(CCFLAGS=["-O3"])
+        env.Append(CCFLAGS=["-Ofast"])
 
     target_path = "libeffekseer.osx.dylib"
 
@@ -250,19 +251,21 @@ elif env["platform"] == "ios":
     env["AR"] = compiler_path + "ar"
     env["RANLIB"] = compiler_path + "ranlib"
 
-    env.Append(CCFLAGS=["-g", "-std=c++14", "-arch", env["ios_arch"], "-isysroot", sdk_path])
+    env.Append(CCFLAGS=[
+        "-std=c++14", "-fvisibility=hidden",
+        "-arch", env["ios_arch"],
+        "-isysroot", sdk_path])
     env.Append(LINKFLAGS=[
-        "-arch",
-        env["ios_arch"],
+        "-arch", env["ios_arch"],
         "-Wl,-undefined,dynamic_lookup",
         "-isysroot", sdk_path,
         "-F" + sdk_path
     ])
 
     if env["target"] == "debug":
-        env.Append(CCFLAGS=["-Og"])
+        env.Append(CCFLAGS=["-Og", "-g"])
     elif env["target"] == "release":
-        env.Append(CCFLAGS=["-O3"])
+        env.Append(CCFLAGS=["-Ofast"])
 
     target_path = "libeffekseer.ios-" + env["ios_arch"] + ".dylib"
 
@@ -334,9 +337,15 @@ elif env["platform"] == "android":
     env["CXX"] = toolchain + "/bin/clang++"
     env["AR"] = toolchain + "/bin/" + arch_info["tool_path"] + "-ar"
 
-    env.Append(CCFLAGS=["--target=" + arch_info["target"] + env["android_api_level"], "-march=" + arch_info["march"], "-fPIC"])#, "-fPIE", "-fno-addrsig", "-Oz"])
+    env.Append(CCFLAGS=[
+        "--target=" + arch_info["target"] + env["android_api_level"],
+        "-march=" + arch_info["march"],
+        "-fPIC", "-fvisibility=hidden"])#, "-fPIE", "-fno-addrsig", "-Oz"])
     env.Append(CCFLAGS=arch_info["ccflags"])
-    env.Append(LINKFLAGS=["--target=" + arch_info["target"] + env["android_api_level"], "-march=" + arch_info["march"]])
+    env.Append(LINKFLAGS=[
+        "--target=" + arch_info["target"] + env["android_api_level"],
+        "-march=" + arch_info["march"],
+    ])
 
 elif env["platform"] == "html5":
     if host_platform == "windows":
@@ -356,11 +365,11 @@ elif env["platform"] == "html5":
     env["RANLIB"] = "emranlib"
 
     if env["target"] == "debug":
-        env.Append(CCFLAGS=["-O0", "-std=c++14", "-fno-exceptions", "-s", "SIDE_MODULE=1"])
+        env.Append(CCFLAGS=["-O0", "-std=c++14", "-fno-exceptions", "-fvisibility=hidden", "-s", "SIDE_MODULE=1"])
     else:
-        env.Append(CCFLAGS=["-O3", "-std=c++14", "-fno-exceptions", "-DNDEBUG", "-s", "SIDE_MODULE=1"])
+        env.Append(CCFLAGS=["-Ofast", "-std=c++14", "-fno-exceptions", "-fvisibility=hidden", "-DNDEBUG", "-s", "SIDE_MODULE=1"])
     
-    env.Append(LINKFLAGS=["-O3", "-s", "SIDE_MODULE=1", "--llvm-lto 1"])
+    env.Append(LINKFLAGS=["-Ofast", "-s", "SIDE_MODULE=1", "--llvm-lto 1"])
 
     env["SHOBJSUFFIX"] = ".bc"
     env["SHLIBSUFFIX"] = ".wasm"
