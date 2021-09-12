@@ -139,6 +139,7 @@ private:
 	std::unique_ptr<RenderState> m_renderState;
 
 	Effekseer::Backend::TextureRef m_background;
+	Effekseer::Backend::TextureRef m_depth;
 
 public:
 	/**

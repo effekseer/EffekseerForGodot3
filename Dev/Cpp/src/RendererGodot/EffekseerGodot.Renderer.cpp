@@ -342,6 +342,7 @@ RendererImplemented::RendererImplemented(int32_t squareMaxCount)
 {
 	// dummy
 	m_background = Effekseer::MakeRefPtr<Texture>();
+	m_depth = Effekseer::MakeRefPtr<Texture>();
 }
 
 //----------------------------------------------------------------------------------
@@ -401,6 +402,9 @@ bool RendererImplemented::Initialize(int32_t drawMaxCount)
 	m_customData1Texture.Init(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT);
 	m_customData2Texture.Init(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT);
 	m_uvTangentTexture.Init(CUSTOM_DATA_TEXTURE_WIDTH, CUSTOM_DATA_TEXTURE_HEIGHT);
+
+	impl->SetBackground(m_background);
+	impl->SetDepth(m_depth, EffekseerRenderer::DepthReconstructionParameter());
 
 	return true;
 }
