@@ -212,7 +212,10 @@ Color EffekseerEmitter2D::get_color() const
 void EffekseerEmitter2D::set_effect(Ref<EffekseerEffect> effect)
 {
 	m_effect = effect;
-	m_effect->setup();
+
+	if (m_effect.is_valid()) {
+		m_effect->setup();
+	}
 }
 
 }

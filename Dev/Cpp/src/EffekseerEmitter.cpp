@@ -205,7 +205,10 @@ Color EffekseerEmitter::get_color() const
 void EffekseerEmitter::set_effect(Ref<EffekseerEffect> effect)
 {
 	m_effect = effect;
-	m_effect->setup();
+
+	if (m_effect.is_valid()) {
+		m_effect->setup();
+	}
 }
 
 }
