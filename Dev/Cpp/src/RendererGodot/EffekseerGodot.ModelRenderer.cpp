@@ -168,7 +168,13 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 		return;
 	}
 
-	m_renderer->SetModel(model);
+	const bool softparticleEnabled = 
+		!(parameter.BasicParameterPtr->SoftParticleDistanceFar == 0.0f &&
+		parameter.BasicParameterPtr->SoftParticleDistanceNear == 0.0f &&
+		parameter.BasicParameterPtr->SoftParticleDistanceNearOffset == 0.0f) &&
+		parameter.BasicParameterPtr->MaterialType != Effekseer::RendererMaterialType::File;
+
+	m_renderer->BeginModelRendering(model, softparticleEnabled);
 
 	using namespace EffekseerRenderer;
 
@@ -187,7 +193,7 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 		m_shaders[(size_t)RendererShaderType::BackDistortion].get(),
 		parameter, userData);
 
-	m_renderer->SetModel(nullptr);
+	m_renderer->EndModelRendering();
 }
 
 //----------------------------------------------------------------------------------

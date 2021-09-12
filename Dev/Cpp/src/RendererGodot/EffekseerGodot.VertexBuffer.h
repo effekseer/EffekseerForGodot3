@@ -20,8 +20,6 @@ class VertexBuffer
 {
 private:
 	std::vector<uint8_t> m_buffer;
-
-	uint32_t m_vertexRingOffset;
 	bool m_ringBufferLock;
 
 	int32_t m_ringLockedOffset;

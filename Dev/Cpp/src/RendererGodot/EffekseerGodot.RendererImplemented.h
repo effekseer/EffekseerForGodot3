@@ -124,7 +124,12 @@ private:
 	std::vector<RenderCommand2D> m_renderCommand2Ds;
 	size_t m_renderCount2D = 0;
 
-	Effekseer::ModelRef m_currentModel = nullptr;
+	struct ModelRenderState {
+		Effekseer::ModelRef model = nullptr;
+		bool softparticleEnabled = false;
+	};
+	ModelRenderState m_modelRenderState;
+
 	DynamicTexture m_customData1Texture;
 	DynamicTexture m_customData2Texture;
 	DynamicTexture m_uvTangentTexture;
@@ -244,9 +249,10 @@ public:
 
 	void SetLayout(Shader* shader);
 	void DrawSprites(int32_t spriteCount, int32_t vertexOffset);
-	void SetModel(Effekseer::ModelRef model);
 	void DrawPolygon(int32_t vertexCount, int32_t indexCount);
 	void DrawPolygonInstanced(int32_t vertexCount, int32_t indexCount, int32_t instanceCount);
+	void BeginModelRendering(Effekseer::ModelRef model, bool softparticleEnabled);
+	void EndModelRendering();
 
 	Shader* GetShader(::EffekseerRenderer::RendererShaderType type);
 	void BeginShader(Shader* shader);
@@ -267,16 +273,17 @@ public:
 
 private:
 	void TransferVertexToImmediate3D(godot::RID immediate, 
-		const void* vertexData, int32_t spriteCount, 
-		const EffekseerRenderer::StandardRendererState& state);
+		const void* vertexData, int32_t vertexOffset, 
+		int32_t spriteCount, const EffekseerRenderer::StandardRendererState& state);
 
 	void TransferVertexToCanvasItem2D(godot::RID canvas_item, 
-		const void* vertexData, int32_t spriteCount, godot::Vector2 baseScale, 
+		const void* vertexData, int32_t vertexOffset, 
+		int32_t spriteCount, godot::Vector2 baseScale, 
 		const EffekseerRenderer::StandardRendererState& state);
 
 	void TransferModelToCanvasItem2D(godot::RID canvas_item, Effekseer::Model* model, 
 		godot::Vector2 baseScale, bool flipPolygon,
-		const EffekseerRenderer::StandardRendererState& state);
+		Effekseer::CullingType cullingType);
 };
 
 //----------------------------------------------------------------------------------
