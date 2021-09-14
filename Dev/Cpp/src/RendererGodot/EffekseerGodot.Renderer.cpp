@@ -169,7 +169,7 @@ void DynamicTexture::Unlock()
 
 inline godot::Color ConvertColor(const EffekseerRenderer::VertexColor& color)
 {
-	return godot::Color(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+	return godot::Color(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f).to_linear();
 }
 
 inline godot::Vector2 ConvertUV(const float uv[])
