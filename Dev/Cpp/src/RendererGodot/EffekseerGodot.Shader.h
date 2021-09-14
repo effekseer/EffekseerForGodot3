@@ -87,6 +87,11 @@ public:
 
 	void SetConstantBuffer() {}
 
+	void SetCustomData1Count(int32_t count) { m_customData1 = (int8_t)count; }
+	void SetCustomData2Count(int32_t count) { m_customData2 = (int8_t)count; }
+	int32_t GetCustomData1Count() const { return m_customData1; }
+	int32_t GetCustomData2Count() const { return m_customData2; }
+
 	void ApplyToMaterial(RenderType renderType, godot::RID material, EffekseerRenderer::RenderStateBase::State& state);
 
 	EffekseerRenderer::RendererShaderType GetShaderType() { return m_shaderType; }
@@ -102,6 +107,8 @@ private:
 		std::vector<ParamDecl> paramDecls;
 	};
 	InternalShader m_internals[(size_t)RenderType::Max];
+	int8_t m_customData1 = 0;
+	int8_t m_customData2 = 0;
 
 	Shader(const char* name, EffekseerRenderer::RendererShaderType shaderType);
 };

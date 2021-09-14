@@ -188,9 +188,9 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 		m_shaders[(size_t)RendererShaderType::AdvancedLit].get(),
 		m_shaders[(size_t)RendererShaderType::AdvancedUnlit].get(),
 		m_shaders[(size_t)RendererShaderType::AdvancedBackDistortion].get(),
-		m_shaders[(size_t)RendererShaderType::Lit].get(),
-		m_shaders[(size_t)RendererShaderType::Unlit].get(),
-		m_shaders[(size_t)RendererShaderType::BackDistortion].get(),
+		nullptr,
+		nullptr,
+		nullptr,
 		parameter, userData);
 
 	m_renderer->EndModelRendering();

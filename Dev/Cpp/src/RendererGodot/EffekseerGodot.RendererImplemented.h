@@ -113,6 +113,7 @@ private:
 	IndexBufferRef m_indexBuffer;
 	IndexBufferRef m_indexBufferForWireframe;
 	int32_t m_squareMaxCount = 0;
+	int32_t m_vertexStride = 0;
 
 	std::array<std::unique_ptr<Shader>, 6> m_shaders;
 
@@ -242,8 +243,8 @@ public:
 
 	StandardRenderer* GetStandardRenderer() { return m_standardRenderer.get(); }
 
-	void SetVertexBuffer(VertexBuffer* vertexBuffer, int32_t size) {}
-	void SetIndexBuffer(IndexBuffer* indexBuffer) {}
+	void SetVertexBuffer(VertexBuffer* vertexBuffer, int32_t size);
+	void SetIndexBuffer(IndexBuffer* indexBuffer);
 
 	void SetVertexBuffer(Effekseer::Backend::VertexBufferRef vertexBuffer, int32_t size) {}
 	void SetIndexBuffer(Effekseer::Backend::IndexBufferRef indexBuffer) {}
@@ -274,13 +275,10 @@ public:
 
 private:
 	void TransferVertexToImmediate3D(godot::RID immediate, 
-		const void* vertexData, int32_t vertexOffset, 
-		int32_t spriteCount, const EffekseerRenderer::StandardRendererState& state);
+		const void* vertexData, int32_t spriteCount);
 
 	void TransferVertexToCanvasItem2D(godot::RID canvas_item, 
-		const void* vertexData, int32_t vertexOffset, 
-		int32_t spriteCount, godot::Vector2 baseScale, 
-		const EffekseerRenderer::StandardRendererState& state);
+		const void* vertexData, int32_t spriteCount, godot::Vector2 baseScale);
 
 	void TransferModelToCanvasItem2D(godot::RID canvas_item, Effekseer::Model* model, 
 		godot::Vector2 baseScale, bool flipPolygon,

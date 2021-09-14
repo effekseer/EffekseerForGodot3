@@ -445,6 +445,7 @@ bool RendererImplemented::BeginRendering()
 	// ステート初期設定
 	m_renderState->GetActiveState().Reset();
 	m_renderState->Update(true);
+	m_vertexStride = 0;
 
 	return true;
 }
@@ -546,6 +547,15 @@ void RendererImplemented::SetDistortingCallback(EffekseerRenderer::DistortingCal
 {
 }
 
+void RendererImplemented::SetVertexBuffer(VertexBuffer* vertexBuffer, int32_t size)
+{
+	m_vertexStride = size;
+}
+
+void RendererImplemented::SetIndexBuffer(IndexBuffer* indexBuffer)
+{
+}
+
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
@@ -579,8 +589,7 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 
 		// Transfer vertex data
 		TransferVertexToImmediate3D(command.GetImmediate(), 
-			GetVertexBuffer()->Refer(), vertexOffset,
-			spriteCount, state);
+			GetVertexBuffer()->Refer() + vertexOffset * m_vertexStride, spriteCount);
 
 		// Setup material
 		m_currentShader->ApplyToMaterial(renderType, command.GetMaterial(), m_renderState->GetActiveState());
@@ -605,8 +614,8 @@ void RendererImplemented::DrawSprites(int32_t spriteCount, int32_t vertexOffset)
 		// Transfer vertex data
 		auto srt = EffekseerGodot::ToSRT(emitter->get_global_transform());
 		TransferVertexToCanvasItem2D(command.GetCanvasItem(), 
-			GetVertexBuffer()->Refer(), vertexOffset, 
-			spriteCount, srt.scale.abs(), state);
+			GetVertexBuffer()->Refer() + vertexOffset * m_vertexStride, 
+			spriteCount, srt.scale.abs());
 
 		// Setup material
 		m_currentShader->ApplyToMaterial(Shader::RenderType::CanvasItem, command.GetMaterial(), m_renderState->GetActiveState());
@@ -785,8 +794,7 @@ void RendererImplemented::DeleteProxyTexture(Effekseer::Backend::TextureRef& tex
 }
 
 void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate, 
-	const void* vertexData, int32_t vertexOffset, 
-	int32_t spriteCount, const EffekseerRenderer::StandardRendererState& state)
+	const void* vertexData, int32_t spriteCount)
 {
 	using namespace EffekseerRenderer;
 
@@ -798,7 +806,7 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 
 	if (shaderType == RendererShaderType::Unlit)
 	{
-		const SimpleVertex* vertices = (const SimpleVertex*)vertexData + vertexOffset;
+		const SimpleVertex* vertices = (const SimpleVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
 			// Generate degenerate triangles
@@ -821,7 +829,7 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 	}
 	else if (shaderType == RendererShaderType::BackDistortion || shaderType == RendererShaderType::Lit)
 	{
-		const LightingVertex* vertices = (const LightingVertex*)vertexData + vertexOffset;
+		const LightingVertex* vertices = (const LightingVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
 			// Generate degenerate triangles
@@ -850,15 +858,15 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 	}
 	else if (shaderType == RendererShaderType::Material)
 	{
-		const int32_t stride = sizeof(DynamicVertex) + (state.CustomData1Count + state.CustomData2Count) * sizeof(float);
-		const int32_t customData1Count = state.CustomData1Count;
-		const int32_t customData2Count = state.CustomData2Count;
+		const int32_t customData1Count = m_currentShader->GetCustomData1Count();
+		const int32_t customData2Count = m_currentShader->GetCustomData2Count();
+		const int32_t stride = sizeof(DynamicVertex) + (customData1Count + customData2Count) * sizeof(float);
 
 		if (customData1Count > 0 || customData2Count > 0)
 		{
 			const int32_t width = CUSTOM_DATA_TEXTURE_WIDTH;
 			const int32_t height = (spriteCount * 4 + width - 1) / width;
-			const uint8_t* vertexPtr = (const uint8_t*)vertexData + vertexOffset * stride;
+			const uint8_t* vertexPtr = (const uint8_t*)vertexData;
 			float* customData1TexPtr = (customData1Count > 0) ? m_customData1Texture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr : nullptr;
 			float* customData2TexPtr = (customData2Count > 0) ? m_customData2Texture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr : nullptr;
 			
@@ -935,9 +943,7 @@ void RendererImplemented::TransferVertexToImmediate3D(godot::RID immediate,
 }
 
 void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item, 
-	const void* vertexData, int32_t vertexOffset, 
-	int32_t spriteCount, godot::Vector2 baseScale, 
-	const EffekseerRenderer::StandardRendererState& state)
+	const void* vertexData, int32_t spriteCount, godot::Vector2 baseScale)
 {
 	using namespace EffekseerRenderer;
 
@@ -977,7 +983,7 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 		godot::Color* colors = colorArray.write().ptr();
 		godot::Vector2* uvs = uvArray.write().ptr();
 
-		const SimpleVertex* vertices = (const SimpleVertex*)vertexData + vertexOffset;
+		const SimpleVertex* vertices = (const SimpleVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
 			for (int32_t j = 0; j < 4; j++)
@@ -999,7 +1005,7 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 		const int32_t height = (spriteCount * 4 + width - 1) / width;
 		float* uvtTexPtr = m_uvTangentTexture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr;
 
-		const LightingVertex* vertices = (const LightingVertex*)vertexData + vertexOffset;
+		const LightingVertex* vertices = (const LightingVertex*)vertexData;
 		for (int32_t i = 0; i < spriteCount; i++)
 		{
 			for (int32_t j = 0; j < 4; j++)
@@ -1019,9 +1025,9 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 	}
 	else if (shaderType == RendererShaderType::Material)
 	{
-		const int32_t stride = sizeof(DynamicVertex) + (state.CustomData1Count + state.CustomData2Count) * sizeof(float);
-		const int32_t customData1Count = state.CustomData1Count;
-		const int32_t customData2Count = state.CustomData2Count;
+		const int32_t customData1Count = m_currentShader->GetCustomData1Count();
+		const int32_t customData2Count = m_currentShader->GetCustomData2Count();
+		const int32_t stride = sizeof(DynamicVertex) + (customData1Count + customData2Count) * sizeof(float);
 
 		godot::Vector2* points = pointArray.write().ptr();
 		godot::Color* colors = colorArray.write().ptr();
@@ -1029,7 +1035,7 @@ void RendererImplemented::TransferVertexToCanvasItem2D(godot::RID canvas_item,
 
 		const int32_t width = CUSTOM_DATA_TEXTURE_WIDTH;
 		const int32_t height = (spriteCount * 4 + width - 1) / width;
-		const uint8_t* vertexPtr = (const uint8_t*)vertexData + vertexOffset * stride;
+		const uint8_t* vertexPtr = (const uint8_t*)vertexData;
 		float* uvtTexPtr = m_uvTangentTexture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr;
 		float* customData1TexPtr = (customData1Count > 0) ? m_customData1Texture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr : nullptr;
 		float* customData2TexPtr = (customData2Count > 0) ? m_customData2Texture.Lock(0, m_vertexTextureOffset / width, width, height)->ptr : nullptr;
