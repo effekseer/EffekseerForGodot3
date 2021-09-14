@@ -217,13 +217,12 @@ elif env["platform"] == "osx":
     env.Append(CCFLAGS=[
         "-std=c++14", "-arch", "x86_64", "-arch", "arm64",
         "-fvisibility=hidden",
-        "-fembed-bitcode",
+        "-ffunction-sections", "-fdata-sections",
         "-mmacosx-version-min=10.10",
         "-isysroot", sdk_path
     ])
     env.Append(LINKFLAGS=[
         "-arch", "x86_64", "-arch", "arm64",
-        "-fembed-bitcode",
         "-framework", "Cocoa",
         "-Wl,-undefined,dynamic_lookup,-dead_strip",
         "-isysroot", sdk_path
@@ -259,13 +258,12 @@ elif env["platform"] == "ios":
 
     env.Append(CCFLAGS=[
         "-std=c++14", "-fvisibility=hidden",
-        "-fembed-bitcode",
+        "-ffunction-sections", "-fdata-sections",
         "-arch", env["ios_arch"],
         "-isysroot", sdk_path])
     env.Append(LINKFLAGS=[
         "-arch", env["ios_arch"],
         "-Wl,-undefined,dynamic_lookup,-dead_strip",
-        "-fembed-bitcode",
         "-isysroot", sdk_path,
         "-F" + sdk_path
     ])
