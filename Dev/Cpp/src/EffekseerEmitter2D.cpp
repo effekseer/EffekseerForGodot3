@@ -37,6 +37,9 @@ void EffekseerEmitter2D::_register_methods()
 		&EffekseerEmitter2D::set_flip_h, &EffekseerEmitter2D::get_flip_h, false);
 	register_property<EffekseerEmitter2D, bool>("flip_v", 
 		&EffekseerEmitter2D::set_flip_v, &EffekseerEmitter2D::get_flip_v, true);
+	register_property<EffekseerEmitter2D, Vector2>("target_position", 
+		&EffekseerEmitter2D::set_target_position, &EffekseerEmitter2D::get_target_position, {},
+		GODOT_METHOD_RPC_MODE_DISABLED, GODOT_PROPERTY_USAGE_NOEDITOR);
 	register_signal<EffekseerEmitter2D>("finished", {});
 }
 
@@ -126,6 +129,10 @@ void EffekseerEmitter2D::play()
 			if (m_color != Effekseer::Color(255, 255, 255, 255)) {
 				manager->SetAllColor(handle, m_color);
 			}
+			if (m_target_position != Vector2::ZERO) {
+				Vector2 scaled_position = m_target_position / get_scale();
+				manager->SetTargetLocation(handle, EffekseerGodot::ToEfkVector3(scaled_position));
+			}
 			m_handles.push_back(handle);
 		}
 	}
@@ -207,6 +214,24 @@ void EffekseerEmitter2D::set_color(Color color)
 Color EffekseerEmitter2D::get_color() const
 {
 	return EffekseerGodot::ToGdColor(m_color);
+}
+
+void EffekseerEmitter2D::set_target_position(Vector2 position)
+{
+	m_target_position = position;
+
+	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
+
+	Vector2 scaled_position = position / get_scale();
+	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SetTargetLocation(m_handles[i], EffekseerGodot::ToEfkVector3(scaled_position));
+	}
+}
+
+Vector2 EffekseerEmitter2D::get_target_position() const
+{
+	return m_target_position;
 }
 
 void EffekseerEmitter2D::set_effect(Ref<EffekseerEffect> effect)

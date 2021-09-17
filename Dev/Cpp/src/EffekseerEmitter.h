@@ -49,6 +49,10 @@ public:
 
 	Color get_color() const;
 
+	void set_target_position(Vector3 position);
+
+	Vector3 get_target_position() const;
+
 	void set_effect(Ref<EffekseerEffect> effect);
 
 	Ref<EffekseerEffect> get_effect() const { return m_effect; }
@@ -64,6 +68,7 @@ private:
 	bool m_paused = false;
 	float m_speed = 1.0f;
 	Effekseer::Color m_color = {255, 255, 255, 255};
+	Vector3 m_target_position = {};
 };
 
 }

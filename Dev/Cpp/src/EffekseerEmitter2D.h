@@ -53,6 +53,10 @@ public:
 
 	Vector3 get_orientation() const { return m_orientation; }
 
+	void set_target_position(Vector2 position);
+
+	Vector2 get_target_position() const;
+
 	void set_flip_h(bool flip_h) { m_flip_h = flip_h; }
 
 	bool get_flip_h() const { return m_flip_h; }
@@ -76,9 +80,10 @@ private:
 	bool m_paused = false;
 	float m_speed = 1.0f;
 	Effekseer::Color m_color = {255, 255, 255, 255};
-	Vector3 m_orientation;
+	Vector3 m_orientation = {};
 	bool m_flip_h = false;
 	bool m_flip_v = true;
+	Vector2 m_target_position = {};
 };
 
 }

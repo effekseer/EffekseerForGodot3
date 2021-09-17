@@ -42,6 +42,11 @@ inline Effekseer::Vector3D ToEfkVector3(godot::Vector3 v)
 	return { v.x, v.y, v.z };
 }
 
+inline Effekseer::Vector3D ToEfkVector3(godot::Vector2 v)
+{
+	return { v.x, v.y, 0.0f };
+}
+
 inline godot::Vector3 ToGdVector3(Effekseer::Vector3D v)
 {
 	return { v.X, v.Y, v.Z };

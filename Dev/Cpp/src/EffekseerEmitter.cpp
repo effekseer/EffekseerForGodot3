@@ -31,6 +31,9 @@ void EffekseerEmitter::_register_methods()
 		GODOT_PROPERTY_HINT_RANGE, "0.0,10.0,0.01");
 	register_property<EffekseerEmitter, Color>("color", 
 		&EffekseerEmitter::set_color, &EffekseerEmitter::get_color, Color(1.0f, 1.0f, 1.0f, 1.0f));
+	register_property<EffekseerEmitter, Vector3>("target_position", 
+		&EffekseerEmitter::set_target_position, &EffekseerEmitter::get_target_position, {},
+		GODOT_METHOD_RPC_MODE_DISABLED, GODOT_PROPERTY_USAGE_NOEDITOR);
 	register_signal<EffekseerEmitter>("finished", {});
 }
 
@@ -200,6 +203,24 @@ void EffekseerEmitter::set_color(Color color)
 Color EffekseerEmitter::get_color() const
 {
 	return EffekseerGodot::ToGdColor(m_color);
+}
+
+void EffekseerEmitter::set_target_position(Vector3 position)
+{
+	m_target_position = position;
+
+	auto system = EffekseerSystem::get_instance();
+	auto manager = system->get_manager();
+
+	Vector3 scaled_position = position / get_scale();
+	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SetTargetLocation(m_handles[i], EffekseerGodot::ToEfkVector3(scaled_position));
+	}
+}
+
+Vector3 EffekseerEmitter::get_target_position() const
+{
+	return m_target_position;
 }
 
 void EffekseerEmitter::set_effect(Ref<EffekseerEffect> effect)
