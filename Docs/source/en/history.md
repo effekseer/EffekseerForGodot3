@@ -1,5 +1,16 @@
 ﻿# Release notes
 
+## 1.61c
+- Changes
+  - Updated to Effekseer 1.61c
+  - Shrink the size of binary files such as dll/so/dylib/wasm
+  - Add signal `finished` to Emitter/Emitter2D
+  - Add property `target_position` to Emitter/Emitter2D
+- Bugfixes
+  - Runtime error when using depth textures with custom materials
+  - Crash when specifying null for `effect` of Emitter/Emitter2D
+  - Not correct color space (Corrected to linear color)
+
 ## 1.60 Beta3
 - Update to latest of Effekseer 1.60 branch.
 

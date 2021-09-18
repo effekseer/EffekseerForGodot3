@@ -19,7 +19,7 @@ Effekseerのエフェクトを再生、描画するための3Dオブジェクト
 | *Setter*	| set_effect(value) |
 | *Getter*	| get_effect()      |
 
-エミッターに設定されたエフェクト。
+エミッターに設定されたエフェクトリソース。
 
 ----
 
@@ -73,6 +73,17 @@ Effekseerのエフェクトを再生、描画するための3Dオブジェクト
 | *Getter*	| get_color()       |
 
 描画色の設定。エフェクトが持つ色と掛け合わされます。
+
+----
+
+#### Vector3 target_position
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_target_position(value)  |
+| *Getter*	| get_target_position()       |
+
+ターゲット位置の設定。ターゲットがあるエフェクトの誘導位置です。
 
 ----
 
@@ -190,6 +201,17 @@ Effekseerのエフェクトを再生、描画するための2Dオブジェクト
 | *Getter*	| get_orientation()       |
 
 エフェクトの3D向きの設定。Transform2Dのrotationの前に掛けられます。
+
+----
+
+#### Vector2 target_position
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_target_position(value)  |
+| *Getter*	| get_target_position()       |
+
+ターゲット位置の設定。ターゲットがあるエフェクトの誘導位置です。
 
 ----
 

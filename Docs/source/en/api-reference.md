@@ -22,7 +22,7 @@ In addition, the set transforms (position, rotation, scaling) are reflected in t
 | *Setter*	| set_effect(value) |
 | *Getter*	| get_effect()      |
 
-The effect set on the emitter.
+The effect resource set on the emitter.
 
 ----
 
@@ -76,6 +76,17 @@ Playback speed setting. Range: 0.0 to 10.0
 | *Getter*	| get_color()       |
 
 Rendering color setting. It is multiplied by the color of the effect.
+
+----
+
+#### Vector3 target_position
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_target_position(value)  |
+| *Getter*	| get_target_position()       |
+
+Target position setting. The position of the effect with the target.
 
 ----
 
@@ -198,6 +209,17 @@ Rendering color setting. It is multiplied by the color of the effect.
 | *Getter*	| get_orientation()       |
 
 3D orientation settings for effects. It is applied before the rotation of Transform2D.
+
+----
+
+#### Vector2 target_position
+
+|           |                   |
+|-----------|-------------------|
+| *Setter*	| set_target_position(value)  |
+| *Getter*	| get_target_position()       |
+
+Target position setting. The position of the effect with the target.
 
 ----
 
