@@ -4,11 +4,32 @@
 namespace EffekseerGodot
 {
 
-static const char* g_material_src_common = R"(
+static const char* g_material_src_common_atan2 = R"(
 float atan2(float y, float x) {
 	return x == 0.0 ? sign(y)* 3.141592 / 2.0 : atan(y, x);
 }
 )";
+
+static const char* g_material_src_common_calcdepthfade = R"(
+float CalcDepthFade(sampler2D depthTex, vec2 screenUV, float meshZ, float softParticleParam)
+{
+	float backgroundZ = texture(depthTex, screenUV).x;
+
+	float distance = softParticleParam * PredefinedData.y;
+	vec2 rescale = ReconstructionParam1.xy;
+	vec4 params = ReconstructionParam2;
+
+	vec2 zs = vec2(backgroundZ * rescale.x + rescale.y, meshZ);
+
+	vec2 depth = (zs * params.w - params.y) / (params.x - zs * params.z);
+	float dir = sign(depth.x);
+	depth *= dir;
+	return min(max((depth.x - depth.y) / distance, 0.0), 1.0);
+}
+)";
+
+static const char* g_material_src_common_calcdepthfade_caller = 
+	"CalcDepthFade(screenUV, meshZ, temp_0)";
 
 static const char g_material_src_spatial_vertex_sprite_pre[] =  R"(
 void vertex()
@@ -220,17 +241,20 @@ uniform vec4 ModelColor : hint_color;
 )";
 
 
-static std::string Replace(std::string target, const std::string& from_, const std::string& to_)
+static void Replace(std::string& target, const std::string& from, const std::string& to)
 {
-	std::string::size_type Pos(target.find(from_));
+	auto pos = target.find(from);
 
-	while (Pos != std::string::npos)
+	while (pos != std::string::npos)
 	{
-		target.replace(Pos, from_.length(), to_);
-		Pos = target.find(from_, Pos + to_.length());
+		target.replace(pos, from.length(), to);
+		pos = target.find(from, pos + to.length());
 	}
+}
 
-	return target;
+static bool Contains(const std::string& target, const std::string& str)
+{
+	return target.find(str) != std::string::npos;
 }
 
 static const char* GetType(int32_t i)
@@ -328,22 +352,23 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 		maincode << "uniform sampler2D " << textureName << ";" << std::endl;
 	}
 
-	// Common code
-	maincode << g_material_src_common;
-
 	// Output user code
 	auto baseCode = std::string(materialFile.GetGenericCode());
-	baseCode = Replace(baseCode, "$F1$", "float");
-	baseCode = Replace(baseCode, "$F2$", "vec2");
-	baseCode = Replace(baseCode, "$F3$", "vec3");
-	baseCode = Replace(baseCode, "$F4$", "vec4");
-	baseCode = Replace(baseCode, "$TIME$", "PredefinedData.x");
-	baseCode = Replace(baseCode, "$EFFECTSCALE$", "PredefinedData.y");
-	baseCode = Replace(baseCode, "$UV$", "uv");
-	baseCode = Replace(baseCode, "MOD", "mod");
-	baseCode = Replace(baseCode, "FRAC", "fract");
-	baseCode = Replace(baseCode, "LERP", "mix");
-	baseCode = Replace(baseCode, "cameraPosition", "CameraPosition");
+	Replace(baseCode, "$F1$", "float");
+	Replace(baseCode, "$F2$", "vec2");
+	Replace(baseCode, "$F3$", "vec3");
+	Replace(baseCode, "$F4$", "vec4");
+	Replace(baseCode, "$TIME$", "PredefinedData.x");
+	Replace(baseCode, "$EFFECTSCALE$", "PredefinedData.y");
+	Replace(baseCode, "$UV$", "uv");
+	Replace(baseCode, "MOD", "mod");
+	Replace(baseCode, "FRAC", "fract");
+	Replace(baseCode, "LERP", "mix");
+	Replace(baseCode, "cameraPosition", "CameraPosition");
+	if (Contains(baseCode, "atan2("))
+		maincode << g_material_src_common_atan2;
+	if (Contains(baseCode, "CalcDepthFade("))
+		maincode << g_material_src_common_calcdepthfade;
 
 	// replace textures
 	for (int32_t i = 0; i < actualTextureCount; i++)
@@ -354,8 +379,8 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 		std::string keyP = "$TEX_P" + std::to_string(textureIndex) + "$";
 		std::string keyS = "$TEX_S" + std::to_string(textureIndex) + "$";
 
-		baseCode = Replace(baseCode, keyP, "texture(" + textureName + ",");
-		baseCode = Replace(baseCode, keyS, ")");
+		Replace(baseCode, keyP, "texture(" + textureName + ",");
+		Replace(baseCode, keyS, ")");
 	}
 
 	// invalid texture
@@ -367,8 +392,8 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 		std::string keyP = "$TEX_P" + std::to_string(textureIndex) + "$";
 		std::string keyS = "$TEX_S" + std::to_string(textureIndex) + "$";
 
-		baseCode = Replace(baseCode, keyP, "vec4(");
-		baseCode = Replace(baseCode, keyS, ",0.0,1.0)");
+		Replace(baseCode, keyP, "vec4(");
+		Replace(baseCode, keyS, ",0.0,1.0)");
 	}
 
 	if (isSpatial)
@@ -396,7 +421,11 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 			if (customData2Count > 0) maincode << "\t" << GetType(customData2Count) << " customData2 = CustomData2" << GetElement(customData2Count) << ";\n";
 		}
 
-		maincode << baseCode;
+		std::string vertCode = baseCode;
+
+		Replace(vertCode, g_material_src_common_calcdepthfade_caller, "1.0");
+
+		maincode << vertCode;
 
 		if (customData1Count > 0) maincode << "\t" << "v_CustomData1 = customData1;\n";
 		if (customData2Count > 0) maincode << "\t" << "v_CustomData2 = customData2;\n";
@@ -435,7 +464,11 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 			if (customData2Count > 0) maincode << "\t" << GetType(customData2Count) << " customData2 = CustomData2" << GetElement(customData2Count) << ";\n";
 		}
 
-		maincode << baseCode;
+		std::string vertCode = baseCode;
+
+		Replace(vertCode, g_material_src_common_calcdepthfade_caller, "1.0");
+
+		maincode << vertCode;
 
 		if (customData1Count > 0) maincode << "\t" << "v_CustomData1 = customData1;\n";
 		if (customData2Count > 0) maincode << "\t" << "v_CustomData2 = customData2;\n";
@@ -465,7 +498,12 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 			maincode << "\t" << GetType(customData2Count) << " customData2 = v_CustomData2;\n";
 		}
 
-		maincode << baseCode;
+		std::string fragCode = baseCode;
+		
+		Replace(fragCode, g_material_src_common_calcdepthfade_caller, 
+			"CalcDepthFade(DEPTH_TEXTURE, screenUV, meshZ, temp_0)");
+		
+		maincode << fragCode;
 
 		if (materialFile.GetShadingModel() == Effekseer::ShadingModelType::Lit)
 		{
@@ -491,7 +529,11 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 			maincode << "\t" << GetType(customData2Count) << " customData2 = v_CustomData2;\n";
 		}
 
-		maincode << baseCode;
+		std::string fragCode = baseCode;
+
+		Replace(fragCode, g_material_src_common_calcdepthfade_caller, "1.0");
+
+		maincode << fragCode;
 
 		if (materialFile.GetShadingModel() == Effekseer::ShadingModelType::Lit)
 		{
