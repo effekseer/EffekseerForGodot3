@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://grid.png" type="Texture" id=1]
 [ext_resource path="res://addons/effekseer/src/EffekseerEmitter.gdns" type="Script" id=2]
-[ext_resource path="res://effect/samples/Laser01_Sound.efkefc" type="Resource" id=3]
-[ext_resource path="res://Test.gd" type="Script" id=4]
-[ext_resource path="res://Camera.gd" type="Script" id=5]
+[ext_resource path="res://effect/samples/Laser01_SoftParticle.efkefc" type="Resource" id=3]
+[ext_resource path="res://scripts/Scene3D.gd" type="Script" id=4]
+[ext_resource path="res://scripts/CameraController3D.gd" type="Script" id=5]
+[ext_resource path="res://GUI.tscn" type="PackedScene" id=6]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -31,25 +32,37 @@ script = ExtResource( 5 )
 transform = Transform( 1, 0, 0, 0, 0.200531, 0.979687, 0, -0.979687, 0.200531, 0, 6.95046, -4.86754e-07 )
 
 [node name="Effect" type="Spatial" parent="."]
-transform = Transform( -0.0235947, 0, 0.999722, 0, 1, 0, -0.999722, 0, -0.0235947, 0, 1, 0 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1, 0 )
 script = ExtResource( 2 )
 effect = ExtResource( 3 )
 
-[node name="Effect5" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.22584, 0.284854, -5.92645 )
-script = ExtResource( 2 )
-
-[node name="Effect2" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.42361, 0.284854, 4.92767 )
-script = ExtResource( 2 )
-
-[node name="Effect3" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.05371, 0.284854, 5.36872 )
-script = ExtResource( 2 )
-
-[node name="Effect4" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.73447, 0.284854, -5.66505 )
-script = ExtResource( 2 )
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 3 )
+
+[node name="Header" type="HBoxContainer" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 1020.0
+margin_bottom = 35.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Header"]
+margin_top = 8.0
+margin_right = 200.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 200, 0 )
+text = "Effekseer 3D Effect Example"
+valign = 1
+
+[node name="Description" type="Label" parent="Header"]
+margin_left = 204.0
+margin_right = 1016.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+text = "W/A/S/D: Move the Emitter.  Q/E: Rotate the Emitter.
+MouseRightDrag: Rotate the Camera, MouseMiddleDrag: Move the Camera"
+valign = 1
+
+[node name="GUI" parent="." instance=ExtResource( 6 )]
