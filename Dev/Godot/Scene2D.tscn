@@ -47,7 +47,6 @@ effect = ExtResource( 3 )
 orientation = Vector3( 30, 0, 0 )
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Effect"]
-scale = Vector2( 1, 1 )
 mesh = SubResource( 1 )
 __meta__ = {
 "_edit_lock_": true

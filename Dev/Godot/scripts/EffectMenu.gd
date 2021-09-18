@@ -22,7 +22,8 @@ func setup_menu(path: String, menu: PopupMenu):
 				if setup_menu(path + "/" + name, submenu) > 0:
 					menu.add_submenu_item(name, submenu.name)
 					menu.add_child(submenu)
-			elif name.get_extension() == "efkefc":
+			elif name.ends_with("efkefc.import"):
+				name = name.substr(0, name.find_last(".import"))
 				file_count += 1
 				menu.add_item(name, len(effect_list))
 				effect_list.append(path + "/" + name)
