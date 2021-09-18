@@ -185,12 +185,10 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 		false,
 		1>(
 		m_renderer,
-		m_shaders[(size_t)RendererShaderType::AdvancedLit].get(),
-		m_shaders[(size_t)RendererShaderType::AdvancedUnlit].get(),
-		m_shaders[(size_t)RendererShaderType::AdvancedBackDistortion].get(),
-		nullptr,
-		nullptr,
-		nullptr,
+		nullptr, nullptr, nullptr, 
+		m_shaders[(size_t)RendererShaderType::Lit].get(),
+		m_shaders[(size_t)RendererShaderType::Unlit].get(),
+		m_shaders[(size_t)RendererShaderType::BackDistortion].get(),
 		parameter, userData);
 
 	m_renderer->EndModelRendering();
