@@ -206,13 +206,17 @@ void Shader::ApplyToMaterial(RenderType renderType, godot::RID material, Effekse
 		}
 		else if (decl.type == ParamType::Texture)
 		{
-			godot::RID texture = Int64ToRID((int64_t)state.TextureIDs[decl.slot]);
-			if (texture.is_valid())
+			if (state.TextureIDs[decl.slot])
 			{
+				godot::RID texture = Int64ToRID((int64_t)state.TextureIDs[decl.slot]);
 				vs->texture_set_flags(texture, godot::Texture::FLAG_MIPMAPS | 
 					((state.TextureFilterTypes[decl.slot] == Effekseer::TextureFilterType::Linear) ? godot::Texture::FLAG_FILTER : 0) | 
 					((state.TextureWrapTypes[decl.slot] == Effekseer::TextureWrapType::Repeat) ? godot::Texture::FLAG_REPEAT : 0));
 				vs->material_set_param(material, decl.name, texture);
+			}
+			else
+			{
+				vs->material_set_param(material, decl.name, godot::Variant());
 			}
 		}
 	}
