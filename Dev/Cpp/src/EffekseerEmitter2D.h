@@ -25,9 +25,13 @@ public:
 
 	void _exit_tree();
 
-	void _process(float delta);
+	void _notification(int what);
 
-	void _update_draw();
+	void _update_transform();
+
+	void _update_visibility();
+
+	void remove_handle(Effekseer::Handle handle);
 
 	void play();
 
@@ -75,6 +79,7 @@ public:
 
 private:
 	Ref<EffekseerEffect> m_effect;
+	int32_t m_layer = -1;
 	bool m_autoplay = true;
 	Array m_handles;
 	bool m_paused = false;

@@ -1,3 +1,4 @@
+#include <Engine.hpp>
 #include <Viewport.hpp>
 #include <VisualServer.hpp>
 #include "GDLibrary.h"
@@ -11,10 +12,9 @@ void EffekseerEmitter::_register_methods()
 {
 	register_method("_init", &EffekseerEmitter::_init);
 	register_method("_ready", &EffekseerEmitter::_ready);
-	register_method("_process", &EffekseerEmitter::_process);
+	register_method("_notification", &EffekseerEmitter::_notification);
 	register_method("_enter_tree", &EffekseerEmitter::_enter_tree);
 	register_method("_exit_tree", &EffekseerEmitter::_exit_tree);
-	register_method("_update_draw", &EffekseerEmitter::_update_draw);
 	register_method("play", &EffekseerEmitter::play);
 	register_method("stop", &EffekseerEmitter::stop);
 	register_method("stop_root", &EffekseerEmitter::stop_root);
@@ -51,67 +51,95 @@ void EffekseerEmitter::_init()
 
 void EffekseerEmitter::_ready()
 {
-	if (m_autoplay) {
+	set_notify_transform(true);
+
+	if (m_autoplay && !Engine::get_singleton()->is_editor_hint()) {
 		play();
 	}
 }
 
 void EffekseerEmitter::_enter_tree()
 {
-	VisualServer::get_singleton()->connect("frame_pre_draw", this, "_update_draw");
+	if (auto system = EffekseerSystem::get_instance()) {
+		m_layer = system->attach_layer(get_viewport(), EffekseerSystem::LayerType::_3D);
+	}
 }
 
 void EffekseerEmitter::_exit_tree()
 {
-	VisualServer::get_singleton()->disconnect("frame_pre_draw", this, "_update_draw");
+	stop();
+
+	if (auto system = EffekseerSystem::get_instance()) {
+		system->detach_layer(get_viewport(), EffekseerSystem::LayerType::_3D);
+	}
 }
 
-void EffekseerEmitter::_process(float delta)
+void EffekseerEmitter::_notification(int what)
+{
+	switch (what) {
+	case NOTIFICATION_TRANSFORM_CHANGED:
+		_update_transform();
+		break;
+	case NOTIFICATION_VISIBILITY_CHANGED:
+		_update_visibility();
+		break;
+	default:
+		break;
+	}
+}
+
+void EffekseerEmitter::_update_transform()
 {
 	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
 	auto manager = system->get_manager();
+	if (manager == nullptr) return;
 
-	for (int i = 0; i < m_handles.size(); ) {
-		auto handle = m_handles[i];
-		if (!manager->Exists(handle)) {
-			m_handles.remove(i);
-			emit_signal("finished");
-			continue;
-		}
-		manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform()));
-		i++;
+	auto matrix = EffekseerGodot::ToEfkMatrix43(get_global_transform());
+	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SetMatrix(m_handles[i], matrix);
 	}
 }
 
-void EffekseerEmitter::_update_draw()
+void EffekseerEmitter::_update_visibility()
 {
-	if (!is_visible()) {
-		return;
-	}
-
-	auto viewport = get_viewport();
-	if (viewport == nullptr) return;
-
-	auto camera = viewport->get_camera();
-	if (camera == nullptr) return;
-
 	auto system = EffekseerSystem::get_instance();
-	
+	if (system == nullptr) return;
+	auto manager = system->get_manager();
+	if (manager == nullptr) return;
+
 	for (int i = 0; i < m_handles.size(); i++) {
-		system->draw3D(m_handles[i], camera->get_camera_transform());
+		manager->SetShown(m_handles[i], is_visible());
 	}
+}
+
+void EffekseerEmitter::remove_handle(Effekseer::Handle handle)
+{
+	m_handles.erase(handle);
 }
 
 void EffekseerEmitter::play()
 {
 	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
 	auto manager = system->get_manager();
+	if (manager == nullptr) return;
 
-	if (m_effect.is_valid()) {
+	if (m_effect.is_valid() && m_layer >= 0) {
 		Effekseer::Handle handle = manager->Play(m_effect->get_native(), Effekseer::Vector3D(0, 0, 0));
 		if (handle >= 0) {
+			manager->SetLayer(handle, m_layer);
 			manager->SetMatrix(handle, EffekseerGodot::ToEfkMatrix43(get_global_transform()));
 			manager->SetUserData(handle, this);
+			manager->SetRemovingCallback(handle, [](Effekseer::Manager* manager, Effekseer::Handle handle, bool isRemovingManager){
+				if (!isRemovingManager) {
+					EffekseerEmitter* emitter = static_cast<EffekseerEmitter*>(manager->GetUserData(handle));
+					if (emitter) {
+						emitter->emit_signal("finished");
+						emitter->remove_handle(handle);
+					}
+				}
+			});
 
 			if (m_paused) {
 				manager->SetPaused(handle, true);
@@ -130,9 +158,12 @@ void EffekseerEmitter::play()
 void EffekseerEmitter::stop()
 {
 	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
 	auto manager = system->get_manager();
+	if (manager == nullptr) return;
 
 	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SetUserData(m_handles[i], nullptr);
 		manager->StopEffect(m_handles[i]);
 	}
 	
@@ -142,7 +173,9 @@ void EffekseerEmitter::stop()
 void EffekseerEmitter::stop_root()
 {
 	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
 	auto manager = system->get_manager();
+	if (manager == nullptr) return;
 
 	for (int i = 0; i < m_handles.size(); i++) {
 		manager->StopRoot(m_handles[i]);
@@ -159,7 +192,9 @@ void EffekseerEmitter::set_paused(bool paused)
 	m_paused = paused;
 
 	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
 	auto manager = system->get_manager();
+	if (manager == nullptr) return;
 
 	for (int i = 0; i < m_handles.size(); i++) {
 		manager->SetPaused(m_handles[i], paused);
@@ -176,7 +211,9 @@ void EffekseerEmitter::set_speed(float speed)
 	m_speed = speed;
 
 	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
 	auto manager = system->get_manager();
+	if (manager == nullptr) return;
 
 	for (int i = 0; i < m_handles.size(); i++) {
 		manager->SetSpeed(m_handles[i], speed);
@@ -193,7 +230,9 @@ void EffekseerEmitter::set_color(Color color)
 	m_color = EffekseerGodot::ToEfkColor(color);
 
 	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
 	auto manager = system->get_manager();
+	if (manager == nullptr) return;
 
 	for (int i = 0; i < m_handles.size(); i++) {
 		manager->SetAllColor(m_handles[i], m_color);
@@ -210,7 +249,9 @@ void EffekseerEmitter::set_target_position(Vector3 position)
 	m_target_position = position;
 
 	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
 	auto manager = system->get_manager();
+	if (manager == nullptr) return;
 
 	Vector3 scaled_position = position / get_scale();
 	for (int i = 0; i < m_handles.size(); i++) {

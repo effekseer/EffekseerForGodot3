@@ -1,3 +1,5 @@
+#include <assert.h>
+#include <algorithm>
 #include <ProjectSettings.hpp>
 #include <ResourceLoader.hpp>
 #include <Viewport.hpp>
@@ -5,6 +7,10 @@
 #include <Transform.hpp>
 #include <GDScript.hpp>
 #include <VisualServer.hpp>
+#include <World.hpp>
+#include <World2D.hpp>
+#include <Camera.hpp>
+#include <Camera2D.hpp>
 
 #include "RendererGodot/EffekseerGodot.Renderer.h"
 #include "LoaderGodot/EffekseerGodot.TextureLoader.h"
@@ -16,6 +22,8 @@
 #include "Utils/EffekseerGodot.Utils.h"
 #include "EffekseerSystem.h"
 #include "EffekseerEffect.h"
+#include "EffekseerEmitter.h"
+#include "EffekseerEmitter2D.h"
 
 namespace godot {
 
@@ -116,27 +124,68 @@ void EffekseerSystem::_process(float delta)
 void EffekseerSystem::_update_draw()
 {
 	m_renderer->ResetState();
+
+	for (size_t i = 0; i < m_render_layers.size(); i++) {
+		auto& layer = m_render_layers[i];
+		if (layer.viewport == nullptr) {
+			continue;
+		}
+
+		Effekseer::Manager::DrawParameter params{};
+		params.CameraCullingMask = (int32_t)(1 << i);
+
+		if (layer.layer_type == LayerType::_3D) {
+			Transform camera_transform = layer.viewport->get_camera()->get_camera_transform();
+			Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
+			m_renderer->SetCameraMatrix(matrix);
+		} else if (layer.layer_type == LayerType::_2D) {
+			Transform2D camera_transform = layer.viewport->get_canvas_transform();
+			Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
+			matrix.Values[3][2] = -1.0f; // Z offset
+			m_renderer->SetCameraMatrix(matrix);
+		}
+
+		m_renderer->BeginRendering();
+		m_manager->Draw(params);
+		m_renderer->EndRendering();
+	}
 }
 
-void EffekseerSystem::draw3D(Effekseer::Handle handle, const Transform& camera_transform)
+int32_t EffekseerSystem::attach_layer(Viewport* viewport, LayerType layer_type)
 {
-	Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
-	m_renderer->SetCameraMatrix(matrix);
-
-	m_renderer->BeginRendering();
-	m_manager->DrawHandle(handle);
-	m_renderer->EndRendering();
+	auto it = std::find_if(m_render_layers.begin(), m_render_layers.end(), 
+		[viewport, layer_type](const RenderLayer& layer){ return layer.viewport == viewport && layer.layer_type == layer_type; });
+	if (it != m_render_layers.end()) {
+		// Existing layer
+		it->ref_count++;
+		return (int32_t)std::distance(m_render_layers.begin(), it);
+	} else {
+		// Add a new layer
+		it = std::find_if(m_render_layers.begin(), m_render_layers.end(), 
+			[](const RenderLayer& layer){ return layer.viewport == nullptr; });
+		if (it == m_render_layers.end()) {
+			Godot::print_error("Cannot draw in more than 30 viewports", 
+				"EffekseerSystem::attach_layer", "EffekseerSystem.cpp", __LINE__);
+			return EFFEKSEER_INVALID_LAYER;
+		}
+		it->viewport = viewport;
+		it->layer_type = layer_type;
+		it->ref_count = 1;
+		return (int32_t)std::distance(m_render_layers.begin(), it);
+	}
 }
 
-void EffekseerSystem::draw2D(Effekseer::Handle handle, const Transform2D& camera_transform)
+void EffekseerSystem::detach_layer(Viewport* viewport, LayerType layer_type)
 {
-	Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
-	matrix.Values[3][2] = -1.0f; // Z offset
-	m_renderer->SetCameraMatrix(matrix);
-
-	m_renderer->BeginRendering();
-	m_manager->DrawHandle(handle);
-	m_renderer->EndRendering();
+	auto it = std::find_if(m_render_layers.begin(), m_render_layers.end(), 
+		[viewport, layer_type](const RenderLayer& layer){ return layer.viewport == viewport && layer.layer_type == layer_type; });
+	if (it != m_render_layers.end()) {
+		if (--it->ref_count <= 0) {
+			// Delete the layer
+			it->viewport = nullptr;
+			it->ref_count = 0;
+		}
+	}
 }
 
 void EffekseerSystem::stop_all_effects()
