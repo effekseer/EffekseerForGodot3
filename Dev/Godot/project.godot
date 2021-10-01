@@ -59,7 +59,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "effekseer" )
+enabled=PoolStringArray( "res://addons/effekseer/plugin.cfg" )
 
 [importer_defaults]
 

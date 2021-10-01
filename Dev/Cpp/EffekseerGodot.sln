@@ -5,13 +5,15 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EffekseerGodot", "EffekseerGodot.vcxproj", "{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}"
 EndProject
-Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "Godot_v3.2.3-stable_win64", "..\Godot_v3.2.3-stable_win64.exe", "{7DFEF70D-6D06-4738-A8D9-79822C780E86}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effekseer", "..\Effekseer\build\Dev\Cpp\Effekseer\Effekseer.vcxproj", "{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}"
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "Godot_v3.3.3-stable_win64", "..\Godot_v3.3.3-stable_win64.exe", "{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}"
 	ProjectSection(DebuggerProjectSystem) = preProject
 		PortSupplier = 00000000-0000-0000-0000-000000000000
-		Executable = C:\home\work\Effekseer\EffekseerForGodot3\Dev\Godot_v3.2.3-stable_win64.exe
+		Executable = C:\home\work\Effekseer\EffekseerForGodot3\Dev\Godot_v3.3.3-stable_win64.exe
 		RemoteMachine = DESKTOP-R8V8HRU
 		StartingDirectory = C:\home\work\Effekseer\EffekseerForGodot3\Dev
-		Arguments = --path .\Godot
+		Arguments = --path ./Godot
 		Environment = 既定
 		LaunchingEngine = 00000000-0000-0000-0000-000000000000
 		UseLegacyDebugEngines = No
@@ -19,8 +21,6 @@ Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "Godot_v3.2.3-stable_win64",
 		AttachLaunchAction = No
 		IORedirection = Auto
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effekseer", "..\Effekseer\build\Dev\Cpp\Effekseer\Effekseer.vcxproj", "{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,14 +50,6 @@ Global
 		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x86.Build.0 = Release|Win32
-		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.Debug|x64.ActiveCfg = Release|x64
-		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.Debug|x86.ActiveCfg = Release|x64
-		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.MinSizeRel|x64.ActiveCfg = Release|x64
-		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.MinSizeRel|x86.ActiveCfg = Release|x64
-		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.Release|x64.ActiveCfg = Release|x64
-		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.Release|x86.ActiveCfg = Release|x64
-		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{7DFEF70D-6D06-4738-A8D9-79822C780E86}.RelWithDebInfo|x86.ActiveCfg = Release|x64
 		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Debug|x64.ActiveCfg = Debug|x64
 		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Debug|x64.Build.0 = Debug|x64
 		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Debug|x86.ActiveCfg = Debug|x64
@@ -70,6 +62,14 @@ Global
 		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
 		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
+		{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}.Debug|x64.ActiveCfg = Release|x64
+		{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}.Debug|x86.ActiveCfg = Release|x64
+		{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}.MinSizeRel|x64.ActiveCfg = Release|x64
+		{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}.MinSizeRel|x86.ActiveCfg = Release|x64
+		{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}.Release|x64.ActiveCfg = Release|x64
+		{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}.Release|x86.ActiveCfg = Release|x64
+		{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}.RelWithDebInfo|x64.ActiveCfg = Release|x64
+		{57FC23B8-78F0-4A2F-B25B-FDE9076DC847}.RelWithDebInfo|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
