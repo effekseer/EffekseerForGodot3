@@ -1,0 +1,166 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://addons/effekseer/src/EffekseerEmitter.gdns" type="Script" id=1]
+[ext_resource path="res://addons/effekseer/src/EffekseerEmitter2D.gdns" type="Script" id=2]
+[ext_resource path="res://addons/effekseer/src/EffekseerEffectInspector.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.27451, 0.27451, 0.27451, 1 )
+
+[sub_resource type="QuadMesh" id=2]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type spatial;
+render_mode unshaded;
+
+void fragment() {
+	vec2 pos = UV * 8.0;
+	float lum = abs(step(0.5, fract(pos.x)) - step(0.5, fract(pos.y))) * 0.1 + 0.05;
+	ALBEDO = vec3(lum);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+void fragment() {
+	vec2 pos = UV * 32.0;
+	float lum = abs(step(0.5, fract(pos.x)) - step(0.5, fract(pos.y))) * 0.2 + 0.2;
+	COLOR = vec4(vec3(lum), 1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+
+[sub_resource type="QuadMesh" id=7]
+
+[node name="EffekseerEffectInspector" type="VBoxContainer"]
+margin_right = 128.0
+margin_bottom = 304.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 151.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+custom_styles/normal = SubResource( 1 )
+text = "Effekseer Effect Preview"
+align = 1
+valign = 1
+
+[node name="Previewer" type="ViewportContainer" parent="."]
+margin_top = 24.0
+margin_right = 151.0
+margin_bottom = 280.0
+rect_min_size = Vector2( 128, 256 )
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="Previewer"]
+size = Vector2( 151, 256 )
+own_world = true
+handle_input_locally = false
+render_target_update_mode = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+
+[node name="Preview3D" type="Spatial" parent="Previewer/Viewport"]
+
+[node name="Camera" type="Camera" parent="Previewer/Viewport/Preview3D"]
+transform = Transform( 0.707107, -0.241845, 0.664463, 0, 0.939692, 0.342021, -0.707107, -0.241845, 0.664463, 10.6314, 5.47232, 10.6314 )
+current = true
+fov = 45.0
+far = 1000.0
+
+[node name="Box" type="Spatial" parent="Previewer/Viewport/Preview3D"]
+transform = Transform( 50, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0 )
+
+[node name="Quad1" type="MeshInstance" parent="Previewer/Viewport/Preview3D/Box"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Quad2" type="MeshInstance" parent="Previewer/Viewport/Preview3D/Box"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.5 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Quad3" type="MeshInstance" parent="Previewer/Viewport/Preview3D/Box"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.5, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Quad4" type="MeshInstance" parent="Previewer/Viewport/Preview3D/Box"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Quad5" type="MeshInstance" parent="Previewer/Viewport/Preview3D/Box"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Quad6" type="MeshInstance" parent="Previewer/Viewport/Preview3D/Box"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.5, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="EffekseerEmitter" type="Spatial" parent="Previewer/Viewport/Preview3D"]
+script = ExtResource( 1 )
+autoplay = false
+
+[node name="Preview2D" type="Node2D" parent="Previewer/Viewport"]
+visible = false
+
+[node name="Background" type="MeshInstance2D" parent="Previewer/Viewport/Preview2D"]
+material = SubResource( 6 )
+scale = Vector2( 100, 100 )
+mesh = SubResource( 7 )
+
+[node name="EffekseerEmitter2D" type="Node2D" parent="Previewer/Viewport/Preview2D"]
+script = ExtResource( 2 )
+autoplay = false
+
+[node name="Camera2D" type="Camera2D" parent="Previewer/Viewport/Preview2D"]
+current = true
+editor_draw_screen = false
+
+[node name="Controller" type="HBoxContainer" parent="."]
+margin_top = 284.0
+margin_right = 151.0
+margin_bottom = 304.0
+
+[node name="PlayButton" type="Button" parent="Controller"]
+margin_right = 40.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Play"
+
+[node name="StopButton" type="Button" parent="Controller"]
+margin_left = 44.0
+margin_right = 84.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Stop"
+
+[node name="OptionsButton" type="MenuButton" parent="Controller"]
+margin_left = 88.0
+margin_right = 151.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Options"
+flat = false
+items = [ "Reset Camera", null, 0, false, false, 0, 0, null, "", false, "", null, 0, false, false, -1, 0, null, "", true, "View Mode", null, 0, false, false, 2, 0, null, "View Mode", false ]
+
+[node name="OpenEditorButton" type="Button" parent="."]
+margin_top = 308.0
+margin_right = 151.0
+margin_bottom = 328.0
+text = "Open in Effekseer"
