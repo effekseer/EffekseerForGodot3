@@ -150,6 +150,9 @@ void EffekseerEmitter2D::play()
 				}
 			});
 
+			if (!is_visible()) {
+				manager->SetShown(handle, false);
+			}
 			if (m_paused) {
 				manager->SetPaused(handle, true);
 			}
