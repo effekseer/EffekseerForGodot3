@@ -11,3 +11,4 @@ dest_files=[ "res://.import/VertexColor.efkmat-8880f061a69edc722cca0b20af09f05d.
 
 [params]
 
+compress=true

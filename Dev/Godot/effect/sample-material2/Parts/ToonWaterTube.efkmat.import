@@ -11,3 +11,4 @@ dest_files=[ "res://.import/ToonWaterTube.efkmat-3e1e7e7eebed7b818796e1c4626228f
 
 [params]
 
+compress=true

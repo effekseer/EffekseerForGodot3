@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Simple_Ring_Shape1.efkefc-4ec459bfd36e6aa19958c7ecdd
 [params]
 
 scale=1.0
+data_type=0
+compress=true

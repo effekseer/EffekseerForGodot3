@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Lighting1.efkmat-face850d6858f9a62478c2e90b4d3979.re
 
 [params]
 
+compress=true

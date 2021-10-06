@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Simple_Sprite_FixedYAxis.efkefc-9e662567e7e32d30a681
 [params]
 
 scale=1.0
+data_type=0
+compress=true

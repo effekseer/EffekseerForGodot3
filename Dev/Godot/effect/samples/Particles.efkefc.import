@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Particles.efkefc-cc0364beb0c8cff99a86bbc0d64fbcd5.re
 [params]
 
 scale=1.0
+data_type=0
+compress=true

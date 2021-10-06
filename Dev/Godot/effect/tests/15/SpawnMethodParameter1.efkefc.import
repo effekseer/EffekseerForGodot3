@@ -12,3 +12,5 @@ dest_files=[ "res://.import/SpawnMethodParameter1.efkefc-30840d8f81a19bb878c77a2
 [params]
 
 scale=1.0
+data_type=0
+compress=true

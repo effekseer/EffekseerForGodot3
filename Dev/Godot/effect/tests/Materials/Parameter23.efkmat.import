@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Parameter23.efkmat-1d31e7f0ed6e415b472bc5c4c1ab2d19.
 
 [params]
 
+compress=true

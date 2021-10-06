@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Round.efkmodel-6cb373c40f08d31a7ca522ee0c878ccd.res"
 
 [params]
 
+compress=true

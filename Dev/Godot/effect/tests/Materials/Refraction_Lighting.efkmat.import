@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Refraction_Lighting.efkmat-6b54e62d3baceadf68470eaea
 
 [params]
 
+compress=true

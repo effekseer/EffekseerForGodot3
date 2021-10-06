@@ -11,3 +11,4 @@ dest_files=[ "res://.import/FresnelNormalLighting.efkmat-2e9e1da29cbe400c4656c82
 
 [params]
 
+compress=true

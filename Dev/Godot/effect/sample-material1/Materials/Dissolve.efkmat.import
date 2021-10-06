@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Dissolve.efkmat-a80e32bd27929d9fe70ec733445ee448.res
 
 [params]
 
+compress=true

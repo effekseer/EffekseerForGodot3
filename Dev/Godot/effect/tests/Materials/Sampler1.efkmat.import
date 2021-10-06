@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Sampler1.efkmat-3e28ab85282a45d78b9d59ac52f01e00.res
 
 [params]
 
+compress=true

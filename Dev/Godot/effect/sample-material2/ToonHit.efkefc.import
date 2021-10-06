@@ -12,3 +12,5 @@ dest_files=[ "res://.import/ToonHit.efkefc-9ef6e65c354bc160260b96d3e0776fe4.res"
 [params]
 
 scale=1.0
+data_type=0
+compress=true

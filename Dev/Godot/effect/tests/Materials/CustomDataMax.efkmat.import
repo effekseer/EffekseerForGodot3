@@ -11,3 +11,4 @@ dest_files=[ "res://.import/CustomDataMax.efkmat-040a7415b628ac6b4714f7589ea5a27
 
 [params]
 
+compress=true

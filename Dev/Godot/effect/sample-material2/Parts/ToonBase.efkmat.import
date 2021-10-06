@@ -11,3 +11,4 @@ dest_files=[ "res://.import/ToonBase.efkmat-e152352d6c7e70ae60dc4d455f187a25.res
 
 [params]
 
+compress=true

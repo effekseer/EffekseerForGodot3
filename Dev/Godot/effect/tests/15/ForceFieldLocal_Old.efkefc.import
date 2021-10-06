@@ -12,3 +12,5 @@ dest_files=[ "res://.import/ForceFieldLocal_Old.efkefc-68f992af1d97eaeea8f424ba1
 [params]
 
 scale=1.0
+data_type=0
+compress=true

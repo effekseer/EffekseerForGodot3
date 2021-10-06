@@ -12,3 +12,5 @@ dest_files=[ "res://.import/BasicRenderSettings_Blend.efkefc-91200315a215e4a4e46
 [params]
 
 scale=1.0
+data_type=0
+compress=true

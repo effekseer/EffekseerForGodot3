@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Img6.efkmat-43397ddef2d653fef97ded30c222d752.res" ]
 
 [params]
 
+compress=true

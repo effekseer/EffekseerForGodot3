@@ -11,3 +11,4 @@ dest_files=[ "res://.import/WorldPositionOffset.efkmat-e2f4cec99998ede0349e4a94e
 
 [params]
 
+compress=true

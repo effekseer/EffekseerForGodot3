@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Fresnel.efkmat-be49002dd1d7cb454b92f265950ab8a1.res"
 
 [params]
 
+compress=true

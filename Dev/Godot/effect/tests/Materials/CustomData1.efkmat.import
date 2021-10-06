@@ -11,3 +11,4 @@ dest_files=[ "res://.import/CustomData1.efkmat-a2e2dff1d608f97bb8926e200c5f1dcd.
 
 [params]
 
+compress=true

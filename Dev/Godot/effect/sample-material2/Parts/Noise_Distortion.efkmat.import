@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Noise_Distortion.efkmat-6846941edd4039aebcef973f44d6
 
 [params]
 
+compress=true

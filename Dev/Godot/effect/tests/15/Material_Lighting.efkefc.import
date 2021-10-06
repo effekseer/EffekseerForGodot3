@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Material_Lighting.efkefc-bff448add340c847dac40315860
 [params]
 
 scale=1.0
+data_type=0
+compress=true

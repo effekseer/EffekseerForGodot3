@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Falloff.efkmat-ce683268b423c9d800594c9038e0ed64.res"
 
 [params]
 
+compress=true

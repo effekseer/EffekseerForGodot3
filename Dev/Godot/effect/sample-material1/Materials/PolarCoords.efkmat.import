@@ -11,3 +11,4 @@ dest_files=[ "res://.import/PolarCoords.efkmat-b42b42b0bebee685c218862d3140bd40.
 
 [params]
 
+compress=true

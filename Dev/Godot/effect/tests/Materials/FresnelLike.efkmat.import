@@ -11,3 +11,4 @@ dest_files=[ "res://.import/FresnelLike.efkmat-934fd195a5d7b62a467120e2aa679014.
 
 [params]
 
+compress=true

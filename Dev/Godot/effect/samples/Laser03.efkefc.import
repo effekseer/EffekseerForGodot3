@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Laser03.efkefc-dbec544febf49d370d34caa58714336c.res"
 [params]
 
 scale=1.0
+data_type=0
+compress=true

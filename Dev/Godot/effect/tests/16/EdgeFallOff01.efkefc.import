@@ -12,3 +12,5 @@ dest_files=[ "res://.import/EdgeFallOff01.efkefc-c84fa3e356e7d21429be292975c3126
 [params]
 
 scale=1.0
+data_type=0
+compress=true

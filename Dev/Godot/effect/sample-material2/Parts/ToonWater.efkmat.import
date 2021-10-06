@@ -11,3 +11,4 @@ dest_files=[ "res://.import/ToonWater.efkmat-cc1eb3368d06a914665b33874dd18f97.re
 
 [params]
 
+compress=true

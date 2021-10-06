@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Arrow.efkmodel-e4f29d138f98e4b06bdfca6c8f325849.res"
 
 [params]
 
+compress=true

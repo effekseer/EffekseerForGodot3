@@ -11,3 +11,4 @@ dest_files=[ "res://.import/VertexTransform.efkmat-62a7e90d0b9ef06ca4e88373abea2
 
 [params]
 
+compress=true

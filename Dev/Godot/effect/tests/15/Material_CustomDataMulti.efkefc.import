@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Material_CustomDataMulti.efkefc-4ffea0f3744a6cf0f6f8
 [params]
 
 scale=1.0
+data_type=0
+compress=true

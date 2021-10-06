@@ -11,3 +11,4 @@ dest_files=[ "res://.import/AuraTube.efkmat-e72861e18d4219d0d85ade73d6326698.res
 
 [params]
 
+compress=true

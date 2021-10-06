@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Rotar.efkmat-49dd65af62305dff5d954eeba0fba3ed.res" ]
 
 [params]
 
+compress=true

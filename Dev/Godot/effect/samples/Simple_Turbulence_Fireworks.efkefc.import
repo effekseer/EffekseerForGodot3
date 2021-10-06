@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Simple_Turbulence_Fireworks.efkefc-6f166ddd8ca589267
 [params]
 
 scale=1.0
+data_type=0
+compress=true

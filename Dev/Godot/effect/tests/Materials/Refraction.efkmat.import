@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Refraction.efkmat-0c808818258ddc592c2258a466f7f632.r
 
 [params]
 
+compress=true

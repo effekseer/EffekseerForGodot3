@@ -12,3 +12,5 @@ dest_files=[ "res://.import/model_lighting_normalmap.efkefc.efkefc-2c0df1da9ffcb
 [params]
 
 scale=1.0
+data_type=0
+compress=true

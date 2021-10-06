@@ -11,3 +11,4 @@ dest_files=[ "res://.import/MergedSphere.efkmodel-a41684912ed70c2fd84b2339f6a604
 
 [params]
 
+compress=true

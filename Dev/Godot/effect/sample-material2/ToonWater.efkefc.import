@@ -12,3 +12,5 @@ dest_files=[ "res://.import/ToonWater.efkefc-837a9b6f801dc80c808d7199c5c726a9.re
 [params]
 
 scale=1.0
+data_type=0
+compress=true

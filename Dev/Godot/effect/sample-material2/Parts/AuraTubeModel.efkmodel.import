@@ -11,3 +11,4 @@ dest_files=[ "res://.import/AuraTubeModel.efkmodel-565407529bc029b1b38a19a9ae71a
 
 [params]
 
+compress=true

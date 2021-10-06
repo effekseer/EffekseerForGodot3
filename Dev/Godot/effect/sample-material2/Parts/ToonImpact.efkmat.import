@@ -11,3 +11,4 @@ dest_files=[ "res://.import/ToonImpact.efkmat-6157efc947469de8cb27a0fba6f38249.r
 
 [params]
 
+compress=true

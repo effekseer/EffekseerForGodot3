@@ -11,3 +11,4 @@ dest_files=[ "res://.import/UV1.efkmat-71d593d4869588228d9624114446d460.res" ]
 
 [params]
 
+compress=true

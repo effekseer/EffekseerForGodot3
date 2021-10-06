@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Sphare_Resized.efkmodel-8b757a3ed14b375ca8c140535c76
 
 [params]
 
+compress=true

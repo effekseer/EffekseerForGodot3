@@ -12,3 +12,5 @@ dest_files=[ "res://.import/TGA01.efkefc-09fc13671c717c6b7cbd9fc5c1e734e7.res" ]
 [params]
 
 scale=1.0
+data_type=0
+compress=true

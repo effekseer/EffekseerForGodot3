@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Tube.efkmodel-a621de44d52dfcf9064700761e9f5931.res" 
 
 [params]
 
+compress=true

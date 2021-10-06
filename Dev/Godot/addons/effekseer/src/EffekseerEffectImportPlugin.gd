@@ -23,10 +23,11 @@ enum Presets { DEFAULT }
 func get_import_options(preset):
 	match preset:
 		Presets.DEFAULT:
-			return [{
-					   "name": "scale",
-					   "default_value": 1.0
-					}]
+			return [
+				{ "name": "scale", "default_value": 1.0 },
+				{ "name": "data_type", "default_value": 0, "property_hint": PROPERTY_HINT_ENUM, "hint_string": "Runtime Only,Runtime + Editor" },
+				{ "name": "compress", "default_value": true },
+			]
 		_:
 			return []
 
@@ -48,9 +49,10 @@ func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	
 	var effect = preload("res://addons/effekseer/src/EffekseerEffect.gdns").new()
 	
-	effect.load(source_file)
+	effect.load(source_file, options.data_type == 0)
 	effect.resolve_dependencies()
 	effect.scale = options.scale
 	
-	return ResourceSaver.save(
-		"%s.%s" % [save_path, get_save_extension()], effect)
+	var save_name = "%s.%s" % [save_path, get_save_extension()]
+	var flags = ResourceSaver.FLAG_COMPRESS if options.compress else 0
+	return ResourceSaver.save(save_name, effect, flags)

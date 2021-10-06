@@ -15,11 +15,26 @@ func get_save_extension():
 func get_resource_type():
 	return "Resource";
 
+enum Presets { DEFAULT }
+
 func get_import_options(preset):
-	return []
+	match preset:
+		Presets.DEFAULT:
+			return [
+				{ "name": "compress", "default_value": true },
+			]
+		_:
+			return []
+
+func get_preset_name(preset):
+	match preset:
+		Presets.DEFAULT:
+			return "Default"
+		_:
+			return "Unknown"
 
 func get_preset_count():
-	return 0
+	return 1
 
 func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	#print(source_file)
@@ -31,5 +46,6 @@ func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	
 	resource.load(source_file)
 	
-	return ResourceSaver.save(
-		"%s.%s" % [save_path, get_save_extension()], resource)
+	var save_name = "%s.%s" % [save_path, get_save_extension()]
+	var flags = ResourceSaver.FLAG_COMPRESS if options.compress else 0
+	return ResourceSaver.save(save_name, resource, flags)

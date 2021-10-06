@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Laser01_SoftParticle.efkefc-74e396495066930098a8fe7f
 [params]
 
 scale=1.0
+data_type=0
+compress=true

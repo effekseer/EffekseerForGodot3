@@ -11,3 +11,4 @@ dest_files=[ "res://.import/AlphaCutoff.efkmat-433ab1f728e4197fc45acb22d10644a3.
 
 [params]
 
+compress=true

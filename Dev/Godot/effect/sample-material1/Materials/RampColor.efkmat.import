@@ -11,3 +11,4 @@ dest_files=[ "res://.import/RampColor.efkmat-baa4feddd1dc9a4026711b4f9ce9018c.re
 
 [params]
 
+compress=true

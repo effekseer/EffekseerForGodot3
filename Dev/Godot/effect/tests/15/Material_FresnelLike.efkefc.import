@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Material_FresnelLike.efkefc-4eb755cd8c963156728a003d
 [params]
 
 scale=1.0
+data_type=0
+compress=true

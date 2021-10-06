@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Sample1.efkmodel-40aaf9bb55a25e827aa5587533f234ff.re
 
 [params]
 
+compress=true

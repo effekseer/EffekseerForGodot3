@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Shpere.efkmodel-cbe1b38fba773816f213d87dc2e5d7bd.res
 
 [params]
 
+compress=true

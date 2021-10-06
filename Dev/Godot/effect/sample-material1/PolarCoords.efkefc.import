@@ -12,3 +12,5 @@ dest_files=[ "res://.import/PolarCoords.efkefc-8c600f7bf5f5ed24feda6a60915e80e0.
 [params]
 
 scale=1.0
+data_type=0
+compress=true

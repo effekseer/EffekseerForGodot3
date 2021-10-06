@@ -12,3 +12,5 @@ dest_files=[ "res://.import/VertexTransform.efkefc-c62d894ddf2f305ddd9991e276d59
 [params]
 
 scale=1.0
+data_type=0
+compress=true

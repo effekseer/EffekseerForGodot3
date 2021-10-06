@@ -11,3 +11,4 @@ dest_files=[ "res://.import/DepthFade.efkmat-e63f71b0a3605948b2bce06688ed1926.re
 
 [params]
 
+compress=true

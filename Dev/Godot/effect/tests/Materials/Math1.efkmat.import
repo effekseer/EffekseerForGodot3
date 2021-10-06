@@ -11,3 +11,4 @@ dest_files=[ "res://.import/Math1.efkmat-b900a17f98b28b2cb6637e4cb2797eda.res" ]
 
 [params]
 
+compress=true

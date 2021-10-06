@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Material_UV2.efkefc-ed3ab2fb3e55364e35c4e42e3f62e3c9
 [params]
 
 scale=1.0
+data_type=0
+compress=true

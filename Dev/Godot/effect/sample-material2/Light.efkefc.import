@@ -12,3 +12,5 @@ dest_files=[ "res://.import/Light.efkefc-a23f7ac8a572597162404d8546beadca.res" ]
 [params]
 
 scale=1.0
+data_type=0
+compress=true

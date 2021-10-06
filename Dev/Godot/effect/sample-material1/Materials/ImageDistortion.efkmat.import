@@ -11,3 +11,4 @@ dest_files=[ "res://.import/ImageDistortion.efkmat-8682a32d9db5afaeb927702fcfb85
 
 [params]
 
+compress=true
