@@ -172,6 +172,10 @@ void EffekseerEmitter::play()
 			if (m_color != Effekseer::Color(255, 255, 255, 255)) {
 				manager->SetAllColor(handle, m_color);
 			}
+			if (m_target_position != Vector3::ZERO) {
+				Vector3 scaled_position = m_target_position / get_scale();
+				manager->SetTargetLocation(handle, EffekseerGodot::ToEfkVector3(scaled_position));
+			}
 			m_handles.push_back(handle);
 		}
 	}
