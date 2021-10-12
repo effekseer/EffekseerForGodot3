@@ -3,8 +3,11 @@ extends EditorSpatialGizmoPlugin
 
 var is_first_draw = true
 
+func get_name() -> String:
+	return "EffekseerEmitter"
 
-func has_gizmo(spatial):
+
+func has_gizmo(spatial) -> bool:
 	return spatial.get_script() == preload("res://addons/effekseer/src/EffekseerEmitter.gdns")
 
 
