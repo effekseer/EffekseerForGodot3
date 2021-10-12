@@ -90,6 +90,11 @@ void EffekseerEmitter2D::_notification(int what)
 	case NOTIFICATION_VISIBILITY_CHANGED:
 		_update_visibility();
 		break;
+	case NOTIFICATION_PAUSED:
+		_update_paused();
+		break;
+	case NOTIFICATION_UNPAUSED:
+		_update_paused();
 	default:
 		break;
 	}
@@ -118,6 +123,19 @@ void EffekseerEmitter2D::_update_visibility()
 
 	for (int i = 0; i < m_handles.size(); i++) {
 		manager->SetShown(m_handles[i], is_visible());
+	}
+}
+
+void EffekseerEmitter2D::_update_paused()
+{
+	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
+	auto manager = system->get_manager();
+	if (manager == nullptr) return;
+
+	const bool node_paused = m_paused || !can_process();
+	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SetPaused(m_handles[i], node_paused);
 	}
 }
 
@@ -153,7 +171,7 @@ void EffekseerEmitter2D::play()
 			if (!is_visible()) {
 				manager->SetShown(handle, false);
 			}
-			if (m_paused) {
+			if (m_paused || !can_process()) {
 				manager->SetPaused(handle, true);
 			}
 			if (m_speed != 1.0f) {
@@ -206,15 +224,7 @@ bool EffekseerEmitter2D::is_playing()
 void EffekseerEmitter2D::set_paused(bool paused)
 {
 	m_paused = paused;
-
-	auto system = EffekseerSystem::get_instance();
-	if (system == nullptr) return;
-	auto manager = system->get_manager();
-	if (manager == nullptr) return;
-
-	for (int i = 0; i < m_handles.size(); i++) {
-		manager->SetPaused(m_handles[i], paused);
-	}
+	_update_paused();
 }
 
 bool EffekseerEmitter2D::is_paused() const

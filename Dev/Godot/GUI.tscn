@@ -72,6 +72,18 @@ __meta__ = {
 [node name="ResourceName" type="Label" parent="."]
 margin_left = 352.0
 margin_top = 13.0
-margin_right = 578.0
+margin_right = 940.0
 margin_bottom = 27.0
+size_flags_horizontal = 3
 text = "res://effect/samples/Laser01.efkefc"
+
+[node name="PauseButton" type="Button" parent="."]
+pause_mode = 2
+margin_left = 944.0
+margin_right = 1024.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 80, 0 )
+text = "Pause"
+__meta__ = {
+"_edit_use_anchors_": false
+}

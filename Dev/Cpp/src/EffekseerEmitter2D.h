@@ -31,6 +31,8 @@ public:
 
 	void _update_visibility();
 
+	void _update_paused();
+
 	void remove_handle(Effekseer::Handle handle);
 
 	void play();

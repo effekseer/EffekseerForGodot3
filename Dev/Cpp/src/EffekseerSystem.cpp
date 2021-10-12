@@ -101,6 +101,7 @@ void EffekseerSystem::_init()
 void EffekseerSystem::_enter_tree()
 {
 	set_process_priority(100);
+	set_pause_mode(PAUSE_MODE_PROCESS);
 	VisualServer::get_singleton()->connect("frame_pre_draw", this, "_update_draw");
 }
 

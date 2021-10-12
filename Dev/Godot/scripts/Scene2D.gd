@@ -5,6 +5,7 @@ func _ready():
 	$GUI/EffectMenu.connect("effect_choosed", self, "_on_effect_choosed")
 	$GUI/PlayButton.connect("pressed", self, "_on_play_button_pressed")
 	$GUI/StopButton.connect("pressed", self, "_on_stop_button_pressed")
+	$GUI/PauseButton.connect("pressed", self, "_on_pause_button_pressed")
 	
 	$Effect.target_position = Vector2(512, 300)
 
@@ -17,6 +18,9 @@ func _on_play_button_pressed():
 
 func _on_stop_button_pressed():
 	$Effect.stop()
+
+func _on_pause_button_pressed():
+	get_tree().paused = !get_tree().paused
 
 func _process(delta: float):
 	if Input.is_action_pressed("act_move_left"):
