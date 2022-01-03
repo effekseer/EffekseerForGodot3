@@ -53,7 +53,7 @@ func _process(delta: float):
 func _open_button_pressed():
 	if editor:
 		var editor_path = editor.get_editor_settings().get_setting("effekseer/editor_path") as String
-		var file_path = ProjectSettings.globalize_path(effect.data_path)
+		var file_path = ProjectSettings.globalize_path(effect.get_path())
 		if editor_path.empty():
 			printerr("Effekseer editor path is not specified.")
 			printerr("Please specify editor path at Editor -> Editor settings -> Effekseer.")

@@ -36,6 +36,9 @@ func get_preset_name(preset):
 func get_preset_count():
 	return 1
 
+func get_option_visibility(option, options):
+	return true
+
 func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	#print(source_file)
 	if source_file.ends_with(".efkefc"):
