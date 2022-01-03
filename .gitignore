@@ -40,7 +40,9 @@
 Dev/Cpp/x64/
 Dev/Cpp/Win32/
 Dev/Cpp/bin
-Dev/build
+Dev/logs
+Dev/build*
 Dev/Godot/addons/effekseer/bin
 Docs/build
 Docs/build
+Release/

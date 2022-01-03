@@ -7,7 +7,7 @@ func _ready():
 	$GUI/StopButton.connect("pressed", self, "_on_stop_button_pressed")
 	$GUI/PauseButton.connect("pressed", self, "_on_pause_button_pressed")
 	
-	$Effect.target_position = Vector3(0, 3, 0)
+	$Effect.target_position = $Effect.global_transform.origin + Vector3(0, 15, 0)
 
 func _on_effect_choosed(effect_path: String):
 	$GUI/ResourceName.text = effect_path
