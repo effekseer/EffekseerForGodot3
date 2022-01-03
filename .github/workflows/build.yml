@@ -108,15 +108,15 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ./emsdk
-          key: ${{ runner.os }}-emsdk-2_0_10-v1
-      - name: Install emsdk 2.0.10
+          key: ${{ runner.os }}-emsdk-2_0_25-v1
+      - name: Install emsdk 2.0.25
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           git clone --depth 1 https://github.com/emscripten-core/emsdk.git
-          ./emsdk/emsdk install 2.0.10
+          ./emsdk/emsdk install 2.0.25
       - name: Build binaries
         run: |
-          ./emsdk/emsdk activate 2.0.10
+          ./emsdk/emsdk activate 2.0.25
           source ./emsdk/emsdk_env.sh
           sudo apt-get install scons
           cd ./Dev/Cpp
