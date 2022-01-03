@@ -1,5 +1,18 @@
 ﻿# Release notes
 
+## 1.62
+- Changes
+  - Updated to Effekseer 1.62
+  - Updated to Godot-cpp 3.4
+  - Add a inspector plugin for effects preview
+  - Add support for `get_tree().paused`.
+  - Add support `visibility` of Emitter/Emitter2D to be reflected in the effect display
+  - Optimize Emitter/Emitter2D update/render loop
+  - Optimize the size of the EffectResource (reduced unnecessary data and applied compression)
+  - EffekseerSpatialGizmoPlugin has been named
+- Bugfixes
+  - `target_position` doesn't work when play() in Emitter
+
 ## 1.61c
 - Changes
   - Updated to Effekseer 1.61c

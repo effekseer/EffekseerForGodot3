@@ -1,5 +1,18 @@
 ﻿# 更新履歴
 
+## 1.62
+- 変更箇所
+  - Effekseer 1.62へ更新
+  - Godot-cpp 3.4へ更新
+  - エフェクトプレビューのインスペクタプラグインを追加
+  - `get_tree().paused`に対応
+  - Emitter/Emitter2Dの`visibility`をエフェクトの表示に反映するように変更
+  - Emitter/Emitter2Dのupdate/renderループを効率化
+  - EffectResourceのサイズを最適化（不要なデータの削減と圧縮を適用）
+  - EffekseerSpatialGizmoPluginに名前を付けた
+- 不具合修正
+  - Emitterのplay()時に`target_position`が適用されない不具合を修正
+
 ## 1.61c
 - 変更箇所
   - Effekseer 1.61cへ更新

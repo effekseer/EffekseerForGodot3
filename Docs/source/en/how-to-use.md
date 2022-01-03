@@ -114,7 +114,6 @@ The effect was displayed in the correct orientation.
 | Color    | Set the color of the effect |
 | Orientation | Set the 3D orientation of the effect |
 
-
 ## Project settings
 
 You can configure Effekseer's overall settings from Godot's project settings.
@@ -128,3 +127,16 @@ You can configure Effekseer's overall settings from Godot's project settings.
 | Draw Max Count     | Maximum number of draw calls at the same time |
 | Sound Script       | Script used for sound playback. Can be replaced |
 
+## Previewing an effect
+
+When you select an efkefc file imported into Godot, you can preview and play it on the Inspector.
+
+![](../img/Godot_effect_previewer.png)
+
+And press "Open in Effekseer" to open the efkefc file in Effekseer.
+
+To use this feature, you need to set the path to the Effekseer tool in the Effekseer section of the editor settings.
+
+![](../img/Godot_effect_previewer_setting1.png)
+
+![](../img/Godot_effect_previewer_setting2.png)

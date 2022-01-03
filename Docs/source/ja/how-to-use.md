@@ -123,3 +123,29 @@ Effekseerの全体的な設定はGodotのプロジェクト設定から行うこ
 | Draw Max Count     | ドローコールの同時最大数 |
 | Sound Script       | サウンド再生で使われるスクリプト。差し替えが可能 |
 
+## プロジェクト設定
+
+Effekseerの全体的な設定はGodotのプロジェクト設定から行うことができます。
+
+![](../img/Godot_project_settings.png)
+
+| 項目               | 説明                    |
+|--------------------|------------------------|
+| Instance Max Count | ノードが生成するインスタンスの同時最大数 |
+| Square Max Count   | 描画に使用する四角形の同時最大数 |
+| Draw Max Count     | ドローコールの同時最大数 |
+| Sound Script       | サウンド再生で使われるスクリプト。差し替えが可能 |
+
+## エフェクトのプレビュー
+
+Godotにインポートしたefkefcファイルを選択すると、インスペクター上でプレビュー再生を行うことができます。
+
+![](../img/Godot_effect_previewer.png)
+
+また、"Open in Effekseer"を押すとEffekseerでefkefcファイルを開きます。
+
+この機能を使用するには、エディタ設定のEffekseerの所でEffekseerツールのパスを設定する必要があります。
+
+![](../img/Godot_effect_previewer_setting1.png)
+
+![](../img/Godot_effect_previewer_setting2.png)
