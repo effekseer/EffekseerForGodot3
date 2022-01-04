@@ -1,6 +1,7 @@
 [gd_resource type="GDNativeLibrary" format=2]
 
 [resource]
+symbol_prefix = "EffekseerGodot_"
 reloadable = false
 entry/Android.armeabi-v7a = "res://addons/effekseer/bin/android/libeffekseer.android-armv7.so"
 entry/Android.arm64-v8a = "res://addons/effekseer/bin/android/libeffekseer.android-arm64v8.so"
@@ -14,7 +15,7 @@ entry/X11.64 = "res://addons/effekseer/bin/linux/libeffekseer.linux-64.so"
 entry/X11.32 = "res://addons/effekseer/bin/linux/libeffekseer.linux-32.so"
 entry/iOS.armv7 = "res://addons/effekseer/bin/ios/libeffekseer.ios.dylib"
 entry/iOS.arm64 = "res://addons/effekseer/bin/ios/libeffekseer.ios.dylib"
-entry/iOS.x86_64 = "res://addons/effekseer/bin/ios/libeffekseer.ios.dylib"
+entry/iOS.x86_64 = "res://addons/effekseer/bin/ios/libeffekseer.ios-sim.dylib"
 dependency/Android.armeabi-v7a = [  ]
 dependency/Android.arm64-v8a = [  ]
 dependency/Android.x86 = [  ]
