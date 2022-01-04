@@ -63,11 +63,13 @@ elif "platform=ios" in sys.argv:
     subprocess.run("scons platform=ios ios_arch=arm64 target=release" + job_opt, shell = True)
     subprocess.run("scons platform=ios ios_arch=x86_64 target=release" + job_opt, shell = True)
 
-    subprocess.run("lipo -create bin/libeffekseer.ios-armv7.dylib bin/libeffekseer.ios-arm64.dylib bin/libeffekseer.ios-x86_64.dylib -output bin/libeffekseer.ios.dylib", shell = True)
+    subprocess.run("lipo -create bin/libeffekseer.ios-armv7.dylib bin/libeffekseer.ios-arm64.dylib -output bin/libeffekseer.ios.dylib", shell = True)
+    subprocess.run("lipo -create bin/libeffekseer.ios-x86_64.dylib -output bin/libeffekseer.ios-sim.dylib", shell = True)
 
     os.makedirs("../Godot/addons/effekseer/bin/ios", exist_ok = True)
     
     shutil.copy2("bin/libeffekseer.ios.dylib", "../Godot/addons/effekseer/bin/ios/")
+    shutil.copy2("bin/libeffekseer.ios-sim.dylib", "../Godot/addons/effekseer/bin/ios/")
 
 elif "platform=linux" in sys.argv:
     subprocess.run("scons platform=linux bits=32 target=release use_llvm=1" + job_opt, shell = True)
