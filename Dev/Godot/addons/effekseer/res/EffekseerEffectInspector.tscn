@@ -11,7 +11,6 @@ bg_color = Color( 0.27451, 0.27451, 0.27451, 1 )
 
 [sub_resource type="Shader" id=3]
 code = "shader_type spatial;
-render_mode unshaded;
 
 void fragment() {
 	vec2 pos = UV * 8.0;
@@ -72,6 +71,11 @@ audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 
 [node name="Preview3D" type="Spatial" parent="Previewer/Viewport"]
+
+[node name="OmniLight" type="OmniLight" parent="Previewer/Viewport/Preview3D"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0 )
+omni_range = 100.0
+omni_attenuation = 0.4
 
 [node name="Camera" type="Camera" parent="Previewer/Viewport/Preview3D"]
 transform = Transform( 0.707107, -0.241845, 0.664463, 0, 0.939692, 0.342021, -0.707107, -0.241845, 0.664463, 10.6314, 5.47232, 10.6314 )
