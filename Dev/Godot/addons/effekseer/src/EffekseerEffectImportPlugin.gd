@@ -49,8 +49,7 @@ func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	
 	var effect = preload("res://addons/effekseer/src/EffekseerEffect.gdns").new()
 	
-	effect.load(source_file, options.data_type == 0)
-	effect.resolve_dependencies()
+	effect.import(source_file, options.data_type == 0)
 	effect.scale = options.scale
 	
 	var save_name = "%s.%s" % [save_path, get_save_extension()]

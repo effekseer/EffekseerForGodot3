@@ -11,10 +11,9 @@ namespace godot {
 void EffekseerEffect::_register_methods()
 {
 	register_method("_init", &EffekseerEffect::_init);
+	register_method("import", &EffekseerEffect::import);
 	register_method("load", &EffekseerEffect::load);
 	register_method("release", &EffekseerEffect::release);
-	register_method("resolve_dependencies", &EffekseerEffect::resolve_dependencies);
-	register_method("setup", &EffekseerEffect::setup);
 	register_property<EffekseerEffect, PoolByteArray>("data_bytes", 
 		&EffekseerEffect::set_data_bytes, &EffekseerEffect::get_data_bytes, {});
 	register_property<EffekseerEffect, Dictionary>("subresources", 
@@ -36,10 +35,8 @@ void EffekseerEffect::_init()
 {
 }
 
-void EffekseerEffect::load(String path, bool shrink_binary)
+void EffekseerEffect::import(String path, bool shrink_binary)
 {
-	set_path(path);
-
 	godot::Ref<godot::File> file = godot::File::_new();
 	if (file->open(path, godot::File::READ) != godot::Error::OK) {
 		Godot::print_error(String("Failed open file: ") + path, __FUNCTION__, "", __LINE__);
@@ -62,30 +59,21 @@ void EffekseerEffect::load(String path, bool shrink_binary)
 	} else {
 		m_data_bytes = bytes;
 	}
-}
 
-void EffekseerEffect::resolve_dependencies()
-{
 	auto setting = Effekseer::Setting::Create();
 	auto native = Effekseer::Effect::Create(setting, m_data_bytes.read().ptr(), (int32_t)m_data_bytes.size());
-	if (native == nullptr)
-	{
+	if (native == nullptr) {
 		Godot::print_error(String("Failed load effect: ") + get_path(), __FUNCTION__, "", __LINE__);
 		return;
 	}
 
 	auto nativeptr = native.Get();
-	
-	char16_t materialPath[1024];
-	get_material_path(materialPath, sizeof(materialPath) / sizeof(materialPath[0]));
-	godot::String materialDir = EffekseerGodot::ToGdString(materialPath) + "/";
 
+	String materialDir = path.substr(0, path.find_last("/") + 1);
 	auto loader = godot::ResourceLoader::get_singleton();
 	
-	auto enumerateResouces = [&](const char16_t* (Effekseer::Effect::*getter)(int) const, int count)
-	{
-		for (int i = 0; i < count; i++)
-		{
+	auto enumerateResouces = [&](const char16_t* (Effekseer::Effect::*getter)(int) const, int count){
+		for (int i = 0; i < count; i++) {
 			godot::String path = EffekseerGodot::ToGdString((nativeptr->*getter)(i));
 			m_subresources[path] = loader->load(materialDir + path);
 		}
@@ -100,7 +88,7 @@ void EffekseerEffect::resolve_dependencies()
 	enumerateResouces(&Effekseer::Effect::GetWavePath, native->GetWaveCount());
 }
 
-void EffekseerEffect::setup()
+void EffekseerEffect::load()
 {
 	if (m_native != nullptr) return;
 
@@ -109,8 +97,10 @@ void EffekseerEffect::setup()
 	auto manager = system->get_manager();
 	if (manager == nullptr) return;
 
+	String path = get_path();
+	String basePath = path.substr(0, path.find_last("/"));
 	char16_t materialPath[1024];
-	get_material_path(materialPath, sizeof(materialPath) / sizeof(materialPath[0]));
+	EffekseerGodot::ToEfkString(materialPath, basePath, sizeof(materialPath) / sizeof(materialPath[0]));
 
 	m_native = Effekseer::Effect::Create(manager, 
 		m_data_bytes.read().ptr(), (int32_t)m_data_bytes.size(), m_scale, materialPath);
@@ -122,18 +112,6 @@ void EffekseerEffect::setup()
 	if (!Engine::get_singleton()->is_editor_hint()) {
 		// Release data bytes memory
 		m_data_bytes = PoolByteArray();
-	}
-}
-
-void EffekseerEffect::get_material_path(char16_t* path, size_t path_size)
-{
-	int len = (int)EffekseerGodot::ToEfkString(path, get_path(), path_size);
-	
-	for (int i = len - 1; i >= 0; i--) {
-		if (path[i] == u'/') {
-			path[i] = u'\0';
-			break;
-		}
 	}
 }
 

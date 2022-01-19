@@ -295,7 +295,7 @@ void EffekseerEmitter2D::set_effect(Ref<EffekseerEffect> effect)
 	m_effect = effect;
 
 	if (m_effect.is_valid()) {
-		m_effect->setup();
+		m_effect->load();
 	}
 }
 

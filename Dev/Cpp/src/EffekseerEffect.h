@@ -18,13 +18,11 @@ public:
 
 	void _init();
 
-	void load(String path, bool shrink_binary);
+	void import(String path, bool shrink_binary);
+
+	void load();
 
 	void release();
-
-	void resolve_dependencies();
-	
-	void setup();
 
 	Dictionary get_subresources() const { return m_subresources; }
 
@@ -41,8 +39,6 @@ public:
 	Effekseer::EffectRef& get_native() { return m_native; }
 
 private:
-	void get_material_path(char16_t* path, size_t path_size);
-
 	PoolByteArray m_data_bytes;
 	Dictionary m_subresources;
 	float m_scale = 1.0f;
