@@ -31,6 +31,12 @@ float CalcDepthFade(sampler2D depthTex, vec2 screenUV, float meshZ, float softPa
 static const char* g_material_src_common_calcdepthfade_caller = 
 	"CalcDepthFade(screenUV, meshZ, temp_0)";
 
+static const char* g_material_src_common_srgb_to_linear = R"(
+vec3 SRGBToLinear(vec3 c) {
+	return c * (c * (c * 0.305306011 + 0.682171111) + 0.012522878);
+}
+)";
+
 static const char g_material_src_spatial_vertex_sprite_pre[] =  R"(
 void vertex()
 {
@@ -163,8 +169,8 @@ void fragment()
 )";
 
 static const char g_material_src_spatial_fragment_lit_post[] = R"(
-	ALBEDO = baseColor;
-	EMISSION = emissive;
+	ALBEDO = SRGBToLinear(baseColor);
+	EMISSION = SRGBToLinear(emissive);
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
 	AO = ambientOcclusion;
@@ -176,7 +182,7 @@ static const char g_material_src_spatial_fragment_lit_post[] = R"(
 )";
 
 static const char g_material_src_spatial_fragment_unlit_post[] = R"(
-	ALBEDO = emissive;
+	ALBEDO = SRGBToLinear(emissive);
 	ALPHA = clamp(opacity, 0.0, 1.0);
 	
 	if (opacityMask <= 0.0) discard;
@@ -203,7 +209,7 @@ void fragment()
 )";
 
 static const char g_material_src_canvasitem_fragment_lit_post[] = R"(
-	COLOR = vec4(baseColor + emissive, clamp(opacity, 0.0, 1.0));
+	COLOR = vec4(SRGBToLinear(baseColor + emissive), clamp(opacity, 0.0, 1.0));
 
 	if (opacityMask <= 0.0) discard;
 }
@@ -237,7 +243,7 @@ static const char g_material_uniforms_model[] = R"(
 uniform mat4 ViewMatrix;
 uniform mat4 ModelMatrix;
 uniform vec4 ModelUV;
-uniform vec4 ModelColor : hint_color;
+uniform vec4 ModelColor;
 )";
 
 
@@ -349,8 +355,12 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 	for (int32_t i = 0; i < actualTextureCount; i++)
 	{
 		auto textureName = materialFile.GetTextureName(i);
-		maincode << "uniform sampler2D " << textureName << ";" << std::endl;
+		auto textureHint = ": hint_black";
+		maincode << "uniform sampler2D " << textureName << textureHint << ";" << std::endl;
 	}
+
+	// Output builtin functions
+	maincode << g_material_src_common_srgb_to_linear;
 
 	// Output user code
 	auto baseCode = std::string(materialFile.GetGenericCode());
