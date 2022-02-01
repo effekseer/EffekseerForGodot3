@@ -1,8 +1,10 @@
 ﻿# How to use
 
-## Install effekseer plugin
+## Install the effekseer plugin
 
-Copy the addons directory in EffekseerForGodot package into your Godot project.
+Download the latest pre-built plugin from [here](https://github.com/effekseer/EffekseerForGodot3/releases).
+
+Copy the addons directory in the zip into your Godot project.
 
 ![](../img/Godot_addons.png)
 

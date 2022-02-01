@@ -9,15 +9,16 @@ Effekseerで作成したエフェクトをGodot Engineで表示することが�
 
 - [Official website](http://effekseer.github.io)
 
-## Download
+## How to use the plugin
 
-- [Download](https://github.com/effekseer/EffekseerForGodot3/releases)
+- [How to use (English)](https://effekseer.github.io/Help_Godot/en/how-to-use.html)
+- [How to use (Japanese)](https://effekseer.github.io/Help_Godot/en/how-to-use.html)
 
 ## Documents
 
 - [Help](https://effekseer.github.io/Help_Godot/index.html)
 
-## How to develop
+## How to develop the plugin
 
 ### Clone the repository
 

@@ -1,8 +1,10 @@
 ﻿# プラグインの使い方
 
-## プラグインの導入
+## Effekseerプラグインの導入
 
-パッケージ内のaddonsディレクトリをGodotプロジェクト直下にコピーします。
+[こちら](https://github.com/effekseer/EffekseerForGodot3/releases)から最新のビルド済みプラグインをダウンロードします。
+
+ダウンロードしたzip内のaddonsディレクトリをGodotプロジェクト直下にコピーします。
 
 ![](../img/Godot_addons.png)
 
