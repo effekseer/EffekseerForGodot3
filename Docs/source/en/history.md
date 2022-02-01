@@ -1,8 +1,13 @@
 ﻿# Release notes
 
-## 1.62
+## 1.62b
+- Bugfixes
+  - Can't reimport efkefc. #8
+  - Not correct color space in material
+
+## 1.62a
 - Changes
-  - Updated to Effekseer 1.62
+  - Updated to Effekseer 1.62a
   - Updated to Godot-cpp 3.4
   - Add a inspector plugin for effects preview
   - Add support for `get_tree().paused`.
