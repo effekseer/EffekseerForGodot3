@@ -11,9 +11,29 @@
 //-----------------------------------------------------------------------------------
 namespace EffekseerGodot
 {
+	
+Model::Model(const Effekseer::CustomVector<Vertex>& vertecies, const Effekseer::CustomVector<Face>& faces)
+	: Effekseer::Model(vertecies, faces)
+{
+	UploadToEngine();
+}
 
 Model::Model(const void* data, int32_t size)
 	: Effekseer::Model(data, size)
+{
+	UploadToEngine();
+}
+
+Model::~Model()
+{
+	if (meshRid_.is_valid())
+	{
+		auto vs = godot::VisualServer::get_singleton();
+		vs->free_rid(meshRid_);
+	}
+}
+
+void Model::UploadToEngine()
 {
 	int32_t vertexCount = GetVertexCount();
 	const Vertex* vertexData = GetVertexes();
@@ -57,15 +77,6 @@ Model::Model(const void* data, int32_t size)
 	auto vs = godot::VisualServer::get_singleton();
 	meshRid_ = vs->mesh_create();
 	vs->mesh_add_surface_from_arrays(meshRid_, godot::VisualServer::PRIMITIVE_TRIANGLES, arrays);
-}
-
-Model::~Model()
-{
-	if (meshRid_.is_valid())
-	{
-		auto vs = godot::VisualServer::get_singleton();
-		vs->free_rid(meshRid_);
-	}
 }
 
 } // namespace EffekseerGodot

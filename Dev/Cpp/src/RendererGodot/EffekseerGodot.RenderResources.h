@@ -22,12 +22,13 @@ private:
 class Model : public Effekseer::Model
 {
 public:
+	Model(const Effekseer::CustomVector<Vertex>& vertecies, const Effekseer::CustomVector<Face>& faces);
 	Model(const void* data, int32_t size);
 	~Model();
 	godot::RID GetRID() const { return meshRid_; }
 
 private:
-	friend class ModelLoader;
+	void UploadToEngine();
 
 	godot::RID meshRid_;
 };

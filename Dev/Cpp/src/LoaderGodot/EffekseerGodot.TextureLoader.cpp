@@ -24,8 +24,8 @@ Effekseer::TextureRef TextureLoader::Load(const char16_t* path, Effekseer::Textu
 	texture->set_flags(godot::Texture::FLAG_MIPMAPS);
 
 	auto backend = Effekseer::MakeRefPtr<Texture>();
-	backend->size_[0] = (int32_t)texture->get_width();
-	backend->size_[1] = (int32_t)texture->get_height();
+	backend->param_.Size[0] = (int32_t)texture->get_width();
+	backend->param_.Size[1] = (int32_t)texture->get_height();
 	backend->godotTexture_ = resource;
 	backend->textureRid_ = resource->get_rid();
 

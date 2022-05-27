@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "EffekseerGodot.ShaderGenerator.h"
 
 namespace EffekseerGodot
@@ -34,6 +35,134 @@ static const char* g_material_src_common_calcdepthfade_caller =
 static const char* g_material_src_common_srgb_to_linear = R"(
 vec3 SRGBToLinear(vec3 c) {
 	return c * (c * (c * 0.305306011 + 0.682171111) + 0.012522878);
+}
+)";
+
+static const char* g_material_src_common_gradient = R"(
+
+struct Gradient
+{
+	int colorCount;
+	int alphaCount;
+	vec4 colors[8];
+	vec2 alphas[8];
+};
+
+vec4 SampleGradient(Gradient gradient, float t)
+{
+	vec3 color = gradient.colors[0].xyz;
+	for(int i = 1; i < 8; i++)
+	{
+		float a = clamp((t - gradient.colors[i-1].w) / (gradient.colors[i].w - gradient.colors[i-1].w), 0.0, 1.0) * step(float(i), float(gradient.colorCount-1));
+		color = mix(color, gradient.colors[i].xyz, a);
+	}
+
+	float alpha = gradient.alphas[0].x;
+	for(int i = 1; i < 8; i++)
+	{
+		float a = clamp((t - gradient.alphas[i-1].y) / (gradient.alphas[i].y - gradient.alphas[i-1].y), 0.0, 1.0) * step(float(i), float(gradient.alphaCount-1));
+		alpha = mix(alpha, gradient.alphas[i].x, a);
+	}
+
+	return vec4(color, alpha);
+}
+
+Gradient GradientParameter(vec4 param_v, vec4 param_c1, vec4 param_c2, vec4 param_c3, vec4 param_c4, vec4 param_c5, vec4 param_c6, vec4 param_c7, vec4 param_c8, vec4 param_a1, vec4 param_a2, vec4 param_a3, vec4 param_a4)
+{
+	Gradient g;
+	g.colorCount = int(param_v.x);
+	g.alphaCount = int(param_v.y);
+	g.colors[0] = param_c1;
+	g.colors[1] = param_c2;
+	g.colors[2] = param_c3;
+	g.colors[3] = param_c4;
+	g.colors[4] = param_c5;
+	g.colors[5] = param_c6;
+	g.colors[6] = param_c7;
+	g.colors[7] = param_c8;
+	g.alphas[0].xy = param_a1.xy;
+	g.alphas[1].xy = param_a1.zw;
+	g.alphas[2].xy = param_a2.xy;
+	g.alphas[3].xy = param_a2.zw;
+	g.alphas[4].xy = param_a3.xy;
+	g.alphas[5].xy = param_a3.zw;
+	g.alphas[6].xy = param_a4.xy;
+	g.alphas[7].xy = param_a4.zw;
+	return g;
+}
+
+)";
+
+inline std::string GetFixedGradient(const char* name, const Effekseer::Gradient& gradient)
+{
+	std::stringstream ss;
+
+	ss << "Gradient " << name << "() {" << std::endl;
+	ss << "Gradient g;" << std::endl;
+	ss << "g.colorCount = " << gradient.ColorCount << ";" << std::endl;
+	ss << "g.alphaCount = " << gradient.AlphaCount << ";" << std::endl;
+
+	ss << std::fixed << std::setprecision(7);
+
+	// glsl must fill all variables in some environments
+	for (int32_t i = 0; i < gradient.Colors.size(); i++)
+	{
+		ss << "g.colors[" << i << "] = vec4("
+			<< gradient.Colors[i].Color[0] * gradient.Colors[i].Intensity << ", "
+			<< gradient.Colors[i].Color[1] * gradient.Colors[i].Intensity << ", "
+			<< gradient.Colors[i].Color[2] * gradient.Colors[i].Intensity << ", "
+			<< gradient.Colors[i].Position << ");" << std::endl;
+	}
+
+	for (int32_t i = 0; i < gradient.Alphas.size(); i++)
+	{
+		ss << "g.alphas[" << i << "] = vec2(" 
+			<< gradient.Alphas[i].Alpha << ", "
+			<< gradient.Alphas[i].Position << ");" << std::endl;
+	}
+
+	ss << "return g; }" << std::endl;
+
+	return ss.str();
+}
+
+static const char* g_material_src_common_noise = R"(
+float Rand2(vec2 n) { 
+	return fract(sin(dot(n, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+
+float SimpleNoise_Block(vec2 p) {
+	ivec2 i = ivec2(floor(p));
+	vec2 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+	
+	float x0 = mix(Rand2(vec2(i+ivec2(0,0))), Rand2(vec2(i+ivec2(1,0))), f.x);
+	float x1 = mix(Rand2(vec2(i+ivec2(0,1))), Rand2(vec2(i+ivec2(1,1))), f.x);
+	return mix(x0, x1, f.y);
+}
+
+float SimpleNoise(vec2 uv, float scale) {
+	const int loop = 3;
+    float ret = 0.0;
+	for(int i = 0; i < loop; i++) {
+	    float freq = pow(2.0, float(i));
+		float intensity = pow(0.5, float(loop-i));
+	    ret += SimpleNoise_Block(uv * scale / freq) * intensity;
+	}
+
+	return ret;
+}
+)";
+
+static const char* g_material_src_common_light = R"(
+vec3 GetLightDirection() {
+	return vec3(0.0);
+}
+vec3 GetLightColor() {
+	return vec3(0.0);
+}
+vec3 GetLightAmbientColor() {
+	return vec3(0.0);
 }
 )";
 
@@ -246,7 +375,6 @@ uniform vec4 ModelUV;
 uniform vec4 ModelColor;
 )";
 
-
 static void Replace(std::string& target, const std::string& from, const std::string& to)
 {
 	auto pos = target.find(from);
@@ -351,6 +479,15 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 		maincode << "uniform " << GetType(4) << " " << uniformName << ";" << std::endl;
 	}
 
+	for (size_t i = 0; i < materialFile.Gradients.size(); i++)
+	{
+		// TODO : remove a magic number
+		for (size_t j = 0; j < 13; j++)
+		{
+			maincode << "uniform " << GetType(4) << " " << materialFile.Gradients[i].Name << "_" << j << std::endl;
+		}
+	}
+
 	// Output user textures
 	for (int32_t i = 0; i < actualTextureCount; i++)
 	{
@@ -362,6 +499,30 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 	// Output builtin functions
 	maincode << g_material_src_common_srgb_to_linear;
 
+	auto isRequired = [&materialFile](Effekseer::MaterialFile::RequiredPredefinedMethodType type){
+		return std::find(materialFile.RequiredMethods.begin(), materialFile.RequiredMethods.end(), type) != materialFile.RequiredMethods.end();
+	};
+
+	if (isRequired(Effekseer::MaterialFile::RequiredPredefinedMethodType::Noise))
+	{
+		maincode << g_material_src_common_noise;
+	}
+
+	if (isRequired(Effekseer::MaterialFile::RequiredPredefinedMethodType::Light))
+	{
+		maincode << g_material_src_common_light;
+	}
+
+	if (isRequired(Effekseer::MaterialFile::RequiredPredefinedMethodType::Gradient))
+	{
+		maincode << g_material_src_common_gradient;
+	}
+
+	for (const auto& gradient : materialFile.FixedGradients)
+	{
+		maincode << GetFixedGradient(gradient.Name.c_str(), gradient.Data);
+	}
+
 	// Output user code
 	auto baseCode = std::string(materialFile.GetGenericCode());
 	Replace(baseCode, "$F1$", "float");
@@ -370,6 +531,7 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 	Replace(baseCode, "$F4$", "vec4");
 	Replace(baseCode, "$TIME$", "PredefinedData.x");
 	Replace(baseCode, "$EFFECTSCALE$", "PredefinedData.y");
+	Replace(baseCode, "$LOCALTIME$", "PredefinedData.w");
 	Replace(baseCode, "$UV$", "uv");
 	Replace(baseCode, "MOD", "mod");
 	Replace(baseCode, "FRAC", "fract");
@@ -555,8 +717,9 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 		}
 	}
 
-	//puts(shaderData.Code.c_str());
-	return maincode.str();
+	std::string code = maincode.str();
+	//puts(code.c_str());
+	return code;
 }
 
 void ShaderGenerator::GenerateParamDecls(ShaderData& shaderData, const Effekseer::MaterialFile& materialFile, bool isSprite, bool isRefrection)

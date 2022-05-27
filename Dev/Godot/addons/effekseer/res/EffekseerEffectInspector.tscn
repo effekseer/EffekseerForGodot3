@@ -42,9 +42,6 @@ shader = SubResource( 5 )
 margin_right = 128.0
 margin_bottom = 304.0
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="."]
 margin_right = 151.0
@@ -71,6 +68,9 @@ audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 
 [node name="Preview3D" type="Spatial" parent="Previewer/Viewport"]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="Previewer/Viewport/Preview3D"]
+transform = Transform( 1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 10, 0 )
 
 [node name="OmniLight" type="OmniLight" parent="Previewer/Viewport/Preview3D"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0 )
