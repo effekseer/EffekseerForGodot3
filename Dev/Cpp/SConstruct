@@ -414,7 +414,6 @@ add_sources(sources, 'godot-cpp/src/gen', 'cpp')
 ## Effekseer
 effekseer_source_root = "../Effekseer/Dev/Cpp"
 add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer", "cpp")
-add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer/Culling", "cpp")
 add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer/ForceField", "cpp")
 add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer/IO", "cpp")
 add_sources(sources, effekseer_source_root + "/Effekseer/Effekseer/Material", "cpp")
