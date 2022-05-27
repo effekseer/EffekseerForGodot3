@@ -18,6 +18,7 @@
 #include "LoaderGodot/EffekseerGodot.MaterialLoader.h"
 #include "LoaderGodot/EffekseerGodot.CurveLoader.h"
 #include "LoaderGodot/EffekseerGodot.SoundLoader.h"
+#include "LoaderGodot/EffekseerGodot.ProceduralModelGenerator.h"
 #include "SoundGodot/EffekseerGodot.SoundPlayer.h"
 #include "Utils/EffekseerGodot.Utils.h"
 #include "EffekseerSystem.h"
@@ -72,11 +73,17 @@ EffekseerSystem::EffekseerSystem()
 #ifndef __EMSCRIPTEN__
 	m_manager->LaunchWorkerThreads(2);
 #endif
-	m_manager->SetTextureLoader(Effekseer::MakeRefPtr<EffekseerGodot::TextureLoader>());
-	m_manager->SetModelLoader(Effekseer::MakeRefPtr<EffekseerGodot::ModelLoader>());
-	m_manager->SetMaterialLoader(Effekseer::MakeRefPtr<EffekseerGodot::MaterialLoader>());
-	m_manager->SetCurveLoader(Effekseer::MakeRefPtr<EffekseerGodot::CurveLoader>());
-	m_manager->SetSoundLoader(Effekseer::MakeRefPtr<EffekseerGodot::SoundLoader>(sound));
+
+	auto effekseerSettings = Effekseer::Setting::Create();
+
+	effekseerSettings->SetTextureLoader(Effekseer::MakeRefPtr<EffekseerGodot::TextureLoader>());
+	effekseerSettings->SetModelLoader(Effekseer::MakeRefPtr<EffekseerGodot::ModelLoader>());
+	effekseerSettings->SetMaterialLoader(Effekseer::MakeRefPtr<EffekseerGodot::MaterialLoader>());
+	effekseerSettings->SetCurveLoader(Effekseer::MakeRefPtr<EffekseerGodot::CurveLoader>());
+	effekseerSettings->SetSoundLoader(Effekseer::MakeRefPtr<EffekseerGodot::SoundLoader>(sound));
+	effekseerSettings->SetProceduralMeshGenerator(Effekseer::MakeRefPtr<EffekseerGodot::ProceduralModelGenerator>());
+
+	m_manager->SetSetting(effekseerSettings);
 
 	m_renderer = EffekseerGodot::Renderer::Create(squareMaxCount, drawMaxCount);
 	m_renderer->SetProjectionMatrix(Effekseer::Matrix44().Indentity());

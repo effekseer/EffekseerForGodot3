@@ -126,6 +126,9 @@
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.cpp">
       <Filter>EffekseerRendererCommon</Filter>
     </ClCompile>
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.ProceduralModelGenerator.cpp">
+      <Filter>EffekseerGodot\LoaderGodot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GDLibrary.h">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.h">
       <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.ProceduralModelGenerator.h">
+      <Filter>EffekseerGodot\LoaderGodot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

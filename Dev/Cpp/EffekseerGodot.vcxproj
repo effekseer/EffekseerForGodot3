@@ -41,6 +41,7 @@
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.CurveLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.MaterialLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.ModelLoader.cpp" />
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.ProceduralModelGenerator.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.SoundLoader.cpp" />
     <ClCompile Include="src\LoaderGodot\EffekseerGodot.TextureLoader.cpp" />
     <ClCompile Include="src\RendererGodot\EffekseerGodot.IndexBuffer.cpp" />
@@ -80,6 +81,7 @@
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.CurveLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.MaterialLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.ModelLoader.h" />
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.ProceduralModelGenerator.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.SoundLoader.h" />
     <ClInclude Include="src\LoaderGodot\EffekseerGodot.TextureLoader.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.Base.h" />
