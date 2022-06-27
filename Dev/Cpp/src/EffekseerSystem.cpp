@@ -119,6 +119,19 @@ void EffekseerSystem::_exit_tree()
 
 void EffekseerSystem::_process(float delta)
 {
+	for (size_t i = 0; i < m_render_layers.size(); i++) {
+		auto& layer = m_render_layers[i];
+		if (layer.viewport == nullptr) {
+			continue;
+		}
+
+		if (layer.layer_type == LayerType::_3D) {
+			Effekseer::Manager::LayerParameter layerParams;
+			layerParams.ViewerPosition = EffekseerGodot::ToEfkVector3(layer.viewport->get_camera()->get_camera_transform().get_origin());
+			m_manager->SetLayerParameter((int32_t)i, layerParams);
+		}
+	}
+
 	// Stabilize in a variable frame environment
 	float deltaFrames = delta * 60.0f;
 	int iterations = std::max(1, (int)roundf(deltaFrames));

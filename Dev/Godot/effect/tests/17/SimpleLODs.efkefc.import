@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/SimpleLODs.efkefc-028760c3a0db806ce1a1fef64798f8de.res"
+
+[deps]
+
+source_file="res://effect/tests/17/SimpleLODs.efkefc"
+dest_files=[ "res://.import/SimpleLODs.efkefc-028760c3a0db806ce1a1fef64798f8de.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true
