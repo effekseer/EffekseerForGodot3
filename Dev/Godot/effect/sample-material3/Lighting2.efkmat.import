@@ -1,0 +1,14 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Lighting2.efkmat-f36fa934d29ca85e50843125d97f31b9.res"
+
+[deps]
+
+source_file="res://effect/sample-material3/Lighting2.efkmat"
+dest_files=[ "res://.import/Lighting2.efkmat-f36fa934d29ca85e50843125d97f31b9.res" ]
+
+[params]
+
+compress=true

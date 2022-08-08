@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/TriggerLaser.efkefc-378bf2196362ee4430119b6054ff2147.res"
+
+[deps]
+
+source_file="res://effect/samples/TriggerLaser.efkefc"
+dest_files=[ "res://.import/TriggerLaser.efkefc-378bf2196362ee4430119b6054ff2147.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true

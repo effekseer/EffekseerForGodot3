@@ -1,0 +1,14 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Noise.efkmat-b2930bcf3f4658b84889603fcce60e8a.res"
+
+[deps]
+
+source_file="res://effect/sample-material3/Noise.efkmat"
+dest_files=[ "res://.import/Noise.efkmat-b2930bcf3f4658b84889603fcce60e8a.res" ]
+
+[params]
+
+compress=true

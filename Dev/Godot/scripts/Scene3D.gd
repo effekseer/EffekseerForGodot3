@@ -6,6 +6,8 @@ func _ready():
 	$GUI/PlayButton.connect("pressed", self, "_on_play_button_pressed")
 	$GUI/StopButton.connect("pressed", self, "_on_stop_button_pressed")
 	$GUI/PauseButton.connect("pressed", self, "_on_pause_button_pressed")
+	for i in range(4):
+		$GUI/Triggers/Buttons.get_child(i).connect("pressed", self, "_on_trigger_button_pressed", [i])
 	
 	$Effect.target_position = $Effect.global_transform.origin + Vector3(0, 15, 0)
 
@@ -18,6 +20,9 @@ func _on_play_button_pressed():
 
 func _on_stop_button_pressed():
 	$Effect.stop()
+
+func _on_trigger_button_pressed(index: int):
+	$Effect.send_trigger(index)
 
 func _on_pause_button_pressed():
 	get_tree().paused = !get_tree().paused

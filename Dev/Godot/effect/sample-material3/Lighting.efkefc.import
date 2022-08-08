@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/Lighting.efkefc-179cacfa84690fad1488c0316b240e97.res"
+
+[deps]
+
+source_file="res://effect/sample-material3/Lighting.efkefc"
+dest_files=[ "res://.import/Lighting.efkefc-179cacfa84690fad1488c0316b240e97.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true

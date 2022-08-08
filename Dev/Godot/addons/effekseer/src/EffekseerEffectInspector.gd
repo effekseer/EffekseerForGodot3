@@ -24,6 +24,8 @@ func _enter_tree():
 	$OpenEditorButton.connect("pressed", self, "_open_button_pressed")
 	$Controller/PlayButton.connect("pressed", self, "_play_button_pressed")
 	$Controller/StopButton.connect("pressed", self, "_stop_button_pressed")
+	for i in range(4):
+		$Triggers.get_child(i).connect("pressed", self, "_trigger_button_pressed", [i])
 
 func _exit_tree():
 	if editor:
@@ -74,6 +76,12 @@ func _stop_button_pressed():
 		emitter3d.stop()
 	else:
 		emitter2d.stop()
+
+func _trigger_button_pressed(index: int):
+	if view_mode == 0:
+		emitter3d.send_trigger(index)
+	else:
+		emitter2d.send_trigger(index)
 
 
 var target_pos3d := Vector3(0.0, 0.0, 0.0)

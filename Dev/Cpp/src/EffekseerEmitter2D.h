@@ -79,6 +79,12 @@ public:
 
 	bool is_autoplay() const { return m_autoplay; }
 
+	void set_dynamic_input(int index, float value);
+
+	float get_dynamic_input(int index) const;
+
+	void send_trigger(int index);
+
 private:
 	Ref<EffekseerEffect> m_effect;
 	int32_t m_layer = -1;

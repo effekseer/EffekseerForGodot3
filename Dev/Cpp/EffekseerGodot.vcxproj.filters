@@ -120,14 +120,23 @@
     <ClCompile Include="src\EffekseerEmitter2D.cpp">
       <Filter>EffekseerGodot</Filter>
     </ClCompile>
-    <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.cpp">
-      <Filter>EffekseerRendererCommon</Filter>
+    <ClCompile Include="src\LoaderGodot\EffekseerGodot.ProceduralModelGenerator.cpp">
+      <Filter>EffekseerGodot\LoaderGodot</Filter>
     </ClCompile>
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.cpp">
       <Filter>EffekseerRendererCommon</Filter>
     </ClCompile>
-    <ClCompile Include="src\LoaderGodot\EffekseerGodot.ProceduralModelGenerator.cpp">
-      <Filter>EffekseerGodot\LoaderGodot</Filter>
+    <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TGATextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,14 +254,23 @@
     <ClInclude Include="src\EffekseerEmitter2D.h">
       <Filter>EffekseerGodot</Filter>
     </ClInclude>
+    <ClInclude Include="src\LoaderGodot\EffekseerGodot.ProceduralModelGenerator.h">
+      <Filter>EffekseerGodot\LoaderGodot</Filter>
+    </ClInclude>
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.h">
       <Filter>EffekseerRendererCommon</Filter>
     </ClInclude>
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.h">
       <Filter>EffekseerRendererCommon</Filter>
     </ClInclude>
-    <ClInclude Include="src\LoaderGodot\EffekseerGodot.ProceduralModelGenerator.h">
-      <Filter>EffekseerGodot\LoaderGodot</Filter>
+    <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TGATextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

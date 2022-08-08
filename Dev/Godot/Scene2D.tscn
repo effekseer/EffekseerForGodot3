@@ -91,6 +91,6 @@ text = "W/A/S/D: Move the Emitter.  Q/E: Rotate the Emitter."
 valign = 1
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
-margin_top = 560.0
+margin_top = 548.0
 margin_right = 1024.0
 margin_bottom = 600.0

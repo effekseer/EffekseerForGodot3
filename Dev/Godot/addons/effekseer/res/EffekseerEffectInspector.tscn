@@ -39,12 +39,12 @@ shader = SubResource( 5 )
 [sub_resource type="QuadMesh" id=7]
 
 [node name="EffekseerEffectInspector" type="VBoxContainer"]
-margin_right = 128.0
-margin_bottom = 304.0
+margin_right = 240.0
+margin_bottom = 368.0
 script = ExtResource( 3 )
 
-[node name="Label" type="Label" parent="."]
-margin_right = 151.0
+[node name="Label-Subject" type="Label" parent="."]
+margin_right = 240.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 custom_styles/normal = SubResource( 1 )
@@ -54,13 +54,13 @@ valign = 1
 
 [node name="Previewer" type="ViewportContainer" parent="."]
 margin_top = 24.0
-margin_right = 151.0
+margin_right = 240.0
 margin_bottom = 280.0
 rect_min_size = Vector2( 128, 256 )
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="Previewer"]
-size = Vector2( 151, 256 )
+size = Vector2( 240, 256 )
 own_world = true
 handle_input_locally = false
 render_target_update_mode = 3
@@ -138,25 +138,25 @@ editor_draw_screen = false
 
 [node name="Controller" type="HBoxContainer" parent="."]
 margin_top = 284.0
-margin_right = 151.0
+margin_right = 240.0
 margin_bottom = 304.0
 
 [node name="PlayButton" type="Button" parent="Controller"]
-margin_right = 40.0
+margin_right = 77.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Play"
 
 [node name="StopButton" type="Button" parent="Controller"]
-margin_left = 44.0
-margin_right = 84.0
+margin_left = 81.0
+margin_right = 158.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Stop"
 
 [node name="OptionsButton" type="MenuButton" parent="Controller"]
-margin_left = 88.0
-margin_right = 151.0
+margin_left = 162.0
+margin_right = 240.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Options"
@@ -165,6 +165,55 @@ items = [ "Reset Camera", null, 0, false, false, 0, 0, null, "", false, "", null
 
 [node name="OpenEditorButton" type="Button" parent="."]
 margin_top = 308.0
-margin_right = 151.0
+margin_right = 240.0
 margin_bottom = 328.0
 text = "Open in Effekseer"
+
+[node name="HSeparator1" type="HSeparator" parent="."]
+margin_top = 332.0
+margin_right = 240.0
+margin_bottom = 336.0
+
+[node name="Label-Triggers" type="Label" parent="."]
+margin_top = 340.0
+margin_right = 240.0
+margin_bottom = 354.0
+text = "Triggers"
+align = 1
+
+[node name="Triggers" type="HBoxContainer" parent="."]
+margin_top = 358.0
+margin_right = 240.0
+margin_bottom = 378.0
+
+[node name="Trigger0" type="Button" parent="Triggers"]
+margin_right = 57.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "0"
+
+[node name="Trigger1" type="Button" parent="Triggers"]
+margin_left = 61.0
+margin_right = 118.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Trigger2" type="Button" parent="Triggers"]
+margin_left = 122.0
+margin_right = 179.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Trigger3" type="Button" parent="Triggers"]
+margin_left = 183.0
+margin_right = 240.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "3"
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+margin_top = 382.0
+margin_right = 240.0
+margin_bottom = 386.0

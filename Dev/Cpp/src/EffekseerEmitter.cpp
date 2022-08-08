@@ -19,6 +19,8 @@ void EffekseerEmitter::_register_methods()
 	register_method("stop", &EffekseerEmitter::stop);
 	register_method("stop_root", &EffekseerEmitter::stop_root);
 	register_method("is_playing", &EffekseerEmitter::is_playing);
+	register_method("set_dynamic_input", &EffekseerEmitter::set_dynamic_input);
+	register_method("send_trigger", &EffekseerEmitter::send_trigger);
 	register_property<EffekseerEmitter, Ref<EffekseerEffect>>("effect", 
 		&EffekseerEmitter::set_effect, &EffekseerEmitter::get_effect, nullptr);
 	register_property<EffekseerEmitter, bool>("autoplay", 
@@ -288,6 +290,40 @@ void EffekseerEmitter::set_effect(Ref<EffekseerEffect> effect)
 
 	if (m_effect.is_valid()) {
 		m_effect->load();
+	}
+}
+
+void EffekseerEmitter::set_dynamic_input(int index, float value)
+{
+	if ((size_t)index >= 4) {
+		Godot::print_error(String("Invalid range of dynamic input index: "), __FUNCTION__, "", __LINE__);
+		return;
+	}
+
+	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
+	auto manager = system->get_manager();
+	if (manager == nullptr) return;
+
+	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SetDynamicInput(m_handles[i], index, value);
+	}
+}
+
+void EffekseerEmitter::send_trigger(int index)
+{
+	if ((size_t)index >= 4) {
+		Godot::print_error(String("Invalid range of trigger index: "), __FUNCTION__, "", __LINE__);
+		return;
+	}
+
+	auto system = EffekseerSystem::get_instance();
+	if (system == nullptr) return;
+	auto manager = system->get_manager();
+	if (manager == nullptr) return;
+
+	for (int i = 0; i < m_handles.size(); i++) {
+		manager->SendTrigger(m_handles[i], index);
 	}
 }
 

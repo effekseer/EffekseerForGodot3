@@ -1,0 +1,14 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/LocalTime.efkmat-10918bb2d9788b2935af05dfa888ccce.res"
+
+[deps]
+
+source_file="res://effect/sample-material3/LocalTime.efkmat"
+dest_files=[ "res://.import/LocalTime.efkmat-10918bb2d9788b2935af05dfa888ccce.res" ]
+
+[params]
+
+compress=true

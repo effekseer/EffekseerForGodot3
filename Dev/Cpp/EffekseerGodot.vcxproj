@@ -20,14 +20,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.cpp" />
+    <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.IndexBufferBase.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.cpp" />
+    <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer_Impl.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RenderStateBase.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RibbonRendererBase.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RingRendererBase.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.cpp" />
+    <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TGATextureLoader.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.cpp" />
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.cpp" />
@@ -58,8 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.h" />
+    <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.IndexBufferBase.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.h" />
+    <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer_Impl.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RenderStateBase.h" />
@@ -68,6 +73,7 @@
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ShaderBase.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.StandardRenderer.h" />
+    <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TGATextureLoader.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.h" />
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.h" />

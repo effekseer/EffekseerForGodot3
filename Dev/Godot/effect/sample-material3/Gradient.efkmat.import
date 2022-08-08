@@ -1,0 +1,14 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/Gradient.efkmat-83e6ae1278e5be575fed146e9df1c66a.res"
+
+[deps]
+
+source_file="res://effect/sample-material3/Gradient.efkmat"
+dest_files=[ "res://.import/Gradient.efkmat-83e6ae1278e5be575fed146e9df1c66a.res" ]
+
+[params]
+
+compress=true
