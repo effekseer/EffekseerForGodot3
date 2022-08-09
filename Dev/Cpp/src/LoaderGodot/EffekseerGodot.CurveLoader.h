@@ -14,7 +14,7 @@ public:
 
 	Effekseer::CurveRef Load(const char16_t* path) override;
 
-	Effekseer::CurveRef Load(const void* data, int32_t size);// override;
+	Effekseer::CurveRef Load(const void* data, int32_t size) override;
 
 	void Unload(Effekseer::CurveRef data) override;
 };
