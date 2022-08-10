@@ -316,27 +316,41 @@ elif env["platform"] == "android":
     # Get architecture info
     arch_info_table = {
         "armv7" : {
-            "march":"armv7-a", "target":"armv7a-linux-androideabi", 
-            "tool_path":"arm-linux-androideabi", "compiler_path":"armv7a-linux-androideabi",
+            "march":"armv7-a",
+            "target":"armv7a-linux-androideabi", 
+            "tool_path":"arm-linux-androideabi",
+            "compiler_path":"armv7a-linux-androideabi",
+            "sysroot_path":"arch-arm",
             "ccflags" : ["-mfpu=neon"]
             },
         "arm64v8" : {
-            "march":"armv8-a", "target":"aarch64-linux-android", 
-            "tool_path":"aarch64-linux-android", "compiler_path":"aarch64-linux-android",
+            "march":"armv8-a",
+            "target":"aarch64-linux-android", 
+            "tool_path":"aarch64-linux-android",
+            "compiler_path":"aarch64-linux-android",
+            "sysroot_path":"arch-arm64",
             "ccflags" : []
             },
         "x86" : {
-            "march":"i686", "target":"i686-linux-android", 
-            "tool_path":"i686-linux-android", "compiler_path":"i686-linux-android",
+            "march":"i686",
+            "target":"i686-linux-android", 
+            "tool_path":"i686-linux-android",
+            "compiler_path":"i686-linux-android",
+            "sysroot_path":"arch-x86",
             "ccflags" : ["-mstackrealign"]
             },
-        "x86_64" : {"march":"x86-64", "target":"x86_64-linux-android", 
-            "tool_path":"x86_64-linux-android", "compiler_path":"x86_64-linux-android",
+        "x86_64" : {
+            "march":"x86-64",
+            "target":"x86_64-linux-android", 
+            "tool_path":"x86_64-linux-android",
+            "compiler_path":"x86_64-linux-android",
+            "sysroot_path":"arch-x86_64",
             "ccflags" : []
         }
     }
     arch_info = arch_info_table[env["android_arch"]]
     target_path = "libeffekseer.android-" + env["android_arch"] + ".so"
+    platform_lib_path = f"{env['ANDROID_NDK_ROOT']}/platforms/android-{env['android_api_level']}/{arch_info['sysroot_path']}/usr/lib"
     
     # Setup tools
     env["CC"] = toolchain + "/bin/clang"
@@ -347,13 +361,14 @@ elif env["platform"] == "android":
         "--target=" + arch_info["target"] + env["android_api_level"],
         "-march=" + arch_info["march"],
         "-fPIC", "-fvisibility=hidden",
-        "-ffunction-sections", "-fdata-sections"
+        "-ffunction-sections", "-fdata-sections",
     ])#, "-fPIE", "-fno-addrsig", "-Oz"])
     env.Append(CCFLAGS=arch_info["ccflags"])
     env.Append(LINKFLAGS=[
         "-Wl,--gc-sections",
         "--target=" + arch_info["target"] + env["android_api_level"],
         "-march=" + arch_info["march"],
+        "-Wl,-rpath-link=" + platform_lib_path,
     ])
 
 elif env["platform"] == "html5":

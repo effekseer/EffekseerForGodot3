@@ -4,6 +4,8 @@ import shutil
 import subprocess
 import multiprocessing
 
+script_path = os.path.abspath(__file__)
+
 def replace_word(file_name, target_str, replace_str):
     text = ""
     with open(file_name, "r") as file:
@@ -17,13 +19,13 @@ def replace_word(file_name, target_str, replace_str):
 def import_generate_bindings():
     binding_generator = __import__("godot-cpp.binding_generator").binding_generator
     cwd = os.getcwd()
-    os.chdir(os.path.join(os.path.dirname(__file__), "godot-cpp"))
+    os.chdir(os.path.join(os.path.dirname(script_path), "godot-cpp"))
     binding_generator.generate_bindings("godot-headers/api.json", False)
     os.chdir(cwd)
 
 import_generate_bindings()
 
-os.chdir(os.path.dirname(__file__))
+os.chdir(os.path.dirname(script_path))
 
 job_opt = " -j" + str(multiprocessing.cpu_count())
 
