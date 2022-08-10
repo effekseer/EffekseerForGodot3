@@ -350,7 +350,7 @@ elif env["platform"] == "android":
     }
     arch_info = arch_info_table[env["android_arch"]]
     target_path = "libeffekseer.android-" + env["android_arch"] + ".so"
-    sysroot_path = f"{env['ANDROID_NDK_ROOT']}/platforms/android-{env['android_api_level']}/{arch_info['sysroot_path']}"
+    platform_lib_path = f"{env['ANDROID_NDK_ROOT']}/platforms/android-{env['android_api_level']}/{arch_info['sysroot_path']}/usr/lib"
     
     # Setup tools
     env["CC"] = toolchain + "/bin/clang"
@@ -368,7 +368,7 @@ elif env["platform"] == "android":
         "-Wl,--gc-sections",
         "--target=" + arch_info["target"] + env["android_api_level"],
         "-march=" + arch_info["march"],
-        "--sysroot=" + sysroot_path,
+        "-L" + platform_lib_path,
     ])
 
 elif env["platform"] == "html5":
