@@ -130,7 +130,7 @@ opts.Add(
 opts.Add(
     "android_api_level",
     "Target Android API level",
-    "18" if ARGUMENTS.get("android_arch", "armv7") in ["armv7", "x86"] else "21"
+    "19" if ARGUMENTS.get("android_arch", "armv7") in ["armv7", "x86"] else "21"
 )
 opts.Add(
     "ANDROID_NDK_ROOT",
@@ -350,7 +350,6 @@ elif env["platform"] == "android":
     }
     arch_info = arch_info_table[env["android_arch"]]
     target_path = "libeffekseer.android-" + env["android_arch"] + ".so"
-    platform_lib_path = f"{env['ANDROID_NDK_ROOT']}/platforms/android-{env['android_api_level']}/{arch_info['sysroot_path']}/usr/lib"
     
     # Setup tools
     env["CC"] = toolchain + "/bin/clang"
@@ -368,7 +367,6 @@ elif env["platform"] == "android":
         "-Wl,--gc-sections",
         "--target=" + arch_info["target"] + env["android_api_level"],
         "-march=" + arch_info["march"],
-        "-L" + platform_lib_path,
     ])
 
 elif env["platform"] == "html5":
