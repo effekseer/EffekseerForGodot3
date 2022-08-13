@@ -1,5 +1,11 @@
 ﻿# Release notes
 
+## 1.70
+- Changes
+  - Updated to Effekseer 1.70
+  - Add method `set_dynamic_parameter` to Emitter/Emitter2D
+  - Add method `send_trigger` to Emitter/Emitter2D
+
 ## 1.62b
 - Bugfixes
   - Can't reimport efkefc. #8

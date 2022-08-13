@@ -65,3 +65,4 @@ The following features do not work in 2D.
 - PixelNormal
 - VertexTangent
 - PixelTangent
+- Light

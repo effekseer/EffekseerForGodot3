@@ -113,6 +113,23 @@ Get the playback status.
 - true: Playing
 - false: Not played or finished playing
 
+#### void set_dynamic_input(int index, float value)
+
+| Arguments | Descriptions              |
+|-----------|---------------------------|
+| index     | Parameter numbner (0~3)   |
+| value     | Parameter value           |
+
+Specifies a dynamic parameter for the playing effect.
+
+#### void send_trigger(int index)
+
+| Arguments | Descriptions              |
+|-----------|---------------------------|
+| index     | Trigger numbner (0~3)     |
+
+Sends a trigger to the playing effect.
+
 ----
 
 ### Signals
@@ -245,6 +262,23 @@ Get the playback status.
 
 - true: Playing
 - false: Not played or finished playing
+
+#### void set_dynamic_input(int index, float value)
+
+| Arguments | Descriptions              |
+|-----------|---------------------------|
+| index     | Parameter numbner (0~3)   |
+| value     | Parameter value           |
+
+Specifies a dynamic parameter for the playing effect.
+
+#### void send_trigger(int index)
+
+| Arguments | Descriptions              |
+|-----------|---------------------------|
+| index     | Trigger numbner (0~3)     |
+
+Sends a trigger to the playing effect.
 
 ----
 

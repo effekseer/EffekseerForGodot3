@@ -1,5 +1,11 @@
 ﻿# 更新履歴
 
+## 1.70
+- 変更箇所
+  - Effekseer 1.70へ更新
+  - Emitter/Emitter2Dにメソッド`set_dynamic_parameter`を追加
+  - Emitter/Emitter2Dにメソッド`send_trigger`を追加
+
 ## 1.62b
 - 不具合修正
   - 再インポートに失敗する不具合を修正 #8
