@@ -5,4 +5,3 @@
 [submodule "Dev/Effekseer"]
 	path = Dev/Effekseer
 	url = https://github.com/effekseer/Effekseer.git
-	branch = 16x
