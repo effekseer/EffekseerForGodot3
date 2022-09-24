@@ -110,6 +110,14 @@
       <Project>{6aaf8056-6ee5-3cf2-aa95-84f49cce8c64}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\RendererGodot\Shaders\Common2D.inl" />
+    <None Include="src\RendererGodot\Shaders\Common3D.inl" />
+    <None Include="src\RendererGodot\Shaders\Model.inl" />
+    <None Include="src\RendererGodot\Shaders\Model2D.inl" />
+    <None Include="src\RendererGodot\Shaders\Particle.inl" />
+    <None Include="src\RendererGodot\Shaders\Particle2D.inl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}</ProjectGuid>

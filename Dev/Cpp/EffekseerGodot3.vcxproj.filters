@@ -19,6 +19,9 @@
     <Filter Include="EffekseerRendererCommon">
       <UniqueIdentifier>{69fcce49-86ed-4208-9de5-1b8ac7e6ae94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EffekseerGodot\RendererGodot\Shaders">
+      <UniqueIdentifier>{64ec8362-3b9d-47aa-af58-aa7aca58637d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GDLibrary.cpp">
@@ -272,5 +275,25 @@
     <ClInclude Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TGATextureLoader.h">
       <Filter>EffekseerRendererCommon</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\RendererGodot\Shaders\Common3D.inl">
+      <Filter>EffekseerGodot\RendererGodot\Shaders</Filter>
+    </None>
+    <None Include="src\RendererGodot\Shaders\Model.inl">
+      <Filter>EffekseerGodot\RendererGodot\Shaders</Filter>
+    </None>
+    <None Include="src\RendererGodot\Shaders\Model2D.inl">
+      <Filter>EffekseerGodot\RendererGodot\Shaders</Filter>
+    </None>
+    <None Include="src\RendererGodot\Shaders\Particle.inl">
+      <Filter>EffekseerGodot\RendererGodot\Shaders</Filter>
+    </None>
+    <None Include="src\RendererGodot\Shaders\Particle2D.inl">
+      <Filter>EffekseerGodot\RendererGodot\Shaders</Filter>
+    </None>
+    <None Include="src\RendererGodot\Shaders\Common2D.inl">
+      <Filter>EffekseerGodot\RendererGodot\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

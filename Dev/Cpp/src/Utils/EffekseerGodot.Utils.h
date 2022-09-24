@@ -194,6 +194,11 @@ inline godot::Color ToGdColor(Effekseer::Color c)
 	return { c.R / 255.0f, c.G / 255.0f, c.B / 255.0f, c.A / 255.0f };
 }
 
+inline godot::Color ToGdColor(float c[4])
+{
+	return { c[0], c[1], c[2], c[3] };
+}
+
 size_t ToEfkString(char16_t* to, const godot::String& from, size_t size);
 
 godot::String ToGdString(const char16_t* from);
