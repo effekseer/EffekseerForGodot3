@@ -1,18 +1,18 @@
 extends Spatial
 
 func _ready():
-	$GUI/ResourceName.text = $Effect.effect.resource_path
-	$GUI/EffectMenu.connect("effect_choosed", self, "_on_effect_choosed")
-	$GUI/PlayButton.connect("pressed", self, "_on_play_button_pressed")
-	$GUI/StopButton.connect("pressed", self, "_on_stop_button_pressed")
-	$GUI/PauseButton.connect("pressed", self, "_on_pause_button_pressed")
+	$GUI/Controller/ResourceName.text = $Effect.effect.resource_path
+	$GUI/Controller/EffectMenu.connect("effect_choosed", self, "_on_effect_choosed")
+	$GUI/Controller/PlayButton.connect("pressed", self, "_on_play_button_pressed")
+	$GUI/Controller/StopButton.connect("pressed", self, "_on_stop_button_pressed")
+	$GUI/Controller/PauseButton.connect("pressed", self, "_on_pause_button_pressed")
 	for i in range(4):
-		$GUI/Triggers/Buttons.get_child(i).connect("pressed", self, "_on_trigger_button_pressed", [i])
+		$GUI/Controller/Triggers/Buttons.get_child(i).connect("pressed", self, "_on_trigger_button_pressed", [i])
 	
 	$Effect.target_position = $Effect.global_transform.origin + Vector3(0, 15, 0)
 
 func _on_effect_choosed(effect_path: String):
-	$GUI/ResourceName.text = effect_path
+	$GUI/Controller/ResourceName.text = effect_path
 	$Effect.effect = load(effect_path)
 
 func _on_play_button_pressed():

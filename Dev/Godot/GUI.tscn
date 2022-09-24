@@ -1,17 +1,62 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/SceneMenu.gd" type="Script" id=1]
 [ext_resource path="res://scripts/EffectMenu.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Stats.gd" type="Script" id=3]
 
-[node name="GUI" type="HBoxContainer"]
-anchor_top = 1.0
+[node name="GUI" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -56.0
 
-[node name="SceneMenu" type="MenuButton" parent="."]
+[node name="Stats" type="VBoxContainer" parent="."]
+anchor_left = 0.8
+anchor_right = 1.0
+anchor_bottom = 0.2
+script = ExtResource( 3 )
+
+[node name="FPS" type="Label" parent="Stats"]
+margin_right = 204.0
+margin_bottom = 14.0
+text = "FPS: "
+
+[node name="DrawCalls3D" type="Label" parent="Stats"]
+margin_top = 18.0
+margin_right = 204.0
+margin_bottom = 32.0
+text = "3D DrawCalls: "
+
+[node name="Objects3D" type="Label" parent="Stats"]
+margin_top = 36.0
+margin_right = 204.0
+margin_bottom = 50.0
+text = "3D Objects: "
+
+[node name="Vertices3D" type="Label" parent="Stats"]
+margin_top = 54.0
+margin_right = 204.0
+margin_bottom = 68.0
+text = "3D Vertices: "
+
+[node name="DrawCalls2D" type="Label" parent="Stats"]
+margin_top = 72.0
+margin_right = 204.0
+margin_bottom = 86.0
+text = "2D DrawCalls: "
+
+[node name="Items2D" type="Label" parent="Stats"]
+margin_top = 90.0
+margin_right = 204.0
+margin_bottom = 104.0
+text = "2D Items: "
+
+[node name="Controller" type="HBoxContainer" parent="."]
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="SceneMenu" type="MenuButton" parent="Controller"]
 margin_right = 80.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 80, 0 )
 focus_mode = 2
 text = "Scenes"
@@ -19,10 +64,10 @@ flat = false
 switch_on_hover = true
 script = ExtResource( 1 )
 
-[node name="EffectMenu" type="MenuButton" parent="."]
+[node name="EffectMenu" type="MenuButton" parent="Controller"]
 margin_left = 84.0
 margin_right = 164.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 80, 0 )
 focus_mode = 2
 text = "Effects"
@@ -33,108 +78,108 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VSeparator1" type="VSeparator" parent="."]
+[node name="VSeparator1" type="VSeparator" parent="Controller"]
 margin_left = 168.0
 margin_right = 172.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 
-[node name="PlayButton" type="Button" parent="."]
+[node name="PlayButton" type="Button" parent="Controller"]
 margin_left = 176.0
 margin_right = 256.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 80, 0 )
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StopButton" type="Button" parent="."]
+[node name="StopButton" type="Button" parent="Controller"]
 margin_left = 260.0
 margin_right = 340.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 80, 0 )
 text = "Stop"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PauseButton" type="Button" parent="."]
+[node name="PauseButton" type="Button" parent="Controller"]
 pause_mode = 2
 margin_left = 344.0
 margin_right = 424.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 80, 0 )
 text = "Pause"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VSeparator2" type="VSeparator" parent="."]
+[node name="VSeparator2" type="VSeparator" parent="Controller"]
 margin_left = 428.0
 margin_right = 432.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Triggers" type="VSplitContainer" parent="."]
+[node name="Triggers" type="VSplitContainer" parent="Controller"]
 margin_left = 436.0
 margin_right = 570.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 custom_constants/separation = 0
 
-[node name="Label" type="Label" parent="Triggers"]
+[node name="Label" type="Label" parent="Controller/Triggers"]
 margin_right = 134.0
 margin_bottom = 14.0
 text = "Triggers"
 align = 1
 valign = 1
 
-[node name="Buttons" type="HBoxContainer" parent="Triggers"]
+[node name="Buttons" type="HBoxContainer" parent="Controller/Triggers"]
 margin_top = 22.0
 margin_right = 134.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 custom_constants/separation = 2
 
-[node name="Trigger0" type="Button" parent="Triggers/Buttons"]
+[node name="Trigger0" type="Button" parent="Controller/Triggers/Buttons"]
 margin_right = 32.0
-margin_bottom = 34.0
+margin_bottom = 38.0
 rect_min_size = Vector2( 32, 0 )
 text = "0"
 
-[node name="Trigger1" type="Button" parent="Triggers/Buttons"]
+[node name="Trigger1" type="Button" parent="Controller/Triggers/Buttons"]
 margin_left = 34.0
 margin_right = 66.0
-margin_bottom = 34.0
+margin_bottom = 38.0
 rect_min_size = Vector2( 32, 0 )
 text = "1"
 
-[node name="Trigger2" type="Button" parent="Triggers/Buttons"]
+[node name="Trigger2" type="Button" parent="Controller/Triggers/Buttons"]
 margin_left = 68.0
 margin_right = 100.0
-margin_bottom = 34.0
+margin_bottom = 38.0
 rect_min_size = Vector2( 32, 0 )
 text = "2"
 
-[node name="Trigger3" type="Button" parent="Triggers/Buttons"]
+[node name="Trigger3" type="Button" parent="Controller/Triggers/Buttons"]
 margin_left = 102.0
 margin_right = 134.0
-margin_bottom = 34.0
+margin_bottom = 38.0
 rect_min_size = Vector2( 32, 0 )
 text = "3"
 
-[node name="VSeparator3" type="VSeparator" parent="."]
+[node name="VSeparator3" type="VSeparator" parent="Controller"]
 margin_left = 574.0
 margin_right = 578.0
-margin_bottom = 56.0
+margin_bottom = 60.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ResourceName" type="Label" parent="."]
+[node name="ResourceName" type="Label" parent="Controller"]
 margin_left = 582.0
-margin_top = 21.0
+margin_top = 23.0
 margin_right = 1024.0
-margin_bottom = 35.0
+margin_bottom = 37.0
 size_flags_horizontal = 3
 text = "res://effect/samples/Laser01.efkefc"

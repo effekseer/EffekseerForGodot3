@@ -2,7 +2,7 @@
 
 [ext_resource path="res://grid.png" type="Texture" id=1]
 [ext_resource path="res://addons/effekseer/src/EffekseerEmitter.gdns" type="Script" id=2]
-[ext_resource path="res://effect/samples/TriggerLaser.efkefc" type="Resource" id=3]
+[ext_resource path="res://effect/samples/Laser01_SoftParticle.efkefc" type="Resource" id=3]
 [ext_resource path="res://scripts/Scene3D.gd" type="Script" id=4]
 [ext_resource path="res://scripts/CameraController3D.gd" type="Script" id=5]
 [ext_resource path="res://GUI.tscn" type="PackedScene" id=6]
@@ -13,6 +13,7 @@
 albedo_texture = ExtResource( 1 )
 
 [sub_resource type="Environment" id=3]
+ambient_light_color = Color( 0.25098, 0.25098, 0.25098, 1 )
 glow_enabled = true
 
 [node name="Scene3D" type="Spatial"]
@@ -24,6 +25,7 @@ mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
+pause_mode = 2
 transform = Transform( 0.707107, -0.241845, 0.664463, 0, 0.939693, 0.34202, -0.707107, -0.241845, 0.664463, 8.09255, 9.01818, 8.09256 )
 fov = 45.0
 script = ExtResource( 5 )
