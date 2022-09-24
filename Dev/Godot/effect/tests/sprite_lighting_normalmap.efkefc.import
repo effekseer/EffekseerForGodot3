@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/sprite_lighting_normalmap.efkefc-803a9ba9e4f2b50395e8ec6a8b96c2b3.res"
+
+[deps]
+
+source_file="res://effect/tests/sprite_lighting_normalmap.efkefc"
+dest_files=[ "res://.import/sprite_lighting_normalmap.efkefc-803a9ba9e4f2b50395e8ec6a8b96c2b3.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true

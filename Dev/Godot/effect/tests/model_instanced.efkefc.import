@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/model_instanced.efkefc-8e78bce9185ef20f3be6516873ee339f.res"
+
+[deps]
+
+source_file="res://effect/tests/model_instanced.efkefc"
+dest_files=[ "res://.import/model_instanced.efkefc-8e78bce9185ef20f3be6516873ee339f.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true
