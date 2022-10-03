@@ -126,9 +126,11 @@ void EffekseerSystem::_process(float delta)
 		}
 
 		if (layer.layer_type == LayerType::_3D) {
-			Effekseer::Manager::LayerParameter layerParams;
-			layerParams.ViewerPosition = EffekseerGodot::ToEfkVector3(layer.viewport->get_camera()->get_camera_transform().get_origin());
-			m_manager->SetLayerParameter((int32_t)i, layerParams);
+			if (Camera* camera = layer.viewport->get_camera()) {
+				Effekseer::Manager::LayerParameter layerParams;
+				layerParams.ViewerPosition = EffekseerGodot::ToEfkVector3(camera->get_camera_transform().get_origin());
+				m_manager->SetLayerParameter((int32_t)i, layerParams);
+			}
 		}
 	}
 
@@ -156,9 +158,11 @@ void EffekseerSystem::_update_draw()
 		params.CameraCullingMask = (int32_t)(1 << i);
 
 		if (layer.layer_type == LayerType::_3D) {
-			Transform camera_transform = layer.viewport->get_camera()->get_camera_transform();
-			Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
-			m_renderer->SetCameraMatrix(matrix);
+			if (Camera* camera = layer.viewport->get_camera()) {
+				Transform camera_transform = camera->get_transform();
+				Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
+				m_renderer->SetCameraMatrix(matrix);
+			}
 		} else if (layer.layer_type == LayerType::_2D) {
 			Transform2D camera_transform = layer.viewport->get_canvas_transform();
 			Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
