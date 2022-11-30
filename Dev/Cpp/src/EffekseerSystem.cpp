@@ -159,7 +159,7 @@ void EffekseerSystem::_update_draw()
 
 		if (layer.layer_type == LayerType::_3D) {
 			if (Camera* camera = layer.viewport->get_camera()) {
-				Transform camera_transform = camera->get_transform();
+				Transform camera_transform = camera->get_camera_transform();
 				Effekseer:: Matrix44 matrix = EffekseerGodot::ToEfkMatrix44(camera_transform.inverse());
 				m_renderer->SetCameraMatrix(matrix);
 			}
