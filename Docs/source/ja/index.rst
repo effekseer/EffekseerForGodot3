@@ -7,6 +7,6 @@ EffekseerForGodot Help (日本語)
 
     introduction
     how-to-use
-    target-specific
+    faq
     api-reference
     history
