@@ -40,6 +40,8 @@ public:
 	void Rendering(const efkModelNodeParam& parameter, const InstanceParameter& instanceParameter, void* userData) override;
 
 	void EndRendering(const efkModelNodeParam& parameter, void* userData) override;
+
+	Shader* GetShader(::EffekseerRenderer::RendererShaderType type);
 };
 //----------------------------------------------------------------------------------
 //

@@ -50,14 +50,18 @@ public:
 	static std::unique_ptr<Shader> Create(const char* name, EffekseerRenderer::RendererShaderType shaderType);
 
 	template <size_t N>
-	bool Compile(RenderType renderType, const char* code, const ParamDecl (&paramDecls)[N])
+	void SetCode(RenderType renderType, const char* code, const ParamDecl (&paramDecls)[N])
 	{
 		std::vector<ParamDecl> v(N);
 		v.assign(paramDecls, paramDecls + N);
-		return Compile(renderType, code, std::move(v));
+		SetCode(renderType, code, std::move(v));
 	}
 
-	bool Compile(RenderType renderType, const char* code, std::vector<ParamDecl>&& paramDecls);
+	void SetCode(RenderType renderType, const char* code, std::vector<ParamDecl>&& paramDecls);
+
+	bool HasRID(RenderType renderType, bool depthTest, bool depthWrite, ::Effekseer::AlphaBlendType blendType, ::Effekseer::CullingType cullingType);
+
+	godot::RID GetRID(RenderType renderType, bool depthTest, bool depthWrite, ::Effekseer::AlphaBlendType blendType, ::Effekseer::CullingType cullingType);
 
 	void SetVertexConstantBufferSize(int32_t size)
 	{
@@ -103,6 +107,7 @@ private:
 	EffekseerRenderer::RendererShaderType m_shaderType = EffekseerRenderer::RendererShaderType::Unlit;
 
 	struct InternalShader {
+		godot::String baseCode;
 		godot::RID rid[2][2][3][5];
 		std::vector<ParamDecl> paramDecls;
 	};

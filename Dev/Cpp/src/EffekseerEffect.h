@@ -11,6 +11,13 @@ class EffekseerEffect : public Resource
 	GODOT_CLASS(EffekseerEffect, Resource)
 
 public:
+	enum class TargetLayer : int32_t {
+		Both,
+		_2D,
+		_3D,
+	};
+
+public:
 	static void _register_methods();
 
 	EffekseerEffect();
@@ -39,9 +46,12 @@ public:
 	Effekseer::EffectRef& get_native() { return m_native; }
 
 private:
+	void setup_node_render(Effekseer::EffectNode* node, TargetLayer targetLayer);
+
 	PoolByteArray m_data_bytes;
 	Dictionary m_subresources;
 	float m_scale = 1.0f;
+	TargetLayer m_targetLayer = TargetLayer::Both;
 	Effekseer::EffectRef m_native;
 };
 

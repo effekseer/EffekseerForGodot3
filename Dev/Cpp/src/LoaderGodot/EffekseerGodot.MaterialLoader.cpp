@@ -40,8 +40,8 @@ namespace EffekseerGodot
 		auto shader = Shader::Create("Sprite_Material", RendererShaderType::Material);
 		shader->SetVertexConstantBufferSize(shaderDataList[0].VertexConstantBufferSize);
 		shader->SetPixelConstantBufferSize(shaderDataList[0].PixelConstantBufferSize);
-		shader->Compile(Shader::RenderType::SpatialLightweight, shaderDataList[0].CodeSpatial.c_str(), std::vector<Shader::ParamDecl>(shaderDataList[0].ParamDecls));
-		shader->Compile(Shader::RenderType::CanvasItem, shaderDataList[0].CodeCanvasItem.c_str(), std::vector<Shader::ParamDecl>(shaderDataList[0].ParamDecls));
+		shader->SetCode(Shader::RenderType::SpatialLightweight, shaderDataList[0].CodeSpatial.c_str(), std::vector<Shader::ParamDecl>(shaderDataList[0].ParamDecls));
+		shader->SetCode(Shader::RenderType::CanvasItem, shaderDataList[0].CodeCanvasItem.c_str(), std::vector<Shader::ParamDecl>(shaderDataList[0].ParamDecls));
 		shader->SetCustomData1Count(materialFile.GetCustomData1Count());
 		shader->SetCustomData2Count(materialFile.GetCustomData2Count());
 		material->UserPtr = shader.release();
@@ -50,8 +50,8 @@ namespace EffekseerGodot
 		auto shader = Shader::Create("Model_Material", RendererShaderType::Material);
 		shader->SetVertexConstantBufferSize(shaderDataList[1].VertexConstantBufferSize);
 		shader->SetPixelConstantBufferSize(shaderDataList[1].PixelConstantBufferSize);
-		shader->Compile(Shader::RenderType::SpatialLightweight, shaderDataList[1].CodeSpatial.c_str(), std::vector<Shader::ParamDecl>(shaderDataList[1].ParamDecls));
-		shader->Compile(Shader::RenderType::CanvasItem, shaderDataList[1].CodeCanvasItem.c_str(), std::vector<Shader::ParamDecl>(shaderDataList[1].ParamDecls));
+		shader->SetCode(Shader::RenderType::SpatialLightweight, shaderDataList[1].CodeSpatial.c_str(), std::vector<Shader::ParamDecl>(shaderDataList[1].ParamDecls));
+		shader->SetCode(Shader::RenderType::CanvasItem, shaderDataList[1].CodeCanvasItem.c_str(), std::vector<Shader::ParamDecl>(shaderDataList[1].ParamDecls));
 		shader->SetCustomData1Count(materialFile.GetCustomData1Count());
 		shader->SetCustomData2Count(materialFile.GetCustomData2Count());
 		material->ModelUserPtr = shader.release();

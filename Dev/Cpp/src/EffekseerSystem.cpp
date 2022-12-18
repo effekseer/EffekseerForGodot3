@@ -13,6 +13,7 @@
 #include <Camera2D.hpp>
 
 #include "RendererGodot/EffekseerGodot.Renderer.h"
+#include "RendererGodot/EffekseerGodot.ModelRenderer.h"
 #include "LoaderGodot/EffekseerGodot.TextureLoader.h"
 #include "LoaderGodot/EffekseerGodot.ModelLoader.h"
 #include "LoaderGodot/EffekseerGodot.MaterialLoader.h"
@@ -35,11 +36,16 @@ void EffekseerSystem::_register_methods()
 	register_method("_init", &EffekseerSystem::_init);
 	register_method("_enter_tree", &EffekseerSystem::_enter_tree);
 	register_method("_exit_tree", &EffekseerSystem::_exit_tree);
+	register_method("_ready", &EffekseerSystem::_ready);
 	register_method("_process", &EffekseerSystem::_process);
 	register_method("_update_draw", &EffekseerSystem::_update_draw);
 	register_method("stop_all_effects", &EffekseerSystem::stop_all_effects);
 	register_method("set_paused_to_all_effects", &EffekseerSystem::set_paused_to_all_effects);
 	register_method("get_total_instance_count", &EffekseerSystem::get_total_instance_count);
+	register_method("clear_shader_load_count", &EffekseerSystem::clear_shader_load_count);
+	register_method("get_shader_load_count", &EffekseerSystem::get_shader_load_count);
+	register_method("get_shader_load_progress", &EffekseerSystem::get_shader_load_progress);
+	register_method("complete_all_shader_loads", &EffekseerSystem::complete_all_shader_loads);
 }
 
 EffekseerSystem::EffekseerSystem()
@@ -117,6 +123,10 @@ void EffekseerSystem::_exit_tree()
 	VisualServer::get_singleton()->disconnect("frame_pre_draw", this, "_update_draw");
 }
 
+void EffekseerSystem::_ready()
+{
+}
+
 void EffekseerSystem::_process(float delta)
 {
 	for (size_t i = 0; i < m_render_layers.size(); i++) {
@@ -142,6 +152,9 @@ void EffekseerSystem::_process(float delta)
 		m_manager->Update(advance);
 	}
 	m_renderer->SetTime(m_renderer->GetTime() + delta);
+
+	// Shader loading process
+	_process_shader_loader();
 }
 
 void EffekseerSystem::_update_draw()
@@ -226,6 +239,107 @@ void EffekseerSystem::set_paused_to_all_effects(bool paused)
 int EffekseerSystem::get_total_instance_count() const
 {
 	return m_manager->GetTotalInstanceCount();
+}
+
+EffekseerGodot::Shader* EffekseerSystem::get_builtin_shader(bool is_model, EffekseerRenderer::RendererShaderType shader_type)
+{
+	if (is_model) {
+		return m_manager->GetModelRenderer().DownCast<EffekseerGodot::ModelRenderer>()->GetShader(shader_type);
+	}
+	else {
+		return m_renderer->GetStandardShader(shader_type);
+	}
+}
+
+void EffekseerSystem::load_shader(ShaderLoadType load_type, godot::RID shader_rid)
+{
+	m_shader_load_queue.push({ load_type, shader_rid });
+	m_shader_load_count++;
+}
+
+void EffekseerSystem::clear_shader_load_count()
+{
+	m_shader_load_count -= m_shader_load_progress;
+	m_shader_load_progress = 0;
+}
+
+int EffekseerSystem::get_shader_load_count() const
+{
+	return m_shader_load_count;
+}
+
+int EffekseerSystem::get_shader_load_progress() const
+{
+	return m_shader_load_progress;
+}
+
+void EffekseerSystem::complete_all_shader_loads()
+{
+	m_should_complete_all_shader_loads = true;
+}
+
+void EffekseerSystem::_process_shader_loader()
+{
+	auto vs = VisualServer::get_singleton();
+
+	// Destroy all completed loaders
+	for (auto& loader : m_shader_loaders) {
+		vs->free_rid(loader.matarial);
+		vs->free_rid(loader.mesh);
+		vs->free_rid(loader.instance);
+	}
+	m_shader_loaders.clear();
+	
+	// Start loader if queued load request
+	const size_t load_count_in_a_frame = 1;
+	size_t loaded_count = 0;
+	while (loaded_count < load_count_in_a_frame || m_should_complete_all_shader_loads) {
+		if (m_shader_load_queue.size() == 0) {
+			break;
+		}
+
+		auto request = m_shader_load_queue.front();
+		m_shader_load_queue.pop();
+
+		ShaderLoader loader;
+		loader.load_type = request.load_type;
+		loader.matarial = vs->material_create();
+		vs->material_set_shader(loader.matarial, request.shader_rid);
+
+		if (loader.load_type == ShaderLoadType::CanvasItem) {
+			loader.instance = vs->canvas_item_create();
+			vs->canvas_item_set_material(loader.instance, loader.matarial);
+			vs->canvas_item_add_rect(loader.instance, Rect2(0.0f, 0.0f, 0.0f, 0.0f), Color());
+			vs->canvas_item_set_parent(loader.instance, get_viewport()->find_world_2d()->get_canvas());
+			m_shader_loaders.push_back(loader);
+		}
+		else {
+			loader.mesh = vs->mesh_create();
+			loader.instance = vs->instance_create();
+
+			godot::PoolVector3Array positions;
+			positions.resize(1);
+
+			godot::Array arrays;
+			arrays.resize(VisualServer::ARRAY_MAX);
+			arrays[VisualServer::ARRAY_VERTEX] = positions;
+
+			int64_t format = VisualServer::ARRAY_FORMAT_VERTEX;
+			if (request.load_type == ShaderLoadType::SpatialModel) {
+				format |= VisualServer::ARRAY_FLAG_USE_OCTAHEDRAL_COMPRESSION;
+			}
+			vs->mesh_add_surface_from_arrays(loader.mesh, VisualServer::PRIMITIVE_POINTS, arrays, {}, format);
+			vs->mesh_surface_set_material(loader.mesh, 0, loader.matarial);
+			vs->instance_set_base(loader.instance, loader.mesh);
+			vs->instance_set_scenario(loader.instance, get_viewport()->find_world()->get_scenario());
+		}
+
+		m_shader_loaders.push_back(loader);
+		loaded_count++;
+	}
+
+	m_shader_load_progress += loaded_count;
+	m_should_complete_all_shader_loads = false;
 }
 
 }
