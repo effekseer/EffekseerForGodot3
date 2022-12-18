@@ -22,11 +22,11 @@ private:
 	std::vector<uint8_t> m_buffer;
 
 public:
-	IndexBuffer(RendererImplemented* renderer, int maxCount, bool isDynamic);
+	IndexBuffer(Renderer* renderer, int maxCount, bool isDynamic);
 
 	virtual ~IndexBuffer();
 
-	static Effekseer::RefPtr<IndexBuffer> Create(RendererImplemented* renderer, int maxCount, bool isDynamic);
+	static Effekseer::RefPtr<IndexBuffer> Create(Renderer* renderer, int maxCount, bool isDynamic);
 
 public:
 	void Lock() override;

@@ -26,11 +26,11 @@ private:
 	int32_t m_ringLockedSize;
 
 public:
-	VertexBuffer(RendererImplemented* renderer, int size, bool isDynamic);
+	VertexBuffer(Renderer* renderer, int size, bool isDynamic);
 
 	virtual ~VertexBuffer();
 
-	static Effekseer::RefPtr<VertexBuffer> Create(RendererImplemented* renderer, int size, bool isDynamic);
+	static Effekseer::RefPtr<VertexBuffer> Create(Renderer* renderer, int size, bool isDynamic);
 
 public:
 	void Lock() override;

@@ -233,9 +233,6 @@
     <ClInclude Include="src\RendererGodot\EffekseerGodot.Renderer.h">
       <Filter>EffekseerGodot\RendererGodot</Filter>
     </ClInclude>
-    <ClInclude Include="src\RendererGodot\EffekseerGodot.RendererImplemented.h">
-      <Filter>EffekseerGodot\RendererGodot</Filter>
-    </ClInclude>
     <ClInclude Include="src\RendererGodot\EffekseerGodot.RenderResources.h">
       <Filter>EffekseerGodot\RendererGodot</Filter>
     </ClInclude>

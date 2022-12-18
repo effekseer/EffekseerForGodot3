@@ -28,7 +28,7 @@ namespace EffekseerGodot
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-class RendererImplemented;
+class Renderer;
 class RenderStateBase;
 
 class Texture;

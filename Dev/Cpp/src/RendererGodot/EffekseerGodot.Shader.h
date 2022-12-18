@@ -4,7 +4,7 @@
 // Include
 //----------------------------------------------------------------------------------
 #include "EffekseerRenderer.ShaderBase.h"
-#include "EffekseerGodot.RendererImplemented.h"
+#include "EffekseerGodot.Renderer.h"
 
 //-----------------------------------------------------------------------------------
 //

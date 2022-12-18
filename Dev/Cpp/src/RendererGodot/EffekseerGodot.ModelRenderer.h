@@ -4,7 +4,7 @@
 // Include
 //----------------------------------------------------------------------------------
 #include "EffekseerRenderer.ModelRendererBase.h"
-#include "EffekseerGodot.RendererImplemented.h"
+#include "EffekseerGodot.Renderer.h"
 
 //-----------------------------------------------------------------------------------
 //
@@ -24,15 +24,15 @@ using ModelRendererRef = Effekseer::RefPtr<ModelRenderer>;
 class ModelRenderer : public ::EffekseerRenderer::ModelRendererBase
 {
 private:
-	RendererImplemented* m_renderer = nullptr;
+	Renderer* m_renderer = nullptr;
 	std::array<std::unique_ptr<Shader>, 6> m_shaders;
 
-	ModelRenderer(RendererImplemented* renderer);
+	ModelRenderer(Renderer* renderer);
 
 public:
 	virtual ~ModelRenderer();
 
-	static ModelRendererRef Create(RendererImplemented* renderer);
+	static ModelRendererRef Create(Renderer* renderer);
 
 public:
 	void BeginRendering(const efkModelNodeParam& parameter, int32_t count, void* userData) override;

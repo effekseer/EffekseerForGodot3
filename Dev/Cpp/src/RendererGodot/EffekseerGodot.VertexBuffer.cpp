@@ -12,7 +12,7 @@ namespace EffekseerGodot
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-VertexBuffer::VertexBuffer(RendererImplemented* renderer, int size, bool isDynamic)
+VertexBuffer::VertexBuffer(Renderer* renderer, int size, bool isDynamic)
 	: VertexBufferBase(size, isDynamic)
 	, m_buffer((size_t)size)
 	, m_ringBufferLock(false)
@@ -31,7 +31,7 @@ VertexBuffer::~VertexBuffer()
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-Effekseer::RefPtr<VertexBuffer> VertexBuffer::Create(RendererImplemented* renderer, int size, bool isDynamic)
+Effekseer::RefPtr<VertexBuffer> VertexBuffer::Create(Renderer* renderer, int size, bool isDynamic)
 {
 	return VertexBufferRef(new VertexBuffer(renderer, size, isDynamic));
 }

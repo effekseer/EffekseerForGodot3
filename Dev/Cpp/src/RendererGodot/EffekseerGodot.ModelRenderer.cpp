@@ -3,7 +3,7 @@
 // Include
 //----------------------------------------------------------------------------------
 #include "EffekseerGodot.RenderState.h"
-#include "EffekseerGodot.RendererImplemented.h"
+#include "EffekseerGodot.Renderer.h"
 
 #include "EffekseerGodot.IndexBuffer.h"
 #include "EffekseerGodot.ModelRenderer.h"
@@ -90,7 +90,7 @@ namespace CanvasItem
 
 }
 
-ModelRenderer::ModelRenderer(RendererImplemented* renderer)
+ModelRenderer::ModelRenderer(Renderer* renderer)
 	: m_renderer(renderer)
 {
 	using namespace EffekseerRenderer;
@@ -128,7 +128,7 @@ ModelRenderer::~ModelRenderer()
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-ModelRendererRef ModelRenderer::Create(RendererImplemented* renderer)
+ModelRendererRef ModelRenderer::Create(Renderer* renderer)
 {
 	assert(renderer != NULL);
 
@@ -142,7 +142,7 @@ void ModelRenderer::BeginRendering(const efkModelNodeParam& parameter, int32_t c
 
 void ModelRenderer::Rendering(const efkModelNodeParam& parameter, const InstanceParameter& instanceParameter, void* userData)
 {
-	Rendering_<RendererImplemented>(m_renderer, parameter, instanceParameter, userData);
+	Rendering_<Renderer>(m_renderer, parameter, instanceParameter, userData);
 }
 
 void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userData)
@@ -179,7 +179,7 @@ void ModelRenderer::EndRendering(const efkModelNodeParam& parameter, void* userD
 	using namespace EffekseerRenderer;
 
 	EndRendering_<
-		RendererImplemented,
+		Renderer,
 		Shader,
 		Effekseer::Model,
 		false,

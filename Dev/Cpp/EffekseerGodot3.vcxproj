@@ -95,7 +95,6 @@
     <ClInclude Include="src\RendererGodot\EffekseerGodot.IndexBuffer.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.ModelRenderer.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.Renderer.h" />
-    <ClInclude Include="src\RendererGodot\EffekseerGodot.RendererImplemented.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.RenderResources.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.RenderState.h" />
     <ClInclude Include="src\RendererGodot\EffekseerGodot.Shader.h" />

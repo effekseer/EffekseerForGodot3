@@ -12,7 +12,7 @@ namespace EffekseerGodot
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-IndexBuffer::IndexBuffer(RendererImplemented* renderer, int maxCount, bool isDynamic)
+IndexBuffer::IndexBuffer(Renderer* renderer, int maxCount, bool isDynamic)
 	: IndexBufferBase(maxCount, isDynamic)
 	, m_buffer(sizeof(uint16_t) * maxCount)
 {
@@ -28,7 +28,7 @@ IndexBuffer::~IndexBuffer()
 //-----------------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------------
-Effekseer::RefPtr<IndexBuffer> IndexBuffer::Create(RendererImplemented* renderer, int maxCount, bool isDynamic)
+Effekseer::RefPtr<IndexBuffer> IndexBuffer::Create(Renderer* renderer, int maxCount, bool isDynamic)
 {
 	return IndexBufferRef(new IndexBuffer(renderer, maxCount, isDynamic));
 }
