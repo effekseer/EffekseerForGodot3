@@ -5,22 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EffekseerGodot3", "EffekseerGodot3.vcxproj", "{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effekseer", "..\Effekseer\build\Dev\Cpp\Effekseer\Effekseer.vcxproj", "{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}"
-EndProject
-Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "Godot_v3.5-stable_win64", "..\Godot_v3.5-stable_win64.exe", "{0766C01F-C29D-4F18-91A6-030E330FF0FF}"
-	ProjectSection(DebuggerProjectSystem) = preProject
-		PortSupplier = 00000000-0000-0000-0000-000000000000
-		Executable = C:\home\work\Effekseer\EffekseerForGodot3\Dev\Godot_v3.5-stable_win64.exe
-		RemoteMachine = SURFACEPRO7
-		StartingDirectory = C:\home\work\Effekseer\EffekseerForGodot3\Dev
-		Arguments = -d --path ./Godot
-		Environment = 既定
-		LaunchingEngine = 00000000-0000-0000-0000-000000000000
-		UseLegacyDebugEngines = No
-		LaunchSQLEngine = No
-		AttachLaunchAction = No
-		IORedirection = Auto
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effekseer", "..\Effekseer\build\Dev\Cpp\Effekseer\Effekseer.vcxproj", "{1596CF5C-CF06-3048-AB9D-213D913DD71A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,26 +35,18 @@ Global
 		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}.RelWithDebInfo|x86.Build.0 = Release|Win32
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Debug|x64.ActiveCfg = Debug|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Debug|x64.Build.0 = Debug|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Debug|x86.ActiveCfg = Debug|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.MinSizeRel|x86.ActiveCfg = MinSizeRel|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Release|x64.ActiveCfg = Release|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Release|x64.Build.0 = Release|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.Release|x86.ActiveCfg = Release|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
-		{6AAF8056-6EE5-3CF2-AA95-84F49CCE8C64}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
-		{0766C01F-C29D-4F18-91A6-030E330FF0FF}.Debug|x64.ActiveCfg = Release|x64
-		{0766C01F-C29D-4F18-91A6-030E330FF0FF}.Debug|x86.ActiveCfg = Release|x64
-		{0766C01F-C29D-4F18-91A6-030E330FF0FF}.MinSizeRel|x64.ActiveCfg = Release|x64
-		{0766C01F-C29D-4F18-91A6-030E330FF0FF}.MinSizeRel|x86.ActiveCfg = Release|x64
-		{0766C01F-C29D-4F18-91A6-030E330FF0FF}.Release|x64.ActiveCfg = Release|x64
-		{0766C01F-C29D-4F18-91A6-030E330FF0FF}.Release|x86.ActiveCfg = Release|x64
-		{0766C01F-C29D-4F18-91A6-030E330FF0FF}.RelWithDebInfo|x64.ActiveCfg = Release|x64
-		{0766C01F-C29D-4F18-91A6-030E330FF0FF}.RelWithDebInfo|x86.ActiveCfg = Release|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.Debug|x64.ActiveCfg = Debug|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.Debug|x64.Build.0 = Debug|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.Debug|x86.ActiveCfg = Debug|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.MinSizeRel|x86.ActiveCfg = MinSizeRel|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.Release|x64.ActiveCfg = Release|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.Release|x64.Build.0 = Release|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.Release|x86.ActiveCfg = Release|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{1596CF5C-CF06-3048-AB9D-213D913DD71A}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

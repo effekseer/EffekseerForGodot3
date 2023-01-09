@@ -247,7 +247,7 @@ EffekseerGodot::Shader* EffekseerSystem::get_builtin_shader(bool is_model, Effek
 		return m_manager->GetModelRenderer().DownCast<EffekseerGodot::ModelRenderer>()->GetShader(shader_type);
 	}
 	else {
-		return m_renderer->GetStandardShader(shader_type);
+		return m_renderer->GetShader(shader_type);
 	}
 }
 
