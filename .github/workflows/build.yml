@@ -7,7 +7,7 @@ jobs:
     name: Build for Linux
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update Submodules
         run: git submodule update --init --recursive
       - name: Build binaries
@@ -18,7 +18,7 @@ jobs:
           sudo apt-get install g++-multilib
           python3 Dev/Cpp/build.py platform=linux
       - name: Upload binaries
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: bin_linux
           path: ./Dev/Godot/addons/effekseer/bin
@@ -27,7 +27,7 @@ jobs:
     name: Build for Android
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update Submodules
         run: git submodule update --init --recursive
       - name: Build binaries
@@ -35,7 +35,7 @@ jobs:
           sudo apt-get install scons
           python3 Dev/Cpp/build.py platform=android
       - name: Upload binaries
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: bin_android
           path: ./Dev/Godot/addons/effekseer/bin
@@ -44,7 +44,7 @@ jobs:
     name: Build for macOS
     runs-on: macOS-10.15
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update Submodules
         run: git submodule update --init --recursive
       - name: Build binaries
@@ -78,7 +78,7 @@ jobs:
           /usr/bin/codesign --force --verify --verbose --timestamp --sign "$DISTRIBUTION_KEY_IDENTITY" ./Dev/Cpp/bin/libeffekseer.osx.dylib
           /usr/bin/codesign -dvvv ./Dev/Cpp/bin/libeffekseer.osx.dylib
       - name: Upload binaries
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: bin_macos
           path: ./Dev/Godot/addons/effekseer/bin
@@ -87,7 +87,7 @@ jobs:
     name: Build for iOS
     runs-on: macOS-10.15
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update Submodules
         run: git submodule update --init --recursive
       - name: Build binaries
@@ -95,7 +95,7 @@ jobs:
           brew install scons
           python3 Dev/Cpp/build.py platform=ios
       - name: Upload binaries
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: bin_ios
           path: ./Dev/Godot/addons/effekseer/bin
@@ -104,7 +104,7 @@ jobs:
     name: Build for Windows
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update Submodules
         run: git submodule update --init --recursive
       - name: Build binaries
@@ -113,7 +113,7 @@ jobs:
           python Dev/Cpp/build.py platform=windows
         shell: cmd
       - name: Upload binaries
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: bin_windows
           path: ./Dev/Godot/addons/effekseer/bin
@@ -122,7 +122,7 @@ jobs:
     name: Build for HTML5
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update Submodules
         run: git submodule update --init --recursive
       - name: Cache emsdk
@@ -143,7 +143,7 @@ jobs:
           sudo apt-get install scons
           python3 Dev/Cpp/build.py platform=html5
       - name: Upload binaries
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: bin_html5
           path: ./Dev/Godot/addons/effekseer/bin
@@ -153,7 +153,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [linux, android, macos, ios, windows, html5]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Download Linux binaries
         uses: actions/download-artifact@v1
@@ -196,7 +196,7 @@ jobs:
           cp -r bin_html5/html5 ./Dev/Godot/addons/effekseer/bin/
 
       - name: Upload built package
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: addons
           path: ./Dev/Godot/addons
