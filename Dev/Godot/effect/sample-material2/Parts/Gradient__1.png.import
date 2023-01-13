@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Gradient__1.png-018443e5bacc7cbc88f65dcf2941f1ba.s3tc.stex"
-path.etc2="res://.import/Gradient__1.png-018443e5bacc7cbc88f65dcf2941f1ba.etc2.stex"
+path="res://.import/Gradient__1.png-018443e5bacc7cbc88f65dcf2941f1ba.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/Gradient__1.png"
-dest_files=[ "res://.import/Gradient__1.png-018443e5bacc7cbc88f65dcf2941f1ba.s3tc.stex", "res://.import/Gradient__1.png-018443e5bacc7cbc88f65dcf2941f1ba.etc2.stex" ]
+dest_files=[ "res://.import/Gradient__1.png-018443e5bacc7cbc88f65dcf2941f1ba.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

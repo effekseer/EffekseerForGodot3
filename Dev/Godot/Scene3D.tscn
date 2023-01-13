@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://grid.png" type="Texture" id=1]
 [ext_resource path="res://addons/effekseer/src/EffekseerEmitter.gdns" type="Script" id=2]
@@ -15,6 +15,16 @@ albedo_texture = ExtResource( 1 )
 [sub_resource type="Environment" id=3]
 ambient_light_color = Color( 0.25098, 0.25098, 0.25098, 1 )
 glow_enabled = true
+
+[sub_resource type="CubeMesh" id=4]
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends MeshInstance
+
+
+func _process(delta: float):
+	transform = transform.rotated(Vector3.UP, deg2rad(180.0 * delta))
+"
 
 [node name="Scene3D" type="Spatial"]
 script = ExtResource( 4 )
@@ -65,3 +75,7 @@ MouseRightDrag: Rotate the Camera, MouseMiddleDrag: Move the Camera"
 valign = 1
 
 [node name="GUI" parent="." instance=ExtResource( 6 )]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 4 )
+script = SubResource( 5 )

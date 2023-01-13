@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Aura.png-223a3cc44247b168f74a680db5773db9.s3tc.stex"
-path.etc2="res://.import/Aura.png-223a3cc44247b168f74a680db5773db9.etc2.stex"
+path="res://.import/Aura.png-223a3cc44247b168f74a680db5773db9.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/Aura.png"
-dest_files=[ "res://.import/Aura.png-223a3cc44247b168f74a680db5773db9.s3tc.stex", "res://.import/Aura.png-223a3cc44247b168f74a680db5773db9.etc2.stex" ]
+dest_files=[ "res://.import/Aura.png-223a3cc44247b168f74a680db5773db9.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

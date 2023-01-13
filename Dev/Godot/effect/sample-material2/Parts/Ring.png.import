@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Ring.png-131e6a4035599fccfeb9be90c7307f91.s3tc.stex"
-path.etc2="res://.import/Ring.png-131e6a4035599fccfeb9be90c7307f91.etc2.stex"
+path="res://.import/Ring.png-131e6a4035599fccfeb9be90c7307f91.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/Ring.png"
-dest_files=[ "res://.import/Ring.png-131e6a4035599fccfeb9be90c7307f91.s3tc.stex", "res://.import/Ring.png-131e6a4035599fccfeb9be90c7307f91.etc2.stex" ]
+dest_files=[ "res://.import/Ring.png-131e6a4035599fccfeb9be90c7307f91.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

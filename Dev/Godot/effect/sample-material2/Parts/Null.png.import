@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Null.png-370593452b0b7ae4680378015213171c.s3tc.stex"
-path.etc2="res://.import/Null.png-370593452b0b7ae4680378015213171c.etc2.stex"
+path="res://.import/Null.png-370593452b0b7ae4680378015213171c.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/Null.png"
-dest_files=[ "res://.import/Null.png-370593452b0b7ae4680378015213171c.s3tc.stex", "res://.import/Null.png-370593452b0b7ae4680378015213171c.etc2.stex" ]
+dest_files=[ "res://.import/Null.png-370593452b0b7ae4680378015213171c.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

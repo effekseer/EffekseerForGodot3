@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Noise2.png-db0e99389cf309591f2f345a0fc0885f.s3tc.stex"
-path.etc2="res://.import/Noise2.png-db0e99389cf309591f2f345a0fc0885f.etc2.stex"
+path="res://.import/Noise2.png-db0e99389cf309591f2f345a0fc0885f.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/Noise2.png"
-dest_files=[ "res://.import/Noise2.png-db0e99389cf309591f2f345a0fc0885f.s3tc.stex", "res://.import/Noise2.png-db0e99389cf309591f2f345a0fc0885f.etc2.stex" ]
+dest_files=[ "res://.import/Noise2.png-db0e99389cf309591f2f345a0fc0885f.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

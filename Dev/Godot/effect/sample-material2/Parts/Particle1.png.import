@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Particle1.png-3d38d1f672e511532a4e70291559a512.s3tc.stex"
-path.etc2="res://.import/Particle1.png-3d38d1f672e511532a4e70291559a512.etc2.stex"
+path="res://.import/Particle1.png-3d38d1f672e511532a4e70291559a512.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://effect/sample-material2/Parts/Particle1.png"
-dest_files=[ "res://.import/Particle1.png-3d38d1f672e511532a4e70291559a512.s3tc.stex", "res://.import/Particle1.png-3d38d1f672e511532a4e70291559a512.etc2.stex" ]
+dest_files=[ "res://.import/Particle1.png-3d38d1f672e511532a4e70291559a512.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
