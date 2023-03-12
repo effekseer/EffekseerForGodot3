@@ -45,4 +45,4 @@
   - 高FPS時にエフェクトの更新が行われない不具合を修正 (#1)
 
 ## 1.60 Beta1
-- EffekseerForGodot最初のリリース
+- EffekseerForGodot3最初のリリース

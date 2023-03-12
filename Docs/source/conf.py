@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'EffekseerForGodot Help'
+project = u'EffekseerForGodot3 Help'
 copyright = u'2019, Effekseer'
 author = u'Effekseer'
 
@@ -113,7 +113,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'EffekseerForGodotDocdoc'
+htmlhelp_basename = 'EffekseerForGodot3Doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------

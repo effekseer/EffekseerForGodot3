@@ -1,5 +1,5 @@
 ﻿==========================================
-EffekseerForGodot Help (English)
+EffekseerForGodot3 Help (English)
 ==========================================
 
 .. toctree::

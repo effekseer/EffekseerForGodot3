@@ -45,4 +45,4 @@
   - Effects would not be updated when high FPS. (#1)
 
 ## 1.60 Beta1
-- First release the EffekseerForGodot.
+- First release the EffekseerForGodot3.

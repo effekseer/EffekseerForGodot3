@@ -1,5 +1,5 @@
 =========================================
-Hello EffekseerForGodot !
+Hello EffekseerForGodot3 !
 =========================================
 
 .. toctree::
