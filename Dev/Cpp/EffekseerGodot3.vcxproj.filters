@@ -22,6 +22,15 @@
     <Filter Include="EffekseerGodot\RendererGodot\Shaders">
       <UniqueIdentifier>{64ec8362-3b9d-47aa-af58-aa7aca58637d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="godot-cpp">
+      <UniqueIdentifier>{3f95438e-cfbe-41bc-9e69-256e896a6a2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="godot-cpp\core">
+      <UniqueIdentifier>{c8782b59-ecc7-486a-b953-df7f3194c0e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="godot-cpp\gen">
+      <UniqueIdentifier>{b756e03e-6656-4ee8-bd23-fc36626d0946}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GDLibrary.cpp">
@@ -140,6 +149,2106 @@
     </ClCompile>
     <ClCompile Include="..\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TGATextureLoader.cpp">
       <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\GodotGlobal.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\NodePath.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Plane.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\PoolArrays.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Quat.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Rect2.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\RID.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\String.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\TagDB.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Transform.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Transform2D.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Variant.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Vector2.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Vector3.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\AABB.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Array.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Basis.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\CameraMatrix.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Color.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\core\Dictionary.cpp">
+      <Filter>godot-cpp\core</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TextEdit.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TextFile.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TextMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Texture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Texture3D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TextureArray.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TextureButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TextureLayered.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TextureProgress.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TextureRect.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Theme.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Thread.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TileMap.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TileSet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Time.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Timer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ToolButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TouchScreenButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Translation.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TranslationServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Tree.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TreeItem.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TriangleMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Tween.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Tweener.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\UDPServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\UndoRedo.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\UPNP.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\UPNPDevice.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VBoxContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VehicleBody.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VehicleWheel.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VFlowContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VideoPlayer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VideoStream.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VideoStreamGDNative.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VideoStreamTheora.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VideoStreamWebm.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Viewport.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ViewportContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ViewportTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisibilityEnabler.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisibilityEnabler2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisibilityNotifier.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisibilityNotifier2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScript.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptBasicTypeConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptBuiltinFunc.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptClassConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptComment.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptComposeArray.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptCondition.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptConstructor.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptCustomNode.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptDeconstruct.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptEditor.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptEmitSignal.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptEngineSingleton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptExpression.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptFunction.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptFunctionCall.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptFunctionState.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptGlobalConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptIndexGet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptIndexSet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptInputAction.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptIterator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptLists.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptLocalVar.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptLocalVarSet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptMathConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptNode.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptOperator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptPreload.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptPropertyGet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptPropertySet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptResourcePath.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptReturn.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptSceneNode.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptSceneTree.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptSelect.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptSelf.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptSequence.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptSubCall.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptSwitch.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptTypeCast.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptVariableGet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptVariableSet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptWhile.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptYield.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualScriptYieldSignal.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShader.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNode.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeBooleanConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeBooleanUniform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeColorConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeColorFunc.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeColorOp.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeColorUniform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeCompare.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeCubeMap.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeCubeMapUniform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeCustom.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeDeterminant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeDotProduct.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeExpression.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeFaceForward.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeFresnel.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeGlobalExpression.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeGroupBase.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeIf.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeInput.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeIs.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeOuterProduct.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeOutput.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarClamp.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarDerivativeFunc.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarFunc.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarInterp.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarOp.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarSmoothStep.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarSwitch.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeScalarUniform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeSwitch.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTextureUniform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTextureUniformTriplanar.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTransformCompose.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTransformConstant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTransformDecompose.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTransformFunc.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTransformMult.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTransformUniform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeTransformVecMult.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeUniform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeUniformRef.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVec3Constant.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVec3Uniform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorClamp.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorCompose.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorDecompose.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorDerivativeFunc.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorDistance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorFunc.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorInterp.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorLen.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorOp.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorRefract.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorScalarMix.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorScalarSmoothStep.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorScalarStep.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VisualShaderNodeVectorSmoothStep.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VScrollBar.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VSeparator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VSlider.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\VSplitContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WeakRef.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebRTCDataChannel.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebRTCDataChannelGDNative.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebRTCMultiplayer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebRTCPeerConnection.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebRTCPeerConnectionGDNative.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebSocketClient.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebSocketMultiplayerPeer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebSocketPeer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebSocketServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WebXRInterface.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WindowDialog.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\World.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\World2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\WorldEnvironment.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\X509Certificate.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\XMLParser.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\YSort.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\__init_method_bindings.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\__register_types.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AcceptDialog.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AESContext.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimatedSprite.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimatedSprite3D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimatedTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Animation.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNode.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeAdd2.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeAdd3.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeAnimation.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeBlend2.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeBlend3.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeBlendSpace1D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeBlendSpace2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeBlendTree.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeOneShot.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeOutput.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeStateMachine.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeStateMachinePlayback.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeStateMachineTransition.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeTimeScale.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeTimeSeek.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationNodeTransition.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationPlayer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationRootNode.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationTrackEditPlugin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationTree.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AnimationTreePlayer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Area.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Area2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ArrayMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ARVRAnchor.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ARVRCamera.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ARVRController.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ARVRInterface.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ARVRInterfaceGDNative.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ARVROrigin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ARVRPositionalTracker.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ARVRServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AspectRatioContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AStar.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AStar2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AtlasTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioBusLayout.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffect.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectAmplify.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectBandLimitFilter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectBandPassFilter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectCapture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectChorus.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectCompressor.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectDelay.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectDistortion.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectEQ.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectEQ6.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectEQ10.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectEQ21.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectFilter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectHighPassFilter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectHighShelfFilter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectLimiter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectLowPassFilter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectLowShelfFilter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectNotchFilter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectPanner.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectPhaser.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectPitchShift.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectRecord.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectReverb.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectSpectrumAnalyzer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectSpectrumAnalyzerInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioEffectStereoEnhance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStream.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamGenerator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamGeneratorPlayback.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamMicrophone.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamMP3.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamOGGVorbis.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamPlayback.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamPlaybackResampled.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamPlayer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamPlayer2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamPlayer3D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamRandomPitch.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\AudioStreamSample.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BackBufferCopy.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BakedLightmap.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BakedLightmapData.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BaseButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BitMap.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BitmapFont.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Bone2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BoneAttachment.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BoxContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BoxShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\BulletPhysicsServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Button.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ButtonGroup.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CallbackTweener.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Camera.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Camera2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CameraFeed.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CameraServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CameraTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CanvasItem.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CanvasItemMaterial.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CanvasLayer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CanvasModulate.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CapsuleMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CapsuleShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CapsuleShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CenterContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CharFXTransform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CheckBox.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CheckButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CircleShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ClassDB.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ClippedCamera.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CollisionObject.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CollisionObject2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CollisionPolygon.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CollisionPolygon2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CollisionShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CollisionShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ColorPicker.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ColorPickerButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ColorRect.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ConcavePolygonShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ConcavePolygonShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ConeTwistJoint.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ConfigFile.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ConfirmationDialog.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Container.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Control.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ConvexPolygonShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ConvexPolygonShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CPUParticles.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CPUParticles2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Crypto.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CryptoKey.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGBox.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGCombiner.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGCylinder.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGPolygon.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGPrimitive.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGSphere.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CSGTorus.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CubeMap.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CubeMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CullInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Curve.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Curve2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Curve3D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CurveTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CylinderMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\CylinderShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\DampedSpringJoint2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\DirectionalLight.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Directory.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\DTLSServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\DynamicFont.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\DynamicFontData.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorExportPlugin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorFeatureProfile.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorFileDialog.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorFileSystem.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorFileSystemDirectory.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorImportPlugin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorInspector.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorInspectorPlugin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorInterface.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorPlugin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorProperty.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorResourceConversionPlugin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorResourcePicker.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorResourcePreview.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorResourcePreviewGenerator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorSceneImporter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorSceneImporterFBX.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorSceneImporterGLTF.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorScenePostImport.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorScript.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorScriptPicker.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorSelection.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorSettings.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorSpatialGizmo.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorSpatialGizmoPlugin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorSpinSlider.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EditorVCSInterface.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\EncodedObjectAsID.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Engine.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Environment.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Expression.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ExternalTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\File.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\FileDialog.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\FileSystemDock.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\FlowContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Font.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\FuncRef.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GDNative.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GDNativeLibrary.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GDScript.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GDScriptFunctionState.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Generic6DOFJoint.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Geometry.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GeometryInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GIProbe.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GIProbeData.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GlobalConstants.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFAccessor.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFAnimation.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFBufferView.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFCamera.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFDocument.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFLight.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFNode.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFSkeleton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFSkin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFSpecGloss.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFState.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GLTFTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Gradient.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GradientTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GradientTexture2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GraphEdit.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GraphNode.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GridContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GridMap.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\GrooveJoint2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HashingContext.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HBoxContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HeightMapShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HFlowContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HingeJoint.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HMACContext.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HScrollBar.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HSeparator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HSlider.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HSplitContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HTTPClient.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\HTTPRequest.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Image.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ImageTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ImmediateGeometry.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Input.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputDefault.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEvent.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventAction.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventGesture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventJoypadButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventJoypadMotion.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventKey.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventMagnifyGesture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventMIDI.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventMouse.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventMouseButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventMouseMotion.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventPanGesture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventScreenDrag.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventScreenTouch.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputEventWithModifiers.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InputMap.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InstancePlaceholder.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\InterpolatedCamera.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\IntervalTweener.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\IP.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\IP_Unix.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ItemList.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\JavaClass.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\JavaClassWrapper.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\JavaScript.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\JavaScriptObject.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\JNISingleton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Joint.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Joint2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\JSON.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\JSONParseResult.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\JSONRPC.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\KinematicBody.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\KinematicBody2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\KinematicCollision.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\KinematicCollision2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Label.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Label3D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\LargeTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Light.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Light2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\LightOccluder2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Line2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\LineEdit.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\LineShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\LinkButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Listener.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Listener2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MainLoop.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MarginContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Marshalls.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Material.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MenuButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Mesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MeshDataTool.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MeshInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MeshInstance2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MeshLibrary.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MeshTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MethodTweener.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MobileVRInterface.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MultiMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MultiMeshInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MultiMeshInstance2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MultiplayerAPI.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\MultiplayerPeerGDNative.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Mutex.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NativeScript.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Navigation.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Navigation2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Navigation2DServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationAgent.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationAgent2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationMeshGenerator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationMeshInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationObstacle.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationObstacle2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationPolygon.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationPolygonInstance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NavigationServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NetworkedMultiplayerCustom.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NetworkedMultiplayerENet.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NetworkedMultiplayerPeer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NinePatchRect.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Node.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Node2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\NoiseTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Object.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Occluder.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\OccluderPolygon2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\OccluderShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\OccluderShapePolygon.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\OccluderShapeSphere.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\OmniLight.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\OpenSimplexNoise.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\OptionButton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\OS.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PackedDataContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PackedDataContainerRef.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PackedScene.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PackedSceneGLTF.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PacketPeer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PacketPeerDTLS.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PacketPeerGDNative.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PacketPeerStream.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PacketPeerUDP.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Panel.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PanelContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PanoramaSky.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ParallaxBackground.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ParallaxLayer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Particles.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Particles2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ParticlesMaterial.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Path.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Path2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PathFollow.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PathFollow2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PCKPacker.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Performance.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PHashTranslation.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicalBone.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Physics2DDirectBodyState.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Physics2DDirectSpaceState.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Physics2DServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Physics2DServerSW.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Physics2DShapeQueryParameters.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Physics2DTestMotionResult.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicsBody.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicsBody2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicsDirectBodyState.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicsDirectSpaceState.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicsMaterial.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicsServer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicsShapeQueryParameters.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PhysicsTestMotionResult.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PinJoint.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PinJoint2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PlaneMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PlaneShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PluginScript.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PointMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Polygon2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PolygonPathFinder.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Popup.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PopupDialog.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PopupMenu.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PopupPanel.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Portal.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Position2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Position3D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PrimitiveMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PrismMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ProceduralSky.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ProgressBar.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ProjectSettings.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\PropertyTweener.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ProximityGroup.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ProxyTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\QuadMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RandomNumberGenerator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Range.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RayCast.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RayCast2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RayShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RayShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RectangleShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Reference.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ReferenceRect.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ReflectionProbe.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RegEx.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RegExMatch.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RemoteTransform.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RemoteTransform2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Resource.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ResourceFormatLoader.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ResourceFormatSaver.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ResourceImporter.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ResourceInteractiveLoader.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ResourceLoader.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ResourcePreloader.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ResourceSaver.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RichTextEffect.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RichTextLabel.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RigidBody.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RigidBody2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Room.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RoomGroup.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RoomManager.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\RootMotionView.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SceneState.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SceneTree.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SceneTreeTimer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SceneTreeTween.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Script.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ScriptCreateDialog.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ScriptEditor.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ScrollBar.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ScrollContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SegmentShape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Semaphore.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Separator.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Shader.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ShaderMaterial.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Shape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Shape2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\ShortCut.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Skeleton.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Skeleton2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SkeletonIK.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Skin.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SkinReference.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Sky.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Slider.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SliderJoint.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SoftBody.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Spatial.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SpatialGizmo.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SpatialMaterial.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SpatialVelocityTracker.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SphereMesh.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SphereShape.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SpinBox.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SplitContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SpotLight.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SpringArm.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Sprite.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Sprite3D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SpriteBase3D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SpriteFrames.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StaticBody.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StaticBody2D.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StreamPeer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StreamPeerBuffer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StreamPeerGDNative.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StreamPeerSSL.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StreamPeerTCP.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StreamTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StyleBox.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StyleBoxEmpty.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StyleBoxFlat.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StyleBoxLine.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\StyleBoxTexture.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\SurfaceTool.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TabContainer.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\Tabs.cpp">
+      <Filter>godot-cpp\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="godot-cpp\src\gen\TCP_Server.cpp">
+      <Filter>godot-cpp\gen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
