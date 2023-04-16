@@ -51,32 +51,6 @@ jobs:
         run: |
           brew install scons
           python3 Dev/Cpp/build.py platform=osx
-      - name: Codesign libraries
-        env:
-          DISTRIBUTION_KEY_BASE64: ${{ secrets.MACOS_DISTRIBUTION_KEY_BASE64 }}
-          DISTRIBUTION_KEY_PASSWORD: ${{ secrets.MACOS_DISTRIBUTION_KEY_PASSWORD }}
-          DISTRIBUTION_KEY_IDENTITY: ${{ secrets.MACOS_DISTRIBUTION_KEY_IDENTITY }}
-          KEYCHAIN_PASSWORD: ${{ secrets.MACOS_KEYCHAIN_PASSWORD }}
-        run: |
-          DISTRIBUTION_KEY_PATH=$RUNNER_TEMP/distribution.p12
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-
-          echo -n "$DISTRIBUTION_KEY_BASE64" | base64 --decode --output $DISTRIBUTION_KEY_PATH
-
-          echo create keychain
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security default-keychain -s $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
-          echo import key
-          security import $DISTRIBUTION_KEY_PATH -P "$DISTRIBUTION_KEY_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH -T /usr/bin/codesign
-          security list-keychain -d user -s $KEYCHAIN_PATH
-          security find-identity
-
-          echo codesign
-          /usr/bin/codesign --force --verify --verbose --timestamp --sign "$DISTRIBUTION_KEY_IDENTITY" ./Dev/Cpp/bin/libeffekseer.osx.dylib
-          /usr/bin/codesign -dvvv ./Dev/Cpp/bin/libeffekseer.osx.dylib
       - name: Upload binaries
         uses: actions/upload-artifact@v3
         with:
