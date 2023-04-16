@@ -375,6 +375,8 @@ uniform vec4 ModelUV;
 uniform vec4 ModelColor;
 )";
 
+static inline constexpr size_t GradientElements = 13;
+
 static void Replace(std::string& target, const std::string& from, const std::string& to)
 {
 	auto pos = target.find(from);
@@ -481,10 +483,9 @@ std::string ShaderGenerator::GenerateShaderCode(const Effekseer::MaterialFile& m
 
 	for (size_t i = 0; i < materialFile.Gradients.size(); i++)
 	{
-		// TODO : remove a magic number
-		for (size_t j = 0; j < 13; j++)
+		for (size_t j = 0; j < GradientElements; j++)
 		{
-			maincode << "uniform " << GetType(4) << " " << materialFile.Gradients[i].Name << "_" << j << std::endl;
+			maincode << "uniform " << GetType(4) << " " << materialFile.Gradients[i].Name << "_" << j << ";" << std::endl;
 		}
 	}
 
@@ -759,6 +760,16 @@ void ShaderGenerator::GenerateParamDecls(ShaderData& shaderData, const Effekseer
 			const char* uniformName = materialFile.GetUniformName(i);
 			appendDecls(decls, uniformName, Shader::ParamType::Vector4, 0, offset);
 			offset += 4 * sizeof(float);
+		}
+		for (size_t i = 0; i < materialFile.Gradients.size(); i++)
+		{
+			for (size_t j = 0; j < GradientElements; j++)
+			{
+				char uniformName[128];
+				snprintf(uniformName, sizeof(uniformName), "%s_%u", materialFile.Gradients[i].Name.c_str(), static_cast<uint32_t>(j));
+				appendDecls(decls, uniformName, Shader::ParamType::Vector4, 0, offset);
+				offset += 4 * sizeof(float);
+			}
 		}
 	};
 	auto appendTextureDecls = [appendDecls](std::vector<Shader::ParamDecl>& decls, const ::Effekseer::MaterialFile& materialFile)
