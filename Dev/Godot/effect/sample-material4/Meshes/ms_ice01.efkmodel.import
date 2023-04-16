@@ -1,0 +1,14 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/ms_ice01.efkmodel-a6581af667dbeb2d2f23895e82c6cd57.res"
+
+[deps]
+
+source_file="res://effect/sample-material4/Meshes/ms_ice01.efkmodel"
+dest_files=[ "res://.import/ms_ice01.efkmodel-a6581af667dbeb2d2f23895e82c6cd57.res" ]
+
+[params]
+
+compress=true

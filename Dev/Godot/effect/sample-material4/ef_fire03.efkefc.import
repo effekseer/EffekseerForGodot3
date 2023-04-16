@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/ef_fire03.efkefc-02b849bd05c46ee73c75204d0deb34b1.res"
+
+[deps]
+
+source_file="res://effect/sample-material4/ef_fire03.efkefc"
+dest_files=[ "res://.import/ef_fire03.efkefc-02b849bd05c46ee73c75204d0deb34b1.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true

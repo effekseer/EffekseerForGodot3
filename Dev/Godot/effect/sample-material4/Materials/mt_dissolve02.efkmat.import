@@ -1,0 +1,14 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/mt_dissolve02.efkmat-46ad9a55664f0f1ac6e3db9915ea4d66.res"
+
+[deps]
+
+source_file="res://effect/sample-material4/Materials/mt_dissolve02.efkmat"
+dest_files=[ "res://.import/mt_dissolve02.efkmat-46ad9a55664f0f1ac6e3db9915ea4d66.res" ]
+
+[params]
+
+compress=true

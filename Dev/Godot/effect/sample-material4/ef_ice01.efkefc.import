@@ -1,0 +1,16 @@
+[remap]
+
+importer="effekseer.effect"
+type="Resource"
+path="res://.import/ef_ice01.efkefc-cedf68f6f2964d4425f4b45894ca1e18.res"
+
+[deps]
+
+source_file="res://effect/sample-material4/ef_ice01.efkefc"
+dest_files=[ "res://.import/ef_ice01.efkefc-cedf68f6f2964d4425f4b45894ca1e18.res" ]
+
+[params]
+
+scale=1.0
+data_type=0
+compress=true

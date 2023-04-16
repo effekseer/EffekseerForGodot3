@@ -1,0 +1,14 @@
+[remap]
+
+importer="effekseer.resource"
+type="Resource"
+path="res://.import/ms_rock01.efkmodel-ab5713f2f2da040571a59a8284dd1d3a.res"
+
+[deps]
+
+source_file="res://effect/sample-material4/Meshes/ms_rock01.efkmodel"
+dest_files=[ "res://.import/ms_rock01.efkmodel-ab5713f2f2da040571a59a8284dd1d3a.res" ]
+
+[params]
+
+compress=true
