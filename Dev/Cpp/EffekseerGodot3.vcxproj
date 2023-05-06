@@ -817,6 +817,9 @@
     <None Include="src\RendererGodot\Shaders\Particle.inl" />
     <None Include="src\RendererGodot\Shaders\Particle2D.inl" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="godot.natvis" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{4EAFD5E8-4DE5-46C1-8659-E5C6403920FE}</ProjectGuid>
